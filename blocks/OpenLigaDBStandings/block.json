@@ -1,13 +1,13 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
-  "name": "openligadb/standings",
+  "name": "soccr/standings",
   "title": "OpenligaDB Tabelle",
   "category": "openligadb",
   "icon": "forms",
   "description": "OpeneligaDB Spieltag",
   "keywords": [ "OpenligaDB", "tabelle", "spieltag"],
-  "textdomain": "clubfans-united",
+  "textdomain": "soccr",
   "attributes": {
     "leagueShortcut": {
       "type": "string",

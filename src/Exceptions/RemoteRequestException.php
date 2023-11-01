@@ -1,6 +1,6 @@
 <?php
 
-namespace ClubfansUnited\Exceptions;
+namespace Rockschtar\WordPress\Soccr\Exceptions;
 
 class RemoteRequestException extends \Exception
 {

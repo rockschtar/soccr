@@ -1,27 +1,27 @@
 <?php
 
-namespace ClubfansUnited\Blocks;
+namespace Rockschtar\WordPress\Soccr\Blocks;
 
-use Rockschtar\WordPress\Controller\HookController;
+use Rockschtar\WordPress\Soccr\Traits\Singelton;
 use WP_Block_Type;
 
 abstract class Block
 {
-    use HookController;
+    use Singelton;
 
     private ?WP_Block_Type $blockType = null;
 
     private function __construct()
     {
-        $this->addAction('init', 'registerBlock');
-        $this->addFilter('plugins_url', 'pluginsUrl', 10, 3);
+        add_action('init', $this->registerBlock(...));
+        add_filter('plugins_url', $this->pluginsUrl(...), 10, 3);
     }
 
     abstract public function blockDirectory(): string;
 
     private function absBlockDirectory(): string
     {
-        return CUE_ROOT_DIR . $this->blockDirectory();
+        return SOCCR_PLUGIN_DIR . $this->blockDirectory();
     }
 
     protected function blockname(): string
@@ -71,7 +71,7 @@ abstract class Block
     {
         $args = [];
         if (method_exists($this, 'render')) {
-            $args['render_callback'] = $this->addCallback('render');
+            $args['render_callback'] = $this->render(...);
             $assets = include $this->absBlockDirectory() . DIRECTORY_SEPARATOR . 'index.asset.php';
             $handle = sanitize_key(strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', get_class($this))));
 

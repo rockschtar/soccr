@@ -1,11 +1,12 @@
 <?php
 
-namespace ClubfansUnited\Blocks;
+namespace Rockschtar\WordPress\Soccr\Blocks;
 
-use ClubfansUnited\Manager\OpenLigaDBManager;
 use Exception;
+use Rockschtar\WordPress\Soccr\Api\OpenLigaDBApi;
+use Rockschtar\WordPress\Soccr\Utils\DateFormat;
 
-class OpenLigaDBGroupMatchesBlock extends Block
+class GroupMatchesBlock extends Block
 {
     protected function render(array $attributes, string $content = ''): string
     {
@@ -33,10 +34,10 @@ class OpenLigaDBGroupMatchesBlock extends Block
 
         try {
             if ($defaultCurrentGroup) {
-                $openLigaDBCurrentGroup = OpenLigaDBManager::getCurrentGroup(
+                $openLigaDBCurrentGroup = OpenLigaDBApi::getCurrentGroup(
                     $leagueShortcut,
                 );
-                $openLigaDBCurrentLeagueSeason = OpenLigaDBManager::getCurrentLeagueSeason(
+                $openLigaDBCurrentLeagueSeason = OpenLigaDBApi::getCurrentLeagueSeason(
                     $leagueShortcut,
                 );
                 $leagueSeason = $openLigaDBCurrentLeagueSeason->getLeagueSeason();
@@ -63,7 +64,7 @@ class OpenLigaDBGroupMatchesBlock extends Block
                 }
             }
 
-            $openLigaDBGroupMatches = OpenLigaDBManager::getGroupMatches(
+            $openLigaDBGroupMatches = OpenLigaDBApi::getGroupMatches(
                 $leagueShortcut,
                 $leagueSeason,
                 $groupOrderId,
@@ -135,12 +136,12 @@ class OpenLigaDBGroupMatchesBlock extends Block
         $group = $openLigaDBGroupMatches->getGroup();
         $groupName = $openLigaDBGroupMatches->getGroup()->getGroupName();
         $headline = sprintf(
-            __('%s | Saison %s', 'clubfans-united'),
+            __('%s | Saison %s', 'soccr'),
             $groupName,
             $leagueSeasonDisplay,
         );
         $headline = apply_filters(
-            'openligab_group_matches_headline',
+            'soccr_group_matchtes_headline',
             $headline,
             $group,
         );
@@ -163,7 +164,7 @@ class OpenLigaDBGroupMatchesBlock extends Block
                 $currentMatchTimestamp !== $match->getDateTime()->getTimestamp()
             ) {
                 $currentMatchTimestamp = $match->getDateTime()->getTimestamp();
-                $matchDateTimeString = wpdtu_timestamp_to_wp_datetime_string($match->getDateTime()->getTimestamp());
+                $matchDateTimeString = DateFormat::toWordPress($match->getDateTime());
                 $html .= "<tr><td colspan='3' class='openligadb-group-matches-datetime'>$matchDateTimeString</td></tr>";
             }
 
@@ -194,6 +195,6 @@ class OpenLigaDBGroupMatchesBlock extends Block
 
     public function blockDirectory(): string
     {
-        return '/web/dist/wp/OpenLigaDBGroupMatches';
+        return '/dist/OpenLigaDBGroupMatches';
     }
 }

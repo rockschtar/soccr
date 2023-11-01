@@ -1,16 +1,13 @@
 <?php
 
-namespace ClubfansUnited\Controller;
+namespace Rockschtar\WordPress\Soccr\Controller;
 
-use ClubfansUnited\Enum\Capabilities;
-use ClubfansUnited\Manager\OpenLigaDBManager;
-use Rockschtar\WordPress\Controller\HookController;
-use WP_REST_Request;
-use WP_REST_Response;
+use Rockschtar\WordPress\Soccr\Traits\Singelton;
+
 
 class OpenLigaDBController
 {
-    use HookController;
+    use Singelton;
 
     private function __construct()
     {

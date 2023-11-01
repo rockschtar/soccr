@@ -1,14 +1,13 @@
 <?php
 
-namespace ClubfansUnited\Blocks;
+namespace Rockschtar\WordPress\Soccr\Blocks;
 
-use ClubfansUnited\Manager\OpenLigaDBManager;
-use ClubfansUnited\Models\OpenLigaDBStanding;
 use Exception;
 
-use function Sentry\captureException;
+use Rockschtar\WordPress\Soccr\Api\OpenLigaDBApi;
 
-class OpenLigaDBStandingsBlock extends Block
+
+class StandingsBlock extends Block
 {
     protected function render(array $attributes, string $content = ''): string
     {
@@ -22,7 +21,7 @@ class OpenLigaDBStandingsBlock extends Block
         $leagueSeason = $parsedAttributes['leagueSeason'];
 
         try {
-            $openLigaDBStandings = OpenLigaDBManager::getStandings(
+            $openLigaDBStandings = OpenLigaDBApi::getStandings(
                 $leagueShortcut,
                 $leagueSeason,
             );
@@ -40,7 +39,7 @@ class OpenLigaDBStandingsBlock extends Block
                     '</p>';
             }
 
-            captureException($e);
+            do_action('soccr_exception', $e);
 
             return '';
         }
@@ -110,7 +109,6 @@ class OpenLigaDBStandingsBlock extends Block
 
         foreach ($openLigaDBStandings->getStandings() as $openLigaDBStanding) {
             $standingsPosition++;
-            /* @var OpenLigaDBStanding $openLigaDBStanding */
 
             $standingsHTMLBody .= <<<HTML
                 <tr class="{$this->blockClass('row')} {$this->blockClass('team-' . $openLigaDBStanding->getTeam()->getTeamId())}">
@@ -157,6 +155,6 @@ class OpenLigaDBStandingsBlock extends Block
 
     public function blockDirectory(): string
     {
-        return '/web/dist/wp/OpenLigaDBStandings';
+        return '/dist/OpenLigaDBStandings';
     }
 }

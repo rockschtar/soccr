@@ -1,6 +1,6 @@
 <?php
 
-namespace ClubfansUnited\Models;
+namespace Rockschtar\WordPress\Soccr\Models;;
 
 class OpenLigaDBStanding
 {

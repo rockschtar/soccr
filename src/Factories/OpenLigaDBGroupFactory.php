@@ -1,9 +1,8 @@
 <?php
 
-namespace ClubfansUnited\Factories;
+namespace Rockschtar\WordPress\Soccr\Factories;
 
-use Aws\S3\Enum\Group;
-use ClubfansUnited\Models\OpenLigaDBGroup;
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBGroup;
 
 class OpenLigaDBGroupFactory
 {

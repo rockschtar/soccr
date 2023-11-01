@@ -1,8 +1,8 @@
 <?php
 
-namespace ClubfansUnited\Factories;
+namespace Rockschtar\WordPress\Soccr\Factories;
 
-use ClubfansUnited\Models\OpenligaDBLeague;
+use Rockschtar\WordPress\Soccr\Models\OpenligaDBLeague;
 
 class OpenLigaDBLeagueFactory
 {

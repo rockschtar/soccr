@@ -13,6 +13,8 @@
  */
 
 
+define('SOCCR_PLUGIN_DIR', plugin_dir_path(__FILE__));
+
 spl_autoload_register(static function ($class) {
     // Define the base directory for your project
     $baseDir = __DIR__ . '/src/';

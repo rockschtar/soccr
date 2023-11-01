@@ -1,29 +1,29 @@
 <?php
 
 
-use ClubfansUnited\Exceptions\RemoteRequestException;
-use ClubfansUnited\Factories\OpenLigaDBGroupFactory;
-use ClubfansUnited\Factories\OpenLigaDBLeagueFactory;
-use ClubfansUnited\Factories\OpenLigaDBMatchFactory;
-use ClubfansUnited\Factories\OpenLigaDBTeamFactory;
-use ClubfansUnited\Models\OpenLigaDBGroup;
-use ClubfansUnited\Models\OpenLigaDBGroupMatches;
-use ClubfansUnited\Models\OpenligaDBLeague;
-use ClubfansUnited\Models\OpenLigaDBLeagueQuery;
-use ClubfansUnited\Models\OpenLigaDBMatch;
-use ClubfansUnited\Models\OpenLigaDBMatchQuery;
-use ClubfansUnited\Models\OpenLigaDBStanding;
-use ClubfansUnited\Models\OpenLigaDBStandings;
-use ClubfansUnited\Models\OpenLigaDBTeam;
-use ClubfansUnited\Utils\RemoteRequest;
+namespace Rockschtar\WordPress\Soccr\Api;
+
 use JsonException;
+use Rockschtar\WordPress\Soccr\Exceptions\RemoteRequestException;
+use Rockschtar\WordPress\Soccr\Factories\OpenLigaDBGroupFactory;
+use Rockschtar\WordPress\Soccr\Factories\OpenLigaDBLeagueFactory;
+use Rockschtar\WordPress\Soccr\Factories\OpenLigaDBMatchFactory;
+use Rockschtar\WordPress\Soccr\Factories\OpenLigaDBTeamFactory;
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBGroup;
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBGroupMatches;
+use Rockschtar\WordPress\Soccr\Models\OpenligaDBLeague;
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBLeagueQuery;
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBMatch;
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBMatchQuery;
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBStanding;
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBStandings;
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBTeam;
+use Rockschtar\WordPress\Soccr\Utils\RemoteRequest;
 use RuntimeException;
 
 class OpenLigaDBApi
 {
     /**
-     * @param OpenLigaDBMatchQuery $query
-     * @return OpenLigaDBMatch[]
      * @throws RemoteRequestException|JsonException
      */
     public static function matchQuery(OpenLigaDBMatchQuery $query): array
@@ -40,23 +40,20 @@ class OpenLigaDBApi
         $openligaDBMatches = array_merge(...$openligaDBMatches);
 
         if ($query->getTeamId() !== null) {
-            return \ClubfansUnited\Manager\from($openligaDBMatches)
-                ->where(static function (OpenLigaDBMatch $match) use ($query) {
+            $openligaDBMatches = array_filter(
+                $openligaDBMatches,
+                static function (OpenLigaDBMatch $match) use ($query) {
                     return $match->getTeam1()->getTeamId() ===
                         $query->getTeamId() ||
                         $match->getTeam2()->getTeamId() === $query->getTeamId();
-                })
-                ->toArray();
+                }
+            );
         }
 
         return $openligaDBMatches;
     }
 
     /**
-     * @param string $leagueShortcut
-     * @param int $leagueSeason
-     * @param int $groutOrderId
-     * @return OpenLigaDBGroupMatches
      * @throws RemoteRequestException
      * @throws JsonException
      */
@@ -78,33 +75,34 @@ class OpenLigaDBApi
             $leagueSeason,
         );
 
-        $currentGroup = \ClubfansUnited\Manager\from($openLigaDBGroups)
-            ->where(static function (OpenLigaDBGroup $group) use (
-                $groutOrderId
-            ) {
-                return $group->getGroupOrderId() === $groutOrderId;
-            })
-            ->firstOrDefault();
+        $currentGroup = array_filter($openLigaDBGroups, static function (OpenLigaDBGroup $group) use ($groutOrderId) {
+            return $group->getGroupOrderId() === $groutOrderId;
+        });
+
+        $currentGroup = count($currentGroup) === 0 ? null : array_shift($currentGroup);
 
         if ($currentGroup === null) {
             throw new RuntimeException('Invalid Group');
         }
 
-        $nextGroup = \ClubfansUnited\Manager\from($openLigaDBGroups)
-            ->skipWhile(static function ($group) use ($currentGroup) {
-                return $group->getGroupOrderId() !==
-                    $currentGroup->getGroupOrderId();
-            })
-            ->skip(1)
-            ->firstOrDefault();
 
-        $previousGroup = \ClubfansUnited\Manager\from(array_reverse($openLigaDBGroups))
-            ->skipWhile(static function ($group) use ($currentGroup) {
-                return $group->getGroupOrderId() !==
-                    $currentGroup->getGroupOrderId();
-            })
-            ->skip(1)
-            ->firstOrDefault();
+        $currentGroupIndex = array_search($currentGroup, $openLigaDBGroups);
+
+        if($currentGroupIndex === false) {
+            throw new RuntimeException('Invalid Group');
+        }
+
+        if($currentGroupIndex === 0) {
+            $previousGroup = null;
+        } else {
+            $previousGroup = $openLigaDBGroups[$currentGroupIndex - 1];
+        }
+
+        if($currentGroupIndex === count($openLigaDBGroups) - 1) {
+            $nextGroup = null;
+        } else {
+            $nextGroup = $openLigaDBGroups[$currentGroupIndex + 1];
+        }
 
         $groupCount = count($openLigaDBGroups);
         $matches = self::getMatches(
@@ -132,9 +130,6 @@ class OpenLigaDBApi
     }
 
     /**
-     * @param string $leagueShortcut
-     * @param int $leagueSeason
-     * @param int|null $groupOrderId
      * @return OpenLigaDBMatch[]
      * @throws RemoteRequestException
      * @throws JsonException
@@ -177,11 +172,16 @@ class OpenLigaDBApi
             );
         }
 
-        $openLigaDBMatches = \ClubfansUnited\Manager\from($openLigaDBMatches)
-            ->orderBy(static function (OpenLigaDBMatch $match) {
-                return $match->getDateTime()->getTimestamp();
-            })
-            ->toArray();
+        $sortByTimestamp = static function (OpenLigaDBMatch $match1, OpenLigaDBMatch $match2) {
+
+            if($match1->getDateTime()->getTimestamp() === $match2->getDateTime()->getTimestamp()) {
+                return 0;
+            }
+
+            return $match1->getDateTime()->getTimestamp() > $match2->getDateTime()->getTimestamp() ? 1 : -1;
+        };
+
+        usort($openLigaDBMatches, $sortByTimestamp);
 
         wp_cache_set($cacheKey, $openLigaDBMatches, 'openligadb', 60 * 60 * 1);
 
@@ -191,8 +191,8 @@ class OpenLigaDBApi
     /**
      * @param string $leagueShortcut
      * @return OpenLigaDBGroup
-     * @throws RemoteRequestException
-     * @throws JsonException
+     * @throws \JsonException
+     * @throws \Rockschtar\WordPress\Soccr\Exceptions\RemoteRequestException
      */
     public static function getCurrentGroup(
         string $leagueShortcut
@@ -309,8 +309,6 @@ class OpenLigaDBApi
     }
 
     /**
-     * @param string $leagueShortcut
-     * @param int $leagueSeason
      * @return OpenLigaDBTeam[]
      * @throws RemoteRequestException
      * @throws JsonException
@@ -352,48 +350,45 @@ class OpenLigaDBApi
     }
 
     /**
-     * @param OpenLigaDBLeagueQuery $leagueQuery
      * @return OpenligaDBLeague[]
      * @throws RemoteRequestException
      * @throws JsonException
      */
-    public static function queryLeagues(
-        OpenLigaDBLeagueQuery $leagueQuery
-    ): array {
+    public static function queryLeagues(OpenLigaDBLeagueQuery $leagueQuery): array {
         $leagues = self::getAvailableLeagues();
 
-        $leagues = \ClubfansUnited\Manager\from($leagues)
-            ->where(static function (OpenligaDBLeague $league) use (
-                $leagueQuery
-            ) {
-                if (!$leagueQuery->getLeagueShortcut()) {
-                    return true;
-                }
 
-                return $league->getLeagueShortcut() ===
-                    $leagueQuery->getLeagueShortcut();
-            })
-            ->where(static function (OpenligaDBLeague $league) use (
-                $leagueQuery
-            ) {
-                if (!$leagueQuery->getLeagueSeasonGreaterThan()) {
-                    return true;
-                }
+        $leagues = array_filter($leagues, static function (OpenligaDBLeague $league) use ($leagueQuery) {
+            if (!$leagueQuery->getLeagueShortcut()) {
+                return true;
+            }
 
-                return $league->getLeagueSeason() >
-                    $leagueQuery->getLeagueSeasonGreaterThan();
-            })
-            ->orderBy(static function (OpenligaDBLeague $league) {
-                return $league->getLeagueName();
-            })
-            ->toArray();
+            return $league->getLeagueShortcut() === $leagueQuery->getLeagueShortcut();
+        });
+
+        $leagues = array_filter($leagues, static function (OpenligaDBLeague $league) use ($leagueQuery) {
+            if (!$leagueQuery->getLeagueSeasonGreaterThan()) {
+                return true;
+            }
+
+            return $league->getLeagueSeason() > $leagueQuery->getLeagueSeasonGreaterThan();
+        });
+
+        $sortByLeagueName = static function (OpenligaDBLeague $league1, OpenligaDBLeague $league2) {
+
+            if($league1->getLeagueName() === $league2->getLeagueName()) {
+                return 0;
+            }
+
+            return $league1->getLeagueName() > $league2->getLeagueName() ? 1 : -1;
+        };
+
+        usort($leagues, $sortByLeagueName);
 
         return $leagues;
     }
 
     /**
-     * @param string $leagueShortcut
-     * @return OpenligaDBLeague
      * @throws RemoteRequestException
      * @throws JsonException
      */
@@ -410,24 +405,25 @@ class OpenLigaDBApi
 
         $openLigaDBLeagues = self::getAvailableLeagues();
 
-        /* @var $openLigaDBLeague OpenligaDBLeague|null */
-        $openLigaDBLeague = \ClubfansUnited\Manager\from($openLigaDBLeagues)
-            ->where(static function (OpenligaDBLeague $openLigaDBLeague) use (
-                $leagueShortcut
-            ) {
-                return $openLigaDBLeague->getLeagueShortcut() ===
-                    $leagueShortcut;
-            })
-            ->orderByDescending(static function (
-                OpenligaDBLeague $openLigaDBLeague
-            ) {
-                return $openLigaDBLeague->getLeagueSeason();
-            })
-            ->firstOrDefault();
+        $openLigaDBLeaguesByShortcut =array_filter($openLigaDBLeagues, static function (OpenligaDBLeague $league) use ($leagueShortcut) {
+            return $league->getLeagueShortcut() === $leagueShortcut;
+        });
 
-        if ($openLigaDBLeague === null) {
+        if (count($openLigaDBLeaguesByShortcut) === 0) {
             throw new RuntimeException('LeagueShortcut not found');
         }
+        $sortByLeagueSeason = static function (OpenligaDBLeague $league1, OpenligaDBLeague $league2) {
+
+            if($league1->getLeagueSeason() === $league2->getLeagueSeason()) {
+                return 0;
+            }
+
+            return $league1->getLeagueSeason() > $league2->getLeagueSeason() ? -1 : 1;
+        };
+
+        usort($openLigaDBLeaguesByShortcut, $sortByLeagueSeason);
+
+        $openLigaDBLeague = array_shift($openLigaDBLeaguesByShortcut);
 
         wp_cache_set(
             $cacheKey,
@@ -446,23 +442,14 @@ class OpenLigaDBApi
      * @throws RemoteRequestException
      * @throws JsonException
      */
-    public static function getLeagueSeason(
-        string $leagueShortcut,
-        int $leagueSeason
-    ): OpenligaDBLeague {
+    public static function getLeagueSeason(string $leagueShortcut, int $leagueSeason): OpenligaDBLeague {
         $openLigaDBLeagues = self::getAvailableLeagues();
 
-        /* @var $openLigaDBLeague OpenligaDBLeague|null */
-        $openLigaDBLeague = \ClubfansUnited\Manager\from($openLigaDBLeagues)
-            ->where(static function (OpenligaDBLeague $openLigaDBLeague) use (
-                $leagueShortcut,
-                $leagueSeason
-            ) {
-                return $openLigaDBLeague->getLeagueShortcut() ===
-                    $leagueShortcut &&
-                    $openLigaDBLeague->getLeagueSeason() === $leagueSeason;
-            })
-            ->firstOrDefault();
+        $openLigaDBLeague = array_filter($openLigaDBLeagues, static function (OpenligaDBLeague $league) use ($leagueShortcut, $leagueSeason) {
+            return $league->getLeagueShortcut() === $leagueShortcut && $league->getLeagueSeason() === $leagueSeason;
+        });
+
+        $openLigaDBLeague = array_shift($openLigaDBLeague);
 
         if ($openLigaDBLeague === null) {
             throw new RuntimeException('League not found');
@@ -472,14 +459,10 @@ class OpenLigaDBApi
     }
 
     /**
-     * @param string $leagueShortcut
-     * @return OpenLigaDBGroupMatches
      * @throws RemoteRequestException
      * @throws JsonException
      */
-    public static function getCurrentGroupMatches(
-        string $leagueShortcut
-    ): OpenLigaDBGroupMatches {
+    public static function getCurrentGroupMatches(string $leagueShortcut): OpenLigaDBGroupMatches {
         $openLigaDBLeague = self::getCurrentLeagueSeason($leagueShortcut);
         $group = self::getCurrentGroup($leagueShortcut);
         return self::getGroupMatches(
@@ -490,9 +473,6 @@ class OpenLigaDBApi
     }
 
     /**
-     * @param string $leagueShortcut
-     * @param int $leagueSeason
-     * @return OpenLigaDBStandings
      * @throws RemoteRequestException
      * @throws JsonException
      */

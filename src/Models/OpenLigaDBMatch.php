@@ -1,6 +1,6 @@
 <?php
 
-namespace ClubfansUnited\Models;
+namespace Rockschtar\WordPress\Soccr\Models;
 
 use DateTime;
 use JsonSerializable;
@@ -68,13 +68,11 @@ class OpenLigaDBMatch implements JsonSerializable
             return null;
         }
 
-        return from($this->getResults())
-            ->where(static function (OpenLigaDBMatchResult $result) use (
-                $typeId
-            ) {
-                return $result->getTypeId() === $typeId;
-            })
-            ->firstOrDefault();
+        return current(array_filter($this->getResults(), static function (OpenLigaDBMatchResult $result) use (
+            $typeId
+        ) {
+            return $result->getTypeId() === $typeId;
+        }));
     }
 
     /**

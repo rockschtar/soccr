@@ -4,12 +4,19 @@
   "version": "0.1.0",
   "main": "Gruntfile.js",
   "author": "YOUR NAME HERE",
+  "config": {
+    "webpack_src_dir": "blocks",
+    "output_path": "dist"
+  },
   "scripts" : {
-    "start" : "grunt default" ,
+    "default" : "grunt default" ,
     "readme" : "grunt readme",
-    "i18n" : "grunt i18n"
+    "i18n" : "grunt i18n",
+    "build": "wp-scripts build --webpack-copy-php --webpack-src-dir=$npm_package_config_webpack_src_dir --output-path=$npm_package_config_output_path",
+    "start": "wp-scripts start --webpack-copy-php --webpack-src-dir=$npm_package_config_webpack_src_dir --output-path=$npm_package_config_output_path"
   },
   "devDependencies": {
+    "@wordpress/scripts": "^23.5.0",
     "grunt": "~0.4.5",
     "grunt-wp-i18n": "~0.5.0",
     "grunt-wp-readme-to-markdown": "~1.0.0"

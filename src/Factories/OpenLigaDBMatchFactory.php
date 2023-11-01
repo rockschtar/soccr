@@ -1,19 +1,18 @@
 <?php
 
-namespace ClubfansUnited\Factories;
+namespace Rockschtar\WordPress\Soccr\Factories;
 
-use Carbon\Carbon;
-use ClubfansUnited\Models\OpenLigaDBGroup;
-use ClubfansUnited\Models\OpenLigaDBLocation;
-use ClubfansUnited\Models\OpenLigaDBMatch;
-use ClubfansUnited\Models\OpenLigaDBMatchResult;
-use ClubfansUnited\Models\OpenLigaDBTeam;
+
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBGroup;
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBLocation;
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBMatch;
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBMatchResult;
 
 class OpenLigaDBMatchFactory
 {
     public static function createFromJSON(\stdClass $match): OpenLigaDBMatch
     {
-        $dateTime = Carbon::parse($match->matchDateTimeUTC)->toDateTime();
+        $dateTime = \DateTime::createFromFormat(DATE_ATOM, $match->matchDateTimeUTC);
 
         $openLigaDBMatch = new OpenLigaDBMatch();
         $openLigaDBMatch->setDateTime($dateTime);

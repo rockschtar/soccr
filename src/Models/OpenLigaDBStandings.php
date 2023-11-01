@@ -1,7 +1,6 @@
 <?php
 
-namespace ClubfansUnited\Models;
-
+namespace Rockschtar\WordPress\Soccr\Models;
 class OpenLigaDBStandings
 {
     private OpenligaDBLeague $league;
@@ -27,7 +26,7 @@ class OpenLigaDBStandings
     }
 
     /**
-     * @return array
+     * @return OpenLigaDBStanding[]
      */
     public function getStandings(): array
     {

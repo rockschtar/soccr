@@ -1,13 +1,13 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
-  "name": "openligadb/group-matches",
+  "name": "soccr/openligadb-group-matches",
   "title": "OpenligaDB Spieltag",
-  "category": "openligadb",
+  "category": "soccr",
   "icon": "forms",
-  "description": "OpeneligaDB Spieltag",
-  "keywords": [ "OpenligaDB", "liga", "spieltag"],
-  "textdomain": "clubfans-united",
+  "description": "OpenligaDB Spieltag",
+  "keywords": [ "OpenligaDB", "liga", "spieltag", "soccr"],
+  "textdomain": "soccr",
   "attributes": {
     "leagueShortcut": {
       "type": "string",
