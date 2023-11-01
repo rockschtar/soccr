@@ -1,0 +1,42 @@
+.wp-block-openligadb-group-matches {
+    max-width: 700px !important;
+}
+
+.wp-block-openligadb-group-matches table {
+    display: table;
+}
+
+.wp-block-openligadb-group-matches .openligadb-group-matches-result {
+    text-align: center !important;
+}
+
+.wp-block-openligadb-group-matches .openligadb-group-matches-pagination-left {
+    text-align: left !important;
+}
+
+.wp-block-openligadb-group-matches .openligadb-group-matches-pagination-right {
+    text-align: right !important;
+}
+
+.wp-block-openligadb-group-matches .openligadb-group-matches-team-home {
+    text-align: right !important;
+}
+.wp-block-openligadb-group-matches .openligadb-group-matches-team-away {
+    text-align: left !important;
+}
+
+.wp-block-openligadb-group-matches .openligadb-group-matches-result {
+    font-weight: bold;
+}
+.wp-block-openligadb-group-matches  tr:nth-child(even) {
+    background: none !important;
+}
+
+.wp-block-openligadb-group-matches table, th, td {
+    border: none !important;
+}
+
+.wp-block-openligadb-group-matches .openligadb-group-matches-datetime {
+    color: #999;
+    text-align: left;
+}

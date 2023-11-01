@@ -1,0 +1,67 @@
+.wp-block-openligadb-standings {
+    max-width: 700px;
+}
+
+.wp-block-openligadb-standings td,
+.wp-block-openligadb-standings th,
+.wp-block-openligadb-standings tr:nth-child(even) {
+    text-align: revert;
+    background: revert;
+}
+
+.wp-block-openligadb-standings td {
+    text-align: left;
+}
+.wp-block-openligadb-standings th {
+    text-align: center;
+}
+
+.wp-block-openligadb-standings th.wp-block-openligadb-standings-headline {
+    text-align: left;
+}
+
+.wp-block-openligadb-standings .wp-block-openligadb-standings-position {
+    text-align: center;
+}
+
+.wp-block-openligadb-standings td.wp-block-openligadb-standings-goals-difference {
+    text-align: right;
+}
+
+.wp-block-openligadb-standings td.wp-block-openligadb-standings-wins,
+.wp-block-openligadb-standings td.wp-block-openligadb-standings-draws,
+.wp-block-openligadb-standings td.wp-block-openligadb-standings-looses,
+.wp-block-openligadb-standings td.wp-block-openligadb-standings-matches {
+    text-align: center;
+}
+
+.wp-block-openligadb-standings td.wp-block-openligadb-standings-points {
+    font-weight: bold;
+    text-align: center;
+}
+
+.wp-block-openligadb-standings td.wp-block-openligadb-standings-team {
+    text-align: left;
+}
+
+@media screen and (max-width: 580px) {
+    .wp-block-openligadb-standings .wp-block-openligadb-standings-wins,
+    .wp-block-openligadb-standings .wp-block-openligadb-standings-draws,
+    .wp-block-openligadb-standings .wp-block-openligadb-standings-looses {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .wp-block-openligadb-standings .wp-block-openligadb-standings-goals {
+        display: none;
+    }
+}
+
+
+
+
+
+
+
+

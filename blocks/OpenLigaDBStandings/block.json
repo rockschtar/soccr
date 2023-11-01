@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "openligadb/standings",
+  "title": "OpenligaDB Tabelle",
+  "category": "openligadb",
+  "icon": "forms",
+  "description": "OpeneligaDB Spieltag",
+  "keywords": [ "OpenligaDB", "tabelle", "spieltag"],
+  "textdomain": "clubfans-united",
+  "attributes": {
+    "leagueShortcut": {
+      "type": "string",
+      "default": "bl2"
+    },
+    "leagueSeason": {
+      "type": "number",
+      "default": 2021
+    },
+    "align": {
+      "type": "string",
+      "default": "center"
+    }
+  },
+  "supports": {
+    "align": true
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./style.css",
+  "style": "file:./style.scss"
+}

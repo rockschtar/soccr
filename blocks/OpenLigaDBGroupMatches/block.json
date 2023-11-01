@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "openligadb/group-matches",
+  "title": "OpenligaDB Spieltag",
+  "category": "openligadb",
+  "icon": "forms",
+  "description": "OpeneligaDB Spieltag",
+  "keywords": [ "OpenligaDB", "liga", "spieltag"],
+  "textdomain": "clubfans-united",
+  "attributes": {
+    "leagueShortcut": {
+      "type": "string",
+      "default": "bl2"
+    },
+    "leagueSeason": {
+      "type": "number",
+      "default": 2021
+    },
+    "defaultCurrentGroup": {
+      "type": "boolean",
+      "default": true
+    },
+    "groupOrderId": {
+      "type": "number",
+      "default": 1
+    },
+    "pagination": {
+      "type": "boolean",
+      "default": true
+    },
+    "align": {
+      "type": "string",
+      "default": "center"
+    },
+    "blockId": {
+      "type": "string"
+    }
+  },
+  "supports": {
+    "align": true
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./style.css",
+  "style": "file:./style.scss"
+}
