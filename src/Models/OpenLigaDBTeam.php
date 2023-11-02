@@ -106,7 +106,7 @@ class OpenLigaDBTeam implements JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize() : array
     {
         return [
             'teamId' => $this->getTeamId(),

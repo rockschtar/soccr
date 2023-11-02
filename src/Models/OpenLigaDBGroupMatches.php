@@ -23,33 +23,21 @@ class OpenLigaDBGroupMatches implements JsonSerializable
      */
     private array $matches;
 
-    /**
-     * @return string
-     */
     public function getLeagueShortcut(): string
     {
         return $this->leagueShortcut;
     }
 
-    /**
-     * @param string $leagueShortcut
-     */
     public function setLeagueShortcut(string $leagueShortcut): void
     {
         $this->leagueShortcut = $leagueShortcut;
     }
 
-    /**
-     * @return int
-     */
     public function getLeagueSeason(): int
     {
         return $this->leagueSeason;
     }
 
-    /**
-     * @param int $leagueSeason
-     */
     public function setLeagueSeason(int $leagueSeason): void
     {
         $this->leagueSeason = $leagueSeason;
@@ -64,36 +52,22 @@ class OpenLigaDBGroupMatches implements JsonSerializable
         );
     }
 
-    /**
-     * @return int
-     */
     public function getGroupCount(): int
     {
         return $this->groupCount;
     }
 
-    /**
-     * @param int $groupCount
-     * @return OpenLigaDBGroupMatches
-     */
     public function setGroupCount(int $groupCount): OpenLigaDBGroupMatches
     {
         $this->groupCount = $groupCount;
         return $this;
     }
 
-    /**
-     * @return OpenLigaDBGroup
-     */
     public function getGroup(): OpenLigaDBGroup
     {
         return $this->group;
     }
 
-    /**
-     * @param OpenLigaDBGroup $group
-     * @return OpenLigaDBGroupMatches
-     */
     public function setGroup(OpenLigaDBGroup $group): OpenLigaDBGroupMatches
     {
         $this->group = $group;
@@ -110,7 +84,6 @@ class OpenLigaDBGroupMatches implements JsonSerializable
 
     /**
      * @param OpenLigaDBMatch[] $matches
-     * @return OpenLigaDBGroupMatches
      */
     public function setMatches(array $matches): OpenLigaDBGroupMatches
     {
@@ -124,45 +97,27 @@ class OpenLigaDBGroupMatches implements JsonSerializable
         return $this;
     }
 
-    /**
-     * @return OpenLigaDBGroup|null
-     */
     public function getPreviousGroup(): ?OpenLigaDBGroup
     {
         return $this->previousGroup;
     }
 
-    /**
-     * @param OpenLigaDBGroup|null $previousGroup
-     * @return OpenLigaDBGroupMatches
-     */
-    public function setPreviousGroup(
-        ?OpenLigaDBGroup $previousGroup
-    ): OpenLigaDBGroupMatches {
+    public function setPreviousGroup(?OpenLigaDBGroup $previousGroup): OpenLigaDBGroupMatches {
         $this->previousGroup = $previousGroup;
         return $this;
     }
 
-    /**
-     * @return OpenLigaDBGroup|null
-     */
     public function getNextGroup(): ?OpenLigaDBGroup
     {
         return $this->nextGroup;
     }
 
-    /**
-     * @param OpenLigaDBGroup|null $nextGroup
-     * @return OpenLigaDBGroupMatches
-     */
-    public function setNextGroup(
-        ?OpenLigaDBGroup $nextGroup
-    ): OpenLigaDBGroupMatches {
+    public function setNextGroup(?OpenLigaDBGroup $nextGroup): OpenLigaDBGroupMatches {
         $this->nextGroup = $nextGroup;
         return $this;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize() : array
     {
         return [
             'leagueShortcut' => $this->getLeagueShortcut(),

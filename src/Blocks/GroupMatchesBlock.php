@@ -48,8 +48,10 @@ class GroupMatchesBlock extends Block
                 $blockIdInput = filter_input(
                     INPUT_GET,
                     'oldb-block-id',
-                    FILTER_SANITIZE_STRIPPED,
+                    FILTER_UNSAFE_RAW,
                 );
+
+				$blockIdInput = $blockIdInput !== null ? html_entity_decode($blockIdInput) : $blockIdInput;
 
                 if ($blockIdInput === $blockId) {
                     $groupOrderIdInput = filter_input(

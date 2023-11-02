@@ -90,7 +90,7 @@ abstract class Block
 
     private function pluginsUrl(string $url, string $path, string $plugin): string
     {
-        if (strpos($plugin, $this->absBlockDirectory()) !== false) {
+        if (str_contains($plugin, $this->absBlockDirectory())) {
             return home_url(str_replace('/web', '', $this->blockDirectory()) . '/' . $path);
         }
 

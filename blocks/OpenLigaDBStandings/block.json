@@ -3,10 +3,10 @@
   "apiVersion": 2,
   "name": "soccr/standings",
   "title": "OpenligaDB Tabelle",
-  "category": "openligadb",
+  "category": "soccr",
   "icon": "forms",
-  "description": "OpeneligaDB Spieltag",
-  "keywords": [ "OpenligaDB", "tabelle", "spieltag"],
+  "description": "OpenligaDB Tabelle",
+  "keywords": [ "OpenligaDB", "tabelle", "spieltag", "soccr"],
   "textdomain": "soccr",
   "attributes": {
     "leagueShortcut": {

@@ -11,6 +11,6 @@ class PluginController
 
     private function __construct() {
         BlockEditorController::init();
-        StandingsBlock::init();
+ 		RestController::init();
     }
 }
