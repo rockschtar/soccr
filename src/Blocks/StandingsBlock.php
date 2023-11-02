@@ -3,9 +3,7 @@
 namespace Rockschtar\WordPress\Soccr\Blocks;
 
 use Exception;
-
 use Rockschtar\WordPress\Soccr\Api\OpenLigaDBApi;
-
 
 class StandingsBlock extends Block
 {
@@ -16,6 +14,7 @@ class StandingsBlock extends Block
             'leagueSeason' => 0,
             'align' => 'left',
         ];
+
         $parsedAttributes = wp_parse_args($attributes, $defaultAttributes);
         $leagueShortcut = $parsedAttributes['leagueShortcut'];
         $leagueSeason = $parsedAttributes['leagueSeason'];
@@ -34,7 +33,7 @@ class StandingsBlock extends Block
                 return '<p>' .
                     __(
                         'Fehler: Spieltag, Liga oder Saison nicht gefunden',
-                        'clubfans-united',
+                        'soccr',
                     ) .
                     '</p>';
             }
@@ -45,32 +44,19 @@ class StandingsBlock extends Block
         }
 
         $additionalClasses = [];
-        $additionalClasses[] = $openLigaDBStandings
-            ->getLeague()
-            ->getLeagueShortcut();
+        $additionalClasses[] = $openLigaDBStandings->getLeague()->getLeagueShortcut();
         $additionalClasses[] =
             $openLigaDBStandings->getLeague()->getLeagueShortcut() .
             '-' .
             $openLigaDBStandings->getLeague()->getLeagueSeason();
 
-        $cssClasses = $this->blockClasses(
-            $parsedAttributes,
-            $additionalClasses,
-        );
+        $cssClasses = $this->blockClasses($parsedAttributes, $additionalClasses);
 
-        $leagueSeasonDisplay = $openLigaDBStandings
-            ->getLeague()
-            ->getLeagueSeasonDisplay();
+        $leagueSeasonDisplay = $openLigaDBStandings->getLeague()->getLeagueSeasonDisplay();
 
-        $headline = sprintf(
-            __('Tabelle | %s', 'clubfans-united'),
-            $leagueSeasonDisplay,
-        );
-        $headline = apply_filters(
-            'openligab_standings_headline',
-            $headline,
-            $openLigaDBStandings,
-        );
+        $headline = sprintf(__('Tabelle | %s', 'clubfans-united'), $leagueSeasonDisplay);
+
+        $headline = apply_filters('openligab_standings_headline', $headline, $openLigaDBStandings);
 
         $headlineHTML = "<h1>$headline</h1>";
         $headlineHTML = apply_filters(

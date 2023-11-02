@@ -4,7 +4,6 @@ namespace Rockschtar\WordPress\Soccr\Controller;
 
 use Rockschtar\WordPress\Soccr\Traits\Singelton;
 
-
 class OpenLigaDBController
 {
     use Singelton;

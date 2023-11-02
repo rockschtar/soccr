@@ -102,7 +102,8 @@ class OpenLigaDBGroupMatches implements JsonSerializable
         return $this->previousGroup;
     }
 
-    public function setPreviousGroup(?OpenLigaDBGroup $previousGroup): OpenLigaDBGroupMatches {
+    public function setPreviousGroup(?OpenLigaDBGroup $previousGroup): OpenLigaDBGroupMatches
+    {
         $this->previousGroup = $previousGroup;
         return $this;
     }
@@ -112,12 +113,13 @@ class OpenLigaDBGroupMatches implements JsonSerializable
         return $this->nextGroup;
     }
 
-    public function setNextGroup(?OpenLigaDBGroup $nextGroup): OpenLigaDBGroupMatches {
+    public function setNextGroup(?OpenLigaDBGroup $nextGroup): OpenLigaDBGroupMatches
+    {
         $this->nextGroup = $nextGroup;
         return $this;
     }
 
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [
             'leagueShortcut' => $this->getLeagueShortcut(),

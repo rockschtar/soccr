@@ -51,7 +51,7 @@ class GroupMatchesBlock extends Block
                     FILTER_UNSAFE_RAW,
                 );
 
-				$blockIdInput = $blockIdInput !== null ? html_entity_decode($blockIdInput) : $blockIdInput;
+                $blockIdInput = $blockIdInput !== null ? html_entity_decode($blockIdInput) : $blockIdInput;
 
                 if ($blockIdInput === $blockId) {
                     $groupOrderIdInput = filter_input(
@@ -81,8 +81,8 @@ class GroupMatchesBlock extends Block
             if ($e->getCode() === 404) {
                 return '<p>' .
                     __(
-                        'Error. League, Season or GroupOrderId not found',
-                        'clubfans-united',
+                        'Fehler, Spieltag, Liga oder Saison nicht gefunden',
+                        'soccr',
                     ) .
                     '</p>';
             }
@@ -110,7 +110,7 @@ class GroupMatchesBlock extends Block
                     '<a href="' .
                     $paginationPreviousUrl .
                     '">' .
-                    __('Vorheriger Spieltag', 'clubfans-united') .
+                    __('Vorheriger Spieltag', 'soccr') .
                     '</a>';
             }
 
@@ -129,7 +129,7 @@ class GroupMatchesBlock extends Block
                     '<a href="' .
                     $paginationNextUrl .
                     '">' .
-                    __('Nächster Spieltag', 'clubfans-united') .
+                    __('Nächster Spieltag', 'soccr') .
                     '</a>';
             }
         }
@@ -137,11 +137,10 @@ class GroupMatchesBlock extends Block
         $leagueSeasonDisplay = $openLigaDBGroupMatches->getLeagueSeasonDisplay();
         $group = $openLigaDBGroupMatches->getGroup();
         $groupName = $openLigaDBGroupMatches->getGroup()->getGroupName();
-        $headline = sprintf(
-            __('%s | Saison %s', 'soccr'),
-            $groupName,
-            $leagueSeasonDisplay,
-        );
+
+        /* translators: %1$s is the group name, %2$s is the league season */
+        $headline = sprintf(__('%1$s | Saison %2$s', 'soccr'), $groupName, $leagueSeasonDisplay);
+
         $headline = apply_filters(
             'soccr_group_matchtes_headline',
             $headline,
@@ -189,7 +188,7 @@ class GroupMatchesBlock extends Block
         $html .= '</table></div>';
 
         return apply_filters(
-            'openligab_group_matches_html',
+            'soccr_group_matches_html',
             $html,
             $openLigaDBGroupMatches,
         );

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<ruleset name="RockschtarCodingStandardWP">
+    <rule ref="PHPCompatibilityWP"/>
+    <file>src</file>
+
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+    <rule ref="PSR12">
+        <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
+    </rule>
+    <rule name="PSR2.Methods.MethodDeclaration" type="suggested">
+        <properties>
+            <property name="camel_caps" value="true"/>
+        </properties>
+    </rule>
+    <rule name="PSR2.Classes.ClassDeclaration" type="suggested">
+        <properties>
+            <property name="camel_caps" value="true"/>
+        </properties>
+    </rule>
+    <rule name="PSR2.Variables.VariableDeclaration" type="suggested">
+        <properties>
+            <property name="camel_caps" value="true"/>
+        </properties>
+    </rule>
+    <rule name="Squiz.NamingConventions.ValidVariableName.NotCamelCaps" type="error">
+        <properties>
+            <property name="valid" value="true"/>
+        </properties>
+    </rule>
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <properties>
+            <!-- Value: replace the function, class, and variable prefixes used. Separate multiple prefixes with a comma. -->
+            <property name="prefixes" type="array" value="Rockschtar,soccr,openligadb"/>
+
+        </properties>
+    </rule>
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <!-- Value: replace the text domain used. -->
+            <property name="text_domain" type="array" value="soccr"/>
+        </properties>
+    </rule>
+    <ini name="error_reporting" value="E_ALL &#38; ~E_DEPRECATED" />
+</ruleset>

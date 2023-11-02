@@ -1,6 +1,7 @@
 <?php
 
 namespace Rockschtar\WordPress\Soccr\Traits;
+
 trait Singelton
 {
     public static function &init(): ?static

@@ -2,7 +2,6 @@
 
 namespace Rockschtar\WordPress\Soccr\Factories;
 
-
 use Rockschtar\WordPress\Soccr\Models\OpenLigaDBGroup;
 use Rockschtar\WordPress\Soccr\Models\OpenLigaDBLocation;
 use Rockschtar\WordPress\Soccr\Models\OpenLigaDBMatch;

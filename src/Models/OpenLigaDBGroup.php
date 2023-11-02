@@ -81,7 +81,7 @@ class OpenLigaDBGroup implements JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [
             'groupName' => $this->getGroupName(),

@@ -9,8 +9,9 @@ class BlockEditorController
 {
     use Singelton;
 
-    private function __construct() {
-        add_filter('block_categories_all', $this->addBlockCategories(...), 10 ,1);
+    private function __construct()
+    {
+        add_filter('block_categories_all', $this->addBlockCategories(...), 10, 1);
 
         GroupMatchesBlock::init();
     }
@@ -24,5 +25,4 @@ class BlockEditorController
             ],
         ]);
     }
-
 }

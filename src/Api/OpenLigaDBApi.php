@@ -56,7 +56,11 @@ class OpenLigaDBApi
      * @throws RemoteRequestException
      * @throws JsonException
      */
-    public static function getGroupMatches(string $leagueShortcut, int $leagueSeason, int $groutOrderId): OpenLigaDBGroupMatches {
+    public static function getGroupMatches(
+        string $leagueShortcut,
+        int $leagueSeason,
+        int $groutOrderId
+    ): OpenLigaDBGroupMatches {
         $cacheKey = "cu-openligadb-group-matches-$leagueShortcut-$leagueSeason-$groutOrderId";
 
         $openLigaDBGroupMatches = wp_cache_get($cacheKey, 'openligadb');
@@ -83,17 +87,17 @@ class OpenLigaDBApi
 
         $currentGroupIndex = array_search($currentGroup, $openLigaDBGroups);
 
-        if($currentGroupIndex === false) {
+        if ($currentGroupIndex === false) {
             throw new RuntimeException('Invalid Group');
         }
 
-        if($currentGroupIndex === 0) {
+        if ($currentGroupIndex === 0) {
             $previousGroup = null;
         } else {
             $previousGroup = $openLigaDBGroups[$currentGroupIndex - 1];
         }
 
-        if($currentGroupIndex === count($openLigaDBGroups) - 1) {
+        if ($currentGroupIndex === count($openLigaDBGroups) - 1) {
             $nextGroup = null;
         } else {
             $nextGroup = $openLigaDBGroups[$currentGroupIndex + 1];
@@ -129,7 +133,8 @@ class OpenLigaDBApi
      * @throws RemoteRequestException
      * @throws JsonException
      */
-    public static function getMatches(string $leagueShortcut, int $leagueSeason, ?int $groupOrderId = null): array {
+    public static function getMatches(string $leagueShortcut, int $leagueSeason, ?int $groupOrderId = null): array
+    {
         $cacheKey = "cu-openligadb-matches-$leagueShortcut-$leagueSeason-$groupOrderId";
 
         $openLigaDBMatches = wp_cache_get($cacheKey, 'openligadb');
@@ -164,8 +169,7 @@ class OpenLigaDBApi
         }
 
         $sortByTimestamp = static function (OpenLigaDBMatch $match1, OpenLigaDBMatch $match2) {
-
-            if($match1->getDateTime()->getTimestamp() === $match2->getDateTime()->getTimestamp()) {
+            if ($match1->getDateTime()->getTimestamp() === $match2->getDateTime()->getTimestamp()) {
                 return 0;
             }
 
@@ -185,7 +189,8 @@ class OpenLigaDBApi
      * @throws JsonException
      * @throws RemoteRequestException
      */
-    public static function getCurrentGroup(string $leagueShortcut): OpenLigaDBGroup {
+    public static function getCurrentGroup(string $leagueShortcut): OpenLigaDBGroup
+    {
         $cacheKey = "soccr-openligadb-current-group-$leagueShortcut";
 
         $openLigaDBGroup = wp_cache_get($cacheKey, 'openligadb');
@@ -218,7 +223,8 @@ class OpenLigaDBApi
      * @throws RemoteRequestException
      * @throws JsonException
      */
-    public static function getAvailableGroups(string $leagueShortcut, string $leagueSeason): array {
+    public static function getAvailableGroups(string $leagueShortcut, string $leagueSeason): array
+    {
         $cacheKey = "soccr-openligadb-available-groups-$leagueShortcut-$leagueSeason";
 
         $openLigaDBGroups = wp_cache_get($cacheKey, 'openligadb');
@@ -299,7 +305,8 @@ class OpenLigaDBApi
      * @throws RemoteRequestException
      * @throws JsonException
      */
-    public static function getAvailableTeams(string $leagueShortcut, int $leagueSeason): array {
+    public static function getAvailableTeams(string $leagueShortcut, int $leagueSeason): array
+    {
         $cacheKey = "soccr-openligadb-available-teams-$leagueShortcut-$leagueSeason";
 
         $openLigaDBTeams = wp_cache_get($cacheKey);
@@ -337,7 +344,8 @@ class OpenLigaDBApi
      * @throws RemoteRequestException
      * @throws JsonException
      */
-    public static function queryLeagues(OpenLigaDBLeagueQuery $leagueQuery): array {
+    public static function queryLeagues(OpenLigaDBLeagueQuery $leagueQuery): array
+    {
         $leagues = self::getAvailableLeagues();
 
         $leagues = array_filter($leagues, static function (OpenligaDBLeague $league) use ($leagueQuery) {
@@ -357,8 +365,7 @@ class OpenLigaDBApi
         });
 
         $sortByLeagueName = static function (OpenligaDBLeague $league1, OpenligaDBLeague $league2) {
-
-            if($league1->getLeagueName() === $league2->getLeagueName()) {
+            if ($league1->getLeagueName() === $league2->getLeagueName()) {
                 return 0;
             }
 
@@ -374,7 +381,8 @@ class OpenLigaDBApi
      * @throws RemoteRequestException
      * @throws JsonException
      */
-    public static function getCurrentLeagueSeason(string $leagueShortcut): OpenligaDBLeague {
+    public static function getCurrentLeagueSeason(string $leagueShortcut): OpenligaDBLeague
+    {
         $cacheKey = "soccr-openligadb-current-league-season-$leagueShortcut";
 
         $openLigaDBLeagues = wp_cache_get($cacheKey, 'openligadb');
@@ -385,16 +393,18 @@ class OpenLigaDBApi
 
         $openLigaDBLeagues = self::getAvailableLeagues();
 
-        $openLigaDBLeaguesByShortcut =array_filter($openLigaDBLeagues, static function (OpenligaDBLeague $league) use ($leagueShortcut) {
-            return $league->getLeagueShortcut() === $leagueShortcut;
-        });
+        $openLigaDBLeaguesByShortcut = array_filter(
+            $openLigaDBLeagues,
+            static function (OpenligaDBLeague $league) use ($leagueShortcut) {
+                return $league->getLeagueShortcut() === $leagueShortcut;
+            }
+        );
 
         if (count($openLigaDBLeaguesByShortcut) === 0) {
             throw new RuntimeException('LeagueShortcut not found');
         }
         $sortByLeagueSeason = static function (OpenligaDBLeague $league1, OpenligaDBLeague $league2) {
-
-            if($league1->getLeagueSeason() === $league2->getLeagueSeason()) {
+            if ($league1->getLeagueSeason() === $league2->getLeagueSeason()) {
                 return 0;
             }
 
@@ -419,12 +429,16 @@ class OpenLigaDBApi
      * @throws RemoteRequestException
      * @throws JsonException
      */
-    public static function getLeagueSeason(string $leagueShortcut, int $leagueSeason): OpenligaDBLeague {
+    public static function getLeagueSeason(string $leagueShortcut, int $leagueSeason): OpenligaDBLeague
+    {
         $openLigaDBLeagues = self::getAvailableLeagues();
 
-        $openLigaDBLeague = array_filter($openLigaDBLeagues, static function (OpenligaDBLeague $league) use ($leagueShortcut, $leagueSeason) {
-            return $league->getLeagueShortcut() === $leagueShortcut && $league->getLeagueSeason() === $leagueSeason;
-        });
+        $openLigaDBLeague = array_filter(
+            $openLigaDBLeagues,
+            static function (OpenligaDBLeague $league) use ($leagueShortcut, $leagueSeason) {
+                return $league->getLeagueShortcut() === $leagueShortcut && $league->getLeagueSeason() === $leagueSeason;
+            }
+        );
 
         $openLigaDBLeague = array_shift($openLigaDBLeague);
 
@@ -439,7 +453,8 @@ class OpenLigaDBApi
      * @throws RemoteRequestException
      * @throws JsonException
      */
-    public static function getCurrentGroupMatches(string $leagueShortcut): OpenLigaDBGroupMatches {
+    public static function getCurrentGroupMatches(string $leagueShortcut): OpenLigaDBGroupMatches
+    {
         $openLigaDBLeague = self::getCurrentLeagueSeason($leagueShortcut);
         $group = self::getCurrentGroup($leagueShortcut);
         return self::getGroupMatches(
@@ -453,7 +468,8 @@ class OpenLigaDBApi
      * @throws RemoteRequestException
      * @throws JsonException
      */
-    public static function getStandings(string $leagueShortcut, int $leagueSeason): OpenLigaDBStandings {
+    public static function getStandings(string $leagueShortcut, int $leagueSeason): OpenLigaDBStandings
+    {
         $cacheKey = "soccr-openligadb-standings-$leagueShortcut-$leagueSeason";
 
         $url = "https://api.openligadb.de/getbltable/$leagueShortcut/$leagueSeason";
