@@ -2,7 +2,7 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
   "name": "soccr/standings",
-  "title": "OpenligaDB Tabelle",
+  "title": "Soccr Tabelle",
   "category": "soccr",
   "icon": "forms",
   "description": "OpenligaDB Tabelle",

@@ -53,6 +53,54 @@ class OpenLigaDBApi
     }
 
     /**
+     * @throws \JsonException
+     * @throws \Rockschtar\WordPress\Soccr\Exceptions\RemoteRequestException
+     */
+    public static function getNextMatchByTeamid(OpenLigaDBMatchQuery $query) : OpenLigaDBMatch {
+        $matches = self::matchQuery($query);
+
+        $matches = array_filter($matches, static function (OpenLigaDBMatch $match) {
+            return $match->getMatchIsFinished() === false;
+        });
+
+        $sortByTimestamp = static function (OpenLigaDBMatch $match1, OpenLigaDBMatch $match2) {
+            if ($match1->getDateTime()->getTimestamp() === $match2->getDateTime()->getTimestamp()) {
+                return 0;
+            }
+
+            return $match1->getDateTime()->getTimestamp() > $match2->getDateTime()->getTimestamp() ? 1 : -1;
+        };
+
+        usort($matches, $sortByTimestamp);
+
+        return array_shift($matches);
+    }
+
+    /**
+     * @throws \JsonException
+     * @throws \Rockschtar\WordPress\Soccr\Exceptions\RemoteRequestException
+     */
+    public static function getLastMatchByTeamId(OpenLigaDBMatchQuery $query) : OpenLigaDBMatch {
+        $matches = self::matchQuery($query);
+
+        $matches = array_filter($matches, static function (OpenLigaDBMatch $match) {
+            return $match->getMatchIsFinished() === true;
+        });
+
+        $sortByTimestamp = static function (OpenLigaDBMatch $match1, OpenLigaDBMatch $match2) {
+            if ($match1->getDateTime()->getTimestamp() === $match2->getDateTime()->getTimestamp()) {
+                return 0;
+            }
+
+            return $match1->getDateTime()->getTimestamp() > $match2->getDateTime()->getTimestamp() ? -1 : 1;
+        };
+
+        usort($matches, $sortByTimestamp);
+
+        return array_shift($matches);
+    }
+
+    /**
      * @throws RemoteRequestException
      * @throws JsonException
      */
@@ -83,7 +131,6 @@ class OpenLigaDBApi
         if ($currentGroup === null) {
             throw new RuntimeException('Invalid Group');
         }
-
 
         $currentGroupIndex = array_search($currentGroup, $openLigaDBGroups);
 

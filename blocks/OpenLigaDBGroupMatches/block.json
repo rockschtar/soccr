@@ -1,8 +1,8 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
-  "name": "soccr/openligadb-group-matches",
-  "title": "OpenligaDB Spieltag",
+  "name": "soccr/group-matches",
+  "title": "Soccr Spieltag",
   "category": "soccr",
   "icon": "forms",
   "description": "OpenligaDB Spieltag",
