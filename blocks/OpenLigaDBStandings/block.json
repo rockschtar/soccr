@@ -20,6 +20,10 @@
     "align": {
       "type": "string",
       "default": "center"
+    },
+    "hideTitle": {
+      "type": "boolean",
+      "default": false
     }
   },
   "supports": {

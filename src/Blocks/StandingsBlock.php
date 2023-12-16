@@ -13,11 +13,13 @@ class StandingsBlock extends Block
             'leagueShortcut' => '',
             'leagueSeason' => 0,
             'align' => 'left',
+            'hideTitle' => false,
         ];
 
         $parsedAttributes = wp_parse_args($attributes, $defaultAttributes);
         $leagueShortcut = $parsedAttributes['leagueShortcut'];
         $leagueSeason = $parsedAttributes['leagueSeason'];
+        $hideTitle = $parsedAttributes['hideTitle'];
 
         try {
             $openLigaDBStandings = OpenLigaDBApi::getStandings(
@@ -55,10 +57,20 @@ class StandingsBlock extends Block
         $leagueSeasonDisplay = $openLigaDBStandings->getLeague()->getLeagueSeasonDisplay();
 
         $headline = sprintf(__('Tabelle | %s', 'clubfans-united'), $leagueSeasonDisplay);
-
         $headline = apply_filters('openligab_standings_headline', $headline, $openLigaDBStandings);
 
-        $headlineHTML = "<h1>$headline</h1>";
+        $headlineHTML = <<<HTML
+                <tr>
+                    <th colspan="9" class="{$this->blockClass('headline')}">
+                        <h1>$headline</h1>
+                    </th>
+                </tr>
+           HTML;
+
+        if($hideTitle) {
+            $headlineHTML = '';
+        }
+
         $headlineHTML = apply_filters(
             'openligab_standings_headline_html',
             $headlineHTML,
@@ -99,9 +111,11 @@ class StandingsBlock extends Block
             $standingsHTMLBody .= <<<HTML
                 <tr class="{$this->blockClass('row')} {$this->blockClass('team-' . $openLigaDBStanding->getTeam()->getTeamId())}">
                     <td class="{$this->blockClass('position')} {$this->blockClass('position')}-$standingsPosition">{$standingsPosition}</td>
-                    <td class="{$this->blockClass(
-                'team',
-            )}">{$openLigaDBStanding->getTeam()->getTeamName()}</td>
+                    <td class="{$this->blockClass('team',)}">
+                    <span class="{$this->blockClass('team-name')}">{$openLigaDBStanding->getTeam()->getTeamName()}</span>
+                    <span class="{$this->blockClass('team-shortname')}">{$openLigaDBStanding->getTeam()->getShortName()}</span>
+                    </td>
+                    
                     <td class="{$this->blockClass(
                 'matches',
             )}">{$openLigaDBStanding->getMatches()}</td>

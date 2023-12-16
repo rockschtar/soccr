@@ -1,42 +1,45 @@
-.wp-block-openligadb-group-matches {
-    max-width: 700px !important;
+.wp-block-soccr-group-matches {
+    max-width: 700px;
 }
 
-.wp-block-openligadb-group-matches table {
+.wp-block-soccr-group-matches table {
     display: table;
 }
 
-.wp-block-openligadb-group-matches .openligadb-group-matches-result {
-    text-align: center !important;
-}
-
-.wp-block-openligadb-group-matches .openligadb-group-matches-pagination-left {
-    text-align: left !important;
-}
-
-.wp-block-openligadb-group-matches .openligadb-group-matches-pagination-right {
-    text-align: right !important;
-}
-
-.wp-block-openligadb-group-matches .openligadb-group-matches-team-home {
-    text-align: right !important;
-}
-.wp-block-openligadb-group-matches .openligadb-group-matches-team-away {
-    text-align: left !important;
-}
-
-.wp-block-openligadb-group-matches .openligadb-group-matches-result {
+.wp-block-soccr-group-matches .wp-block-soccr-group-matches-result {
+    text-align: center;
     font-weight: bold;
 }
-.wp-block-openligadb-group-matches  tr:nth-child(even) {
-    background: none !important;
-}
 
-.wp-block-openligadb-group-matches table, th, td {
-    border: none !important;
-}
-
-.wp-block-openligadb-group-matches .openligadb-group-matches-datetime {
-    color: #999;
+.wp-block-soccr-group-matches .wp-block-soccr-group-matches-pagination-left {
     text-align: left;
+}
+
+.wp-block-soccr-group-matches .wp-block-soccr-group-matches-pagination-right {
+    text-align: right;
+}
+
+.wp-block-soccr-group-matches .wp-block-soccr-group-matches-team-home {
+    text-align: right;
+}
+.wp-block-soccr-group-matches .wp-block-soccr-group-matches-team-away {
+    text-align: left;
+}
+
+.wp-block-soccr-group-matches .wp-block-soccr-group-matches-team-name {
+    display: block;
+}
+
+.wp-block-soccr-group-matches .wp-block-soccr-group-matches-team-shortname {
+    display: none;
+}
+
+@media screen and (max-width: 580px) {
+    .wp-block-soccr-group-matches .wp-block-soccr-group-matches-team-name {
+        display: none;
+    }
+
+    .wp-block-soccr-group-matches .wp-block-soccr-group-matches-team-shortname {
+        display: block;
+    }
 }

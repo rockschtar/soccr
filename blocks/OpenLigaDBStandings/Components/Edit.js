@@ -1,5 +1,5 @@
 import { InspectorControls } from '@wordpress/block-editor';
-import { Panel, PanelBody, TextControl } from '@wordpress/components';
+import { Panel, PanelBody, TextControl, CheckboxControl } from '@wordpress/components';
 import { default as ServerSideRender } from '@wordpress/server-side-render';
 
 const Edit = (props) => {
@@ -24,6 +24,12 @@ const Edit = (props) => {
                                  onChange={(leagueSeason) => {
                                      setAttributes({ leagueSeason: parseInt(leagueSeason) });
                                  }}
+                    />
+                    <CheckboxControl key={'openligadb-standings-hide-title'}
+                                     label="Hide Title"
+                                     onChange={(hideTitle) => {
+                                         setAttributes({ hideTitle: hideTitle});
+                                     }}
                     />
                 </PanelBody>
             </Panel>

@@ -1,4 +1,3 @@
-
 {
   "name": "soccr-reloaded",
   "version": "0.1.0",
@@ -8,15 +7,17 @@
     "webpack_src_dir": "blocks",
     "output_path": "dist"
   },
-  "scripts" : {
-    "default" : "grunt default" ,
-    "readme" : "grunt readme",
-    "i18n" : "grunt i18n",
+  "scripts": {
+    "default": "grunt default",
+    "readme": "grunt readme",
+    "i18n": "grunt i18n",
     "build": "wp-scripts build --webpack-copy-php --webpack-src-dir=$npm_package_config_webpack_src_dir --output-path=$npm_package_config_output_path",
-    "start": "wp-scripts start --webpack-copy-php --webpack-src-dir=$npm_package_config_webpack_src_dir --output-path=$npm_package_config_output_path"
+    "start": "wp-scripts start --webpack-copy-php --webpack-src-dir=$npm_package_config_webpack_src_dir --output-path=$npm_package_config_output_path",
+    "packages-update": "wp-scripts packages-update --dist-tag=wp-6.4"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^23.5.0",
+    "@wordpress/components": "^25.8.13",
+    "@wordpress/scripts": "^26.13.13",
     "grunt": "~0.4.5",
     "grunt-wp-i18n": "~0.5.0",
     "grunt-wp-readme-to-markdown": "~1.0.0"

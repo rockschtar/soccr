@@ -34,6 +34,11 @@ abstract class Block
         return home_url(str_replace('/web', '', $this->blockDirectory()));
     }
 
+    private function distUrl(): string
+    {
+        return SOCCR_PLUGIN_URL . '/' . $this->blockDirectory();
+    }
+
     final public function blockClasses(
         array $attributes = [],
         array $additionalClasses = []
@@ -75,9 +80,10 @@ abstract class Block
             $assets = include $this->absBlockDirectory() . DIRECTORY_SEPARATOR . 'index.asset.php';
             $handle = sanitize_key(strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', get_class($this))));
 
+
             wp_register_style(
                 $handle,
-                $this->blockUrl() . '/style-index.css',
+                $this->distUrl() . '/style-index.css',
                 $assets['version']
             );
 

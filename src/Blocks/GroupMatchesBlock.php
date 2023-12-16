@@ -160,29 +160,44 @@ class GroupMatchesBlock extends Block
 
         $currentMatchTimestamp = null;
 
+
         foreach ($openLigaDBGroupMatches->getMatches() as $match) {
             if (
                 $currentMatchTimestamp !== $match->getDateTime()->getTimestamp()
             ) {
                 $currentMatchTimestamp = $match->getDateTime()->getTimestamp();
                 $matchDateTimeString = DateFormat::toWordPress($match->getDateTime());
-                $html .= "<tr><td colspan='3' class='openligadb-group-matches-datetime'>$matchDateTimeString</td></tr>";
+                $html .= <<<HTML
+                    <tr>
+                        <td colspan='3' class="{$this->blockClass('datetime')}">$matchDateTimeString</td>
+                    </tr>
+                HTML;
             }
 
-            $html .= '<tr class="openligadb-group-matches-row">';
-            $html .= "<td class='openligadb-group-matches-team-home'>{$match->getTeam1()->getTeamName()}</td>";
-            $html .= "<td class='openligadb-group-matches-result'>{$match->getResultByType(
-                2,
-            )}</td>";
-            $html .= "<td class='openligadb-group-matches-team-away'>{$match->getTeam2()->getTeamName()}</td>";
-            $html .= '</tr>';
+            $html .= <<<HTML
+                <tr class="{$this->blockClass('row')}">
+                    <td class='{$this->blockClass('team-home')}'>
+                        <span class="{$this->blockClass('team-name')}">{$match->getTeam1()->getTeamName()}</span>
+                        <span class="{$this->blockClass('team-shortname')}">{$match->getTeam1()->getShortName()}</span>                     
+                    </td>
+                    <td class="{$this->blockClass('result')}">{$match->getResultByType(2,)}</td>
+                    <td class="{$this->blockClass('team-away')}">
+                        <span class="{$this->blockClass('team-name')}">{$match->getTeam2()->getTeamName()}</span>
+                        <span class="{$this->blockClass('team-shortname')}">{$match->getTeam2()->getShortName()}</span>
+                    </td>
+                </tr>
+            HTML;
+
         }
 
         if ($parsedAttributes['pagination']) {
-            $html .= '<tr>';
-            $html .= "<td colspan='2' class='openligadb-group-matches-pagination-left'>$paginationPreviousHref</td>";
-            $html .= "<td class='openligadb-group-matches-pagination-right'>$paginationNextHref</td>";
-            $html .= '</tr>';
+            $html .= <<<HTML
+                <tr>
+                    <td colspan='2' class='{$this->blockClass('pagination-left')}'>$paginationPreviousHref</td>
+                    <td class='{$this->blockClass('pagination-right')}'>$paginationNextHref</td>
+                </tr>
+            HTML;
+
         }
 
         $html .= '</table></div>';

@@ -1,59 +1,79 @@
-.wp-block-openligadb-standings {
+.wp-block-soccr-standings {
     max-width: 700px;
 }
 
-.wp-block-openligadb-standings td,
-.wp-block-openligadb-standings th,
-.wp-block-openligadb-standings tr:nth-child(even) {
+.peterpan {
+    color: red;
+}
+
+.wp-block-soccr-standings td,
+.wp-block-soccr-standings th,
+.wp-block-soccr-standings tr:nth-child(even) {
     text-align: revert;
     background: revert;
 }
 
-.wp-block-openligadb-standings td {
+.wp-block-soccr-standings td {
     text-align: left;
 }
-.wp-block-openligadb-standings th {
+.wp-block-soccr-standings th {
     text-align: center;
 }
 
-.wp-block-openligadb-standings th.wp-block-openligadb-standings-headline {
+.wp-block-soccr-standings th.wp-block-soccr-standings-headline {
     text-align: left;
 }
 
-.wp-block-openligadb-standings .wp-block-openligadb-standings-position {
+.wp-block-soccr-standings .wp-block-soccr-standings-position {
     text-align: center;
 }
 
-.wp-block-openligadb-standings td.wp-block-openligadb-standings-goals-difference {
+.wp-block-soccr-standings td.wp-block-soccr-standings-goals-difference {
     text-align: right;
 }
 
-.wp-block-openligadb-standings td.wp-block-openligadb-standings-wins,
-.wp-block-openligadb-standings td.wp-block-openligadb-standings-draws,
-.wp-block-openligadb-standings td.wp-block-openligadb-standings-looses,
-.wp-block-openligadb-standings td.wp-block-openligadb-standings-matches {
+.wp-block-soccr-standings td.wp-block-soccr-standings-wins,
+.wp-block-soccr-standings td.wp-block-soccr-standings-draws,
+.wp-block-soccr-standings td.wp-block-soccr-standings-looses,
+.wp-block-soccr-standings td.wp-block-soccr-standings-matches {
     text-align: center;
 }
 
-.wp-block-openligadb-standings td.wp-block-openligadb-standings-points {
+.wp-block-soccr-standings td.wp-block-soccr-standings-points {
     font-weight: bold;
     text-align: center;
 }
 
-.wp-block-openligadb-standings td.wp-block-openligadb-standings-team {
+.wp-block-soccr-standings td.wp-block-soccr-standings-team {
     text-align: left;
 }
 
+.wp-block-soccr-standings .wp-block-soccr-standings-team .wp-block-soccr-standings-team-name {
+    display: block;
+}
+
+.wp-block-soccr-standings .wp-block-soccr-standings-team .wp-block-soccr-standings-team-shortname {
+    display: none;
+}
+
 @media screen and (max-width: 580px) {
-    .wp-block-openligadb-standings .wp-block-openligadb-standings-wins,
-    .wp-block-openligadb-standings .wp-block-openligadb-standings-draws,
-    .wp-block-openligadb-standings .wp-block-openligadb-standings-looses {
+    .wp-block-soccr-standings .wp-block-soccr-standings-team .wp-block-soccr-standings-team-name {
+        display: none;
+    }
+
+    .wp-block-soccr-standings .wp-block-soccr-standings-team .wp-block-soccr-standings-team-shortname {
+        display: block;
+    }
+
+    .wp-block-soccr-standings .wp-block-soccr-standings-wins,
+    .wp-block-soccr-standings .wp-block-soccr-standings-draws,
+    .wp-block-soccr-standings .wp-block-soccr-standings-looses {
         display: none;
     }
 }
 
 @media screen and (max-width: 520px) {
-    .wp-block-openligadb-standings .wp-block-openligadb-standings-goals {
+    .wp-block-soccr-standings .wp-block-soccr-standings-goals {
         display: none;
     }
 }
