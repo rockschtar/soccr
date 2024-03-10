@@ -1,0 +1,16 @@
+{
+    "name": "rockschtar/soccr",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Rockschtar\\WordPress\\Soccr\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Stefan Helmer"
+        }
+    ],
+    "require": {}
+}
