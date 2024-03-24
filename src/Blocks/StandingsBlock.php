@@ -27,8 +27,12 @@ class StandingsBlock extends Block
                 $leagueSeason,
             );
         } catch (Exception $e) {
+            if (is_admin()) {
+                $detailedMessage = $e->getMessage();
+            }
+
             if (defined('WP_DEBUG') && true === WP_DEBUG) {
-                return $e->getMessage();
+                $detailedMessage = $e->getMessage();
             }
 
             if ($e->getCode() === 404) {
@@ -56,7 +60,7 @@ class StandingsBlock extends Block
 
         $leagueSeasonDisplay = $openLigaDBStandings->getLeague()->getLeagueSeasonDisplay();
 
-        $headline = sprintf(__('Tabelle | %s', 'clubfans-united'), $leagueSeasonDisplay);
+        $headline = sprintf(__('Tabelle | %s', 'soccr'), $leagueSeasonDisplay);
         $headline = apply_filters('openligab_standings_headline', $headline, $openLigaDBStandings);
 
         $headlineHTML = <<<HTML
@@ -67,7 +71,7 @@ class StandingsBlock extends Block
                 </tr>
            HTML;
 
-        if($hideTitle) {
+        if ($hideTitle) {
             $headlineHTML = '';
         }
 
