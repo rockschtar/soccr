@@ -187,7 +187,6 @@ class GroupMatchesBlock extends Block
                     </td>
                 </tr>
             HTML;
-
         }
 
         if ($parsedAttributes['pagination']) {
@@ -197,7 +196,6 @@ class GroupMatchesBlock extends Block
                     <td class='{$this->blockClass('pagination-right')}'>$paginationNextHref</td>
                 </tr>
             HTML;
-
         }
 
         $html .= '</table></div>';
