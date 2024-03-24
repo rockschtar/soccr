@@ -56,7 +56,8 @@ class OpenLigaDBApi
      * @throws \JsonException
      * @throws \Rockschtar\WordPress\Soccr\Exceptions\RemoteRequestException
      */
-    public static function getNextMatchByTeamid(OpenLigaDBMatchQuery $query) : OpenLigaDBMatch {
+    public static function getNextMatchByTeamid(OpenLigaDBMatchQuery $query): OpenLigaDBMatch
+    {
         $matches = self::matchQuery($query);
 
         $matches = array_filter($matches, static function (OpenLigaDBMatch $match) {
@@ -80,7 +81,8 @@ class OpenLigaDBApi
      * @throws \JsonException
      * @throws \Rockschtar\WordPress\Soccr\Exceptions\RemoteRequestException
      */
-    public static function getLastMatchByTeamId(OpenLigaDBMatchQuery $query) : OpenLigaDBMatch {
+    public static function getLastMatchByTeamId(OpenLigaDBMatchQuery $query): OpenLigaDBMatch
+    {
         $matches = self::matchQuery($query);
 
         $matches = array_filter($matches, static function (OpenLigaDBMatch $match) {

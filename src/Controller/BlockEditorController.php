@@ -20,13 +20,14 @@ class BlockEditorController
     }
 
 
-    private function blockTypeMetadata(array $metaData): array {
+    private function blockTypeMetadata(array $metaData): array
+    {
 
-        if($metaData['name'] === 'soccr/group-matches') {
+        if ($metaData['name'] === 'soccr/group-matches') {
             $metaData['attributes']['leagueSeason']['default'] = date('Y');
         }
 
-        if($metaData['name'] === 'soccr/standings') {
+        if ($metaData['name'] === 'soccr/standings') {
             $metaData['attributes']['leagueSeason']['default'] = date('Y');
         }
 
