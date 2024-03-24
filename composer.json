@@ -7,6 +7,10 @@
             "Rockschtar\\WordPress\\Soccr\\": "src/"
         }
     },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "squizlabs/php_codesniffer": "^3.5.8"
+    },
     "authors": [
         {
             "name": "Stefan Helmer"
