@@ -69,14 +69,20 @@ jobs:
       - name: Composer Install
         run: composer install --no-dev --no-suggest --optimize-autoloader --no-interaction
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+      - name: Set Version in PHP File
+        run: |
+          cd release-artifact
+          sed -i "s/Version:.*$/Version: ${{ github.ref_name }}/" soccr.php
+        shell: bash
+
+      - name: zip
+        run: npm run plugin-zip
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: build
-          path: release.zip
+          path: soccr-reloaded.zip
 
   release:
     runs-on: ubuntu-latest
@@ -98,18 +104,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build
-
-      - name: unzip artifact for deployment
-        run: unzip release.zip
-
-      - name: Set Version in PHP File
-        run: |
-          cd release-artifact
-          sed -i "s/Version:.*$/Version: ${{ github.ref_name }}/" soccr.php
-        shell: bash
-
-      - name: zip
-        run: npm run plugin-zip
 
       - name: Upload Release Asset
         id: upload-release-asset
