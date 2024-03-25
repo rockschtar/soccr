@@ -19,7 +19,7 @@
   "files": [ "dist", "soccr.php", "src" ],
   "devDependencies": {
     "@wordpress/components": "^25.8.13",
-    "@wordpress/scripts": "^26.13.13",
+    "@wordpress/scripts": "^27.5.0",
     "grunt": "~1.6.1",
     "grunt-wp-i18n": "~1.0.3",
     "grunt-wp-readme-to-markdown": "~2.1.0"
