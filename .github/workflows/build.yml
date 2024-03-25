@@ -71,7 +71,6 @@ jobs:
 
       - name: Set Version in PHP File
         run: |
-          cd release-artifact
           sed -i "s/Version:.*$/Version: ${{ github.ref_name }}/" soccr.php
         shell: bash
 
