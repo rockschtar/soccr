@@ -45,7 +45,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: [phpcs, eslint]
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    #if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -98,7 +98,9 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build
-          path: release-artifact
+
+      - name: unzip artifact for deployment
+        run: unzip release.zip
 
       - name: Set Version in PHP File
         run: |
