@@ -12,6 +12,8 @@ class OpenLigaDBMatchFactory
     public static function createFromJSON(\stdClass $match): OpenLigaDBMatch
     {
         $dateTime = \DateTime::createFromFormat(DATE_ATOM, $match->matchDateTimeUTC);
+		$dateTime->setTimezone(wp_timezone());
+
 
         $openLigaDBMatch = new OpenLigaDBMatch();
         $openLigaDBMatch->setDateTime($dateTime);

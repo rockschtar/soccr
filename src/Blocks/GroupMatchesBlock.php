@@ -24,7 +24,6 @@ class GroupMatchesBlock extends Block
 
         $parsedAttributes = wp_parse_args($attributes, $defaultAttributes);
 
-        $cssClasses = $this->blockClasses($parsedAttributes);
         $leagueShortcut = $parsedAttributes['leagueShortcut'];
         $leagueSeason = $parsedAttributes['leagueSeason'];
         $groupOrderId = $parsedAttributes['groupOrderId'];
@@ -71,8 +70,11 @@ class GroupMatchesBlock extends Block
                 $leagueSeason,
                 $groupOrderId,
             );
+
         } catch (Exception $e) {
             do_action('openligadb_exception', $e);
+
+
 
             if (defined('WP_DEBUG') && true === WP_DEBUG) {
                 return $e->getMessage();
@@ -147,15 +149,16 @@ class GroupMatchesBlock extends Block
             $group,
         );
 
+
+        $wrapperAttributes = get_block_wrapper_attributes();
+
         $html = <<<HTML
             $content
-            <div class='$cssClasses'>
-                <table>
-                    <tr>
-                        <td colspan="3">
-                            <h1>$headline</h1>
-                        </td>
-                    <tr>
+            <div $wrapperAttributes>
+                <div class="{$this->blockClass('header')}">
+                     <h1 class="{$this->blockClass('headline')}">$headline</h1>
+                </div>
+                <div class="{$this->blockClass('content')}">
         HTML;
 
         $currentMatchTimestamp = null;
@@ -168,37 +171,37 @@ class GroupMatchesBlock extends Block
                 $currentMatchTimestamp = $match->getDateTime()->getTimestamp();
                 $matchDateTimeString = DateFormat::toWordPress($match->getDateTime());
                 $html .= <<<HTML
-                    <tr>
-                        <td colspan='3' class="{$this->blockClass('datetime')}">$matchDateTimeString</td>
-                    </tr>
+                    <div class="{$this->blockClass('datetime')}">$matchDateTimeString</div>
                 HTML;
             }
 
             $html .= <<<HTML
-                <tr class="{$this->blockClass('row')}">
-                    <td class='{$this->blockClass('team-home')}'>
+                <div class="{$this->blockClass('row')}">
+                    <div class='{$this->blockClass('team-home')}'>
                         <span class="{$this->blockClass('team-name')}">{$match->getTeam1()->getTeamName()}</span>
-                        <span class="{$this->blockClass('team-shortname')}">{$match->getTeam1()->getShortName()}</span>                     
-                    </td>
-                    <td class="{$this->blockClass('result')}">{$match->getResultByType(2,)}</td>
-                    <td class="{$this->blockClass('team-away')}">
+                        <span class="{$this->blockClass('team-shortname')}">{$match->getTeam1()->getShortName()}</span>
+                    </div>
+                    <div class="{$this->blockClass('result')}">{$match->getResultByType(2,)}</div>
+                    <div class="{$this->blockClass('team-away')}">
                         <span class="{$this->blockClass('team-name')}">{$match->getTeam2()->getTeamName()}</span>
                         <span class="{$this->blockClass('team-shortname')}">{$match->getTeam2()->getShortName()}</span>
-                    </td>
-                </tr>
+                    </div>
+                </div>
             HTML;
         }
+
+        $html .= '</div>';
 
         if ($parsedAttributes['pagination']) {
             $html .= <<<HTML
-                <tr>
-                    <td colspan='2' class='{$this->blockClass('pagination-left')}'>$paginationPreviousHref</td>
-                    <td class='{$this->blockClass('pagination-right')}'>$paginationNextHref</td>
-                </tr>
+                <div class="{$this->blockClass('pagination')}">
+                    <div class='{$this->blockClass('pagination-left')}'>$paginationPreviousHref</div>
+                    <div class='{$this->blockClass('pagination-right')}'>$paginationNextHref</div>
+                </div>
             HTML;
         }
 
-        $html .= '</table></div>';
+        $html .= '</div>';
 
         return apply_filters(
             'soccr_group_matches_html',

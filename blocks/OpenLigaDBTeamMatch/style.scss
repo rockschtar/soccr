@@ -1,0 +1,45 @@
+.wp-block-soccr-team-match {
+    max-width: 700px;
+}
+.wp-block-soccr-team-match .wp-block-soccr-team-match-header {
+    margin-bottom: 10px;
+}
+.wp-block-soccr-team-match .wp-block-soccr-team-match-datetime {
+    font-weight: bold;
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+}
+.wp-block-soccr-team-match .wp-block-soccr-team-match-row {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+.wp-block-soccr-team-match .wp-block-soccr-team-match-team-home,
+.wp-block-soccr-team-match .wp-block-soccr-team-match-team-away {
+    flex: 1;
+}
+.wp-block-soccr-team-match .wp-block-soccr-team-match-result {
+    width: 60px;
+    text-align: center;
+    font-weight: bold;
+}
+.wp-block-soccr-team-match .wp-block-soccr-team-match-team-home {
+    text-align: right;
+}
+.wp-block-soccr-team-match .wp-block-soccr-team-match-team-away {
+    text-align: left;
+}
+.wp-block-soccr-team-match .wp-block-soccr-team-match-team-name {
+    display: block;
+}
+.wp-block-soccr-team-match .wp-block-soccr-team-match-team-shortname {
+    display: none;
+}
+@media screen and (max-width: 580px) {
+    .wp-block-soccr-team-match .wp-block-soccr-team-match-team-name {
+        display: none;
+    }
+    .wp-block-soccr-team-match .wp-block-soccr-team-match-team-shortname {
+        display: block;
+    }
+}

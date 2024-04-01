@@ -16,5 +16,7 @@
             "name": "Stefan Helmer"
         }
     ],
-    "require": {}
+    "require": {
+        "php": ">=8.4"
+    }
 }

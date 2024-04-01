@@ -9,9 +9,15 @@ export const TeamSelectControl = (props) => {
   const { leagueShortcut, leagueSeason } = props;
   const [teams, setTeams] = useState([]);
   const [teamId, setTeamId] = useState(props.teamId);
+
+  useEffect(() => {
+    setTeamId(props.teamId);
+  }, [props.teamId]);
   const componentMounted = useRef(true);
 
   useEffect(() => {
+    componentMounted.current = true;
+
     apiFetch({ path: '/openligadb/v1/teams?leagueShortcut=' + leagueShortcut + '&leagueSeason=' + leagueSeason }).then(
       teams => {
 

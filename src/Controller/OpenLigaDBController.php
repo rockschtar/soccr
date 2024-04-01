@@ -10,10 +10,7 @@ class OpenLigaDBController
 
     private function __construct()
     {
-        $this->addFilter(
-            'openligadb-league-season-display',
-            'leagueSeasonDisplay',
-        );
+        add_filter('openligadb-league-season-display', $this->leagueSeasonDisplay(...));
     }
 
     private function leagueSeasonDisplay(int $leagueSeason): string

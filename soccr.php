@@ -8,7 +8,7 @@
  * Author URI:      YOUR SITE HERE
  * Text Domain:     soccr
  * Domain Path:     /languages
- * Version:         0.1.0
+ * Version:         2.0.0
  *
  * @package         Rockschtar\WordPress\Soccr
  */

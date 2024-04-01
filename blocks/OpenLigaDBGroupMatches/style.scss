@@ -2,26 +2,41 @@
     max-width: 700px;
 }
 
-.wp-block-soccr-group-matches table {
-    display: table;
+.wp-block-soccr-group-matches .wp-block-soccr-group-matches-row {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.wp-block-soccr-group-matches .wp-block-soccr-group-matches-team-home,
+.wp-block-soccr-group-matches .wp-block-soccr-group-matches-team-away {
+    flex: 1;
 }
 
 .wp-block-soccr-group-matches .wp-block-soccr-group-matches-result {
+    width: 60px;
     text-align: center;
     font-weight: bold;
 }
 
-.wp-block-soccr-group-matches .wp-block-soccr-group-matches-pagination-left {
-    text-align: left;
+.wp-block-soccr-group-matches .wp-block-soccr-group-matches-datetime {
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    border-bottom: 2px solid #333;
 }
 
-.wp-block-soccr-group-matches .wp-block-soccr-group-matches-pagination-right {
-    text-align: right;
+.wp-block-soccr-group-matches .wp-block-soccr-group-matches-pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
 .wp-block-soccr-group-matches .wp-block-soccr-group-matches-team-home {
     text-align: right;
 }
+
 .wp-block-soccr-group-matches .wp-block-soccr-group-matches-team-away {
     text-align: left;
 }

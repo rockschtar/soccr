@@ -64,11 +64,9 @@ class StandingsBlock extends Block
         $headline = apply_filters('openligab_standings_headline', $headline, $openLigaDBStandings);
 
         $headlineHTML = <<<HTML
-                <tr>
-                    <th colspan="9" class="{$this->blockClass('headline')}">
-                        <h1>$headline</h1>
-                    </th>
-                </tr>
+                <div class="{$this->blockClass('header')}">
+                    <h1 class="{$this->blockClass('headline')}">$headline</h1>
+                </div>
            HTML;
 
         if ($hideTitle) {
@@ -82,27 +80,23 @@ class StandingsBlock extends Block
         );
 
         $standingsHTMLHeader = <<<HTML
-           <thead>
-                <tr>
-                    <th colspan="9" class="{$this->blockClass('headline')}">
-                        $headlineHTML
-                    </th>
-                </tr>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th class="{$this->blockClass('matches')}">Spiele</th>
-                    <th class="{$this->blockClass('points')}">Punkte</th>
-                    <th class="{$this->blockClass('wins')}">S</th>
-                    <th class="{$this->blockClass('draws')}">U</th>
-                    <th class="{$this->blockClass('looses')}">N</th>
-                    <th class="{$this->blockClass('goals')}">Tore</th>
-                    <th class="{$this->blockClass(
-            'goals-difference',
-        )}"">Diff</td>
-                </tr>
+           <div class="{$this->blockClass('thead')}">
+                <div class="{$this->blockClass('tr')}">
+                    $headlineHTML
+                </div>
+                <div class="{$this->blockClass('tr')}">
+                    <div class="{$this->blockClass('th')} {$this->blockClass('position')}"></div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('team')}"></div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('matches')}">Spiele</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('points')}">Punkte</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('wins')}">S</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('draws')}">U</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('looses')}">N</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('goals')}">Tore</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('goals-difference')}">Diff</div>
+                </div>
 
-           </thead>
+           </div>
         HTML;
 
         $standingsHTMLBody = '';
@@ -113,46 +107,38 @@ class StandingsBlock extends Block
             $standingsPosition++;
 
             $standingsHTMLBody .= <<<HTML
-                <tr class="{$this->blockClass('row')} {$this->blockClass('team-' . $openLigaDBStanding->getTeam()->getTeamId())}">
-                    <td class="{$this->blockClass('position')} {$this->blockClass('position')}-$standingsPosition">{$standingsPosition}</td>
-                    <td class="{$this->blockClass('team',)}">
-                    <span class="{$this->blockClass('team-name')}">{$openLigaDBStanding->getTeam()->getTeamName()}</span>
-                    <span class="{$this->blockClass('team-shortname')}">{$openLigaDBStanding->getTeam()->getShortName()}</span>
-                    </td>
-                    
-                    <td class="{$this->blockClass(
-                'matches',
-            )}">{$openLigaDBStanding->getMatches()}</td>
-                    <td class="{$this->blockClass(
-                'points',
-            )}">{$openLigaDBStanding->getPoints()}</td>
-                    <td class="{$this->blockClass(
-                'wins',
-            )}">{$openLigaDBStanding->getWins()}</td>
-                    <td class="{$this->blockClass(
-                'draws',
-            )}">{$openLigaDBStanding->getDraws()}</td>
-                    <td class="{$this->blockClass(
-                'looses',
-            )}">{$openLigaDBStanding->getLooses()}</td>
-                    <td class="{$this->blockClass(
-                'goals',
-            )}">{$openLigaDBStanding->getGoalsScored()}:{$openLigaDBStanding->getGoalsConceded()}</td>
-                    <td class="{$this->blockClass(
-                'goals-difference',
-            )}">{$openLigaDBStanding->getGoalDifference()}</td>
-                </tr>
+                <div class="{$this->blockClass('row')} {$this->blockClass('team-' . $openLigaDBStanding->getTeam()->getTeamId())}">
+                    <div class="{$this->blockClass('position')} {$this->blockClass('position')}-$standingsPosition">{$standingsPosition}</div>
+                    <div class="{$this->blockClass('team')}">
+                        <span class="{$this->blockClass('team-name')}">{$openLigaDBStanding->getTeam()->getTeamName()}</span>
+                        <span class="{$this->blockClass('team-shortname')}">{$openLigaDBStanding->getTeam()->getShortName()}</span>
+                    </div>
+
+                    <div class="{$this->blockClass('matches')}">{$openLigaDBStanding->getMatches()}</div>
+                    <div class="{$this->blockClass('points')}">{$openLigaDBStanding->getPoints()}</div>
+                    <div class="{$this->blockClass('wins')}">{$openLigaDBStanding->getWins()}</div>
+                    <div class="{$this->blockClass('draws')}">{$openLigaDBStanding->getDraws()}</div>
+                    <div class="{$this->blockClass('looses')}">{$openLigaDBStanding->getLooses()}</div>
+                    <div class="{$this->blockClass('goals')}">{$openLigaDBStanding->getGoalsScored()}:{$openLigaDBStanding->getGoalsConceded()}</div>
+                    <div class="{$this->blockClass('goals-difference')}">{$openLigaDBStanding->getGoalDifference()}</div>
+                </div>
             HTML;
         }
 
+
+
+        $wrapperAttributes = get_block_wrapper_attributes([
+            'class' => $cssClasses,
+        ]);
+
         return <<<HTML
-            <div class="$cssClasses">
-                <table>
+            <div {$wrapperAttributes}>
+                <div class="{$this->blockClass('content')}">
                     {$standingsHTMLHeader}
-                    <tbody>
-                    {$standingsHTMLBody}
-                    </tbody>
-                </table>
+                    <div class="{$this->blockClass('tbody')}">
+                        {$standingsHTMLBody}
+                    </div>
+                </div>
             </div>
         HTML;
     }
