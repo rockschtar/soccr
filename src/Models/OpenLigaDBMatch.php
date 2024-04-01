@@ -68,12 +68,27 @@ class OpenLigaDBMatch implements JsonSerializable
             return null;
         }
 
-        return current(array_filter($this->getResults(), static function (OpenLigaDBMatchResult $result) use (
+        $match = current(array_filter($this->getResults(), static function (OpenLigaDBMatchResult $result) use (
             $typeId
         ) {
             return $result->getTypeId() === $typeId;
         }));
+
+		return $match === false ? null : $match;
     }
+
+	public function getResult() : ?OpenLigaDBMatchResult
+	{
+		if (!$this->isFinished()) {
+			return null;
+		}
+
+		$match = current(array_filter($this->getResults(), static function (OpenLigaDBMatchResult $result) {
+			return $result->getTypeId() === 0 || $result->getTypeId() === 2;
+		}));
+
+		return $match === false ? null : $match;
+	}
 
     /**
      * @return bool

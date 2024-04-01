@@ -4,6 +4,7 @@ namespace Rockschtar\WordPress\Soccr\Controller;
 
 use Rockschtar\WordPress\Soccr\Blocks\GroupMatchesBlock;
 use Rockschtar\WordPress\Soccr\Blocks\StandingsBlock;
+use Rockschtar\WordPress\Soccr\Blocks\TeamMatchBlock;
 use Rockschtar\WordPress\Soccr\Traits\Singelton;
 
 class BlockEditorController
@@ -17,6 +18,7 @@ class BlockEditorController
 
         GroupMatchesBlock::init();
         StandingsBlock::init();
+        TeamMatchBlock::init();
     }
 
 
@@ -28,6 +30,10 @@ class BlockEditorController
         }
 
         if ($metaData['name'] === 'soccr/standings') {
+            $metaData['attributes']['leagueSeason']['default'] = date('Y');
+        }
+
+        if ($metaData['name'] === 'soccr/team-match') {
             $metaData['attributes']['leagueSeason']['default'] = date('Y');
         }
 

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "soccr/team-match",
+  "title": "Soccr Team Spiel",
+  "category": "soccr",
+  "icon": "groups",
+  "description": "OpenligaDB nächstes, aktuelles oder letztes Spiel einer Mannschaft",
+  "keywords": [ "OpenligaDB", "liga", "spiel", "mannschaft", "soccr"],
+  "textdomain": "soccr",
+  "attributes": {
+    "leagueShortcut": {
+      "type": "string",
+      "default": ""
+    },
+    "leagueSeason": {
+      "type": "number",
+      "default": 2021
+    },
+    "teamId": {
+      "type": "number",
+      "default": 0
+    },
+    "displayMode": {
+      "type": "string",
+      "default": "current",
+      "enum": ["current", "next", "last"]
+    },
+    "align": {
+      "type": "string",
+      "default": "center"
+    }
+  },
+  "supports": {
+    "align": true
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./style.css",
+  "style": "file:./style.scss"
+}

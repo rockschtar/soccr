@@ -1,51 +1,70 @@
 .wp-block-soccr-standings {
     max-width: 700px;
+
+    &.alignfull,
+    &.alignwide {
+        max-width: none;
+        width: 100%;
+    }
 }
 
-.peterpan {
-    color: red;
+.wp-block-soccr-standings .wp-block-soccr-standings-tr,
+.wp-block-soccr-standings .wp-block-soccr-standings-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
 }
 
-.wp-block-soccr-standings td,
-.wp-block-soccr-standings th,
-.wp-block-soccr-standings tr:nth-child(even) {
-    text-align: revert;
-    background: revert;
+.wp-block-soccr-standings .wp-block-soccr-standings-thead .wp-block-soccr-standings-tr {
+    font-weight: bold;
+    border-bottom: 2px solid #333;
 }
 
-.wp-block-soccr-standings td {
-    text-align: left;
-}
-.wp-block-soccr-standings th {
-    text-align: center;
-}
-
-.wp-block-soccr-standings th.wp-block-soccr-standings-headline {
-    text-align: left;
+.wp-block-soccr-standings .wp-block-soccr-standings-th,
+.wp-block-soccr-standings .wp-block-soccr-standings-position,
+.wp-block-soccr-standings .wp-block-soccr-standings-team,
+.wp-block-soccr-standings .wp-block-soccr-standings-matches,
+.wp-block-soccr-standings .wp-block-soccr-standings-points,
+.wp-block-soccr-standings .wp-block-soccr-standings-wins,
+.wp-block-soccr-standings .wp-block-soccr-standings-draws,
+.wp-block-soccr-standings .wp-block-soccr-standings-looses,
+.wp-block-soccr-standings .wp-block-soccr-standings-goals,
+.wp-block-soccr-standings .wp-block-soccr-standings-goals-difference {
+    padding: 0 5px;
 }
 
 .wp-block-soccr-standings .wp-block-soccr-standings-position {
+    width: 30px;
     text-align: center;
 }
 
-.wp-block-soccr-standings td.wp-block-soccr-standings-goals-difference {
-    text-align: right;
-}
-
-.wp-block-soccr-standings td.wp-block-soccr-standings-wins,
-.wp-block-soccr-standings td.wp-block-soccr-standings-draws,
-.wp-block-soccr-standings td.wp-block-soccr-standings-looses,
-.wp-block-soccr-standings td.wp-block-soccr-standings-matches {
-    text-align: center;
-}
-
-.wp-block-soccr-standings td.wp-block-soccr-standings-points {
-    font-weight: bold;
-    text-align: center;
-}
-
-.wp-block-soccr-standings td.wp-block-soccr-standings-team {
+.wp-block-soccr-standings .wp-block-soccr-standings-team {
+    flex: 1;
     text-align: left;
+}
+
+.wp-block-soccr-standings .wp-block-soccr-standings-matches,
+.wp-block-soccr-standings .wp-block-soccr-standings-wins,
+.wp-block-soccr-standings .wp-block-soccr-standings-draws,
+.wp-block-soccr-standings .wp-block-soccr-standings-looses,
+.wp-block-soccr-standings .wp-block-soccr-standings-points {
+    width: 40px;
+    text-align: center;
+}
+
+.wp-block-soccr-standings .wp-block-soccr-standings-points {
+    font-weight: bold;
+}
+
+.wp-block-soccr-standings .wp-block-soccr-standings-goals {
+    width: 60px;
+    text-align: center;
+}
+
+.wp-block-soccr-standings .wp-block-soccr-standings-goals-difference {
+    width: 40px;
+    text-align: right;
 }
 
 .wp-block-soccr-standings .wp-block-soccr-standings-team .wp-block-soccr-standings-team-name {

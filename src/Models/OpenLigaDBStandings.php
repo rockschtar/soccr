@@ -6,7 +6,7 @@ class OpenLigaDBStandings
 {
     private OpenligaDBLeague $league;
 
-    private array $standings;
+    private array $standings = [];
 
     /**
      * @return OpenligaDBLeague

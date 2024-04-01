@@ -54,14 +54,14 @@ class OpenLigaDBApi
 
     /**
      * @throws \JsonException
-     * @throws \Rockschtar\WordPress\Soccr\Exceptions\RemoteRequestException
+     * @throws RemoteRequestException
      */
-    public static function getNextMatchByTeamid(OpenLigaDBMatchQuery $query): OpenLigaDBMatch
+    public static function getNextMatchByTeamid(OpenLigaDBMatchQuery $query): ?OpenLigaDBMatch
     {
         $matches = self::matchQuery($query);
 
         $matches = array_filter($matches, static function (OpenLigaDBMatch $match) {
-            return $match->getMatchIsFinished() === false;
+            return $match->isFinished() === false;
         });
 
         $sortByTimestamp = static function (OpenLigaDBMatch $match1, OpenLigaDBMatch $match2) {
@@ -79,14 +79,14 @@ class OpenLigaDBApi
 
     /**
      * @throws \JsonException
-     * @throws \Rockschtar\WordPress\Soccr\Exceptions\RemoteRequestException
+     * @throws RemoteRequestException
      */
-    public static function getLastMatchByTeamId(OpenLigaDBMatchQuery $query): OpenLigaDBMatch
+    public static function getLastMatchByTeamId(OpenLigaDBMatchQuery $query): ?OpenLigaDBMatch
     {
         $matches = self::matchQuery($query);
 
         $matches = array_filter($matches, static function (OpenLigaDBMatch $match) {
-            return $match->getMatchIsFinished() === true;
+            return $match->isFinished() === true;
         });
 
         $sortByTimestamp = static function (OpenLigaDBMatch $match1, OpenLigaDBMatch $match2) {
@@ -231,6 +231,7 @@ class OpenLigaDBApi
 
         return $openLigaDBMatches;
     }
+
 
     /**
      * @param string $leagueShortcut
@@ -463,6 +464,15 @@ class OpenLigaDBApi
         usort($openLigaDBLeaguesByShortcut, $sortByLeagueSeason);
 
         $openLigaDBLeague = array_shift($openLigaDBLeaguesByShortcut);
+
+        $matches = self::getMatches(
+            $openLigaDBLeague->getLeagueShortcut(),
+            $openLigaDBLeague->getLeagueSeason(),
+        );
+
+        if( count($matches) === 0 && count($openLigaDBLeaguesByShortcut) > 1 ) {
+            $openLigaDBLeague = array_shift($openLigaDBLeaguesByShortcut);
+        }
 
         wp_cache_set(
             $cacheKey,
