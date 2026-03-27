@@ -80,18 +80,18 @@ class TeamMatchBlock extends Block
             $content
             <div $wrapperAttributes>
                 <div class="{$this->blockClass('header')}">
-                    <div class="{$this->blockClass('datetime')}">$matchDateTimeString</div>
+                    <div class="{$this->blockClass('datetime')}">{$this->esc($matchDateTimeString)}</div>
                 </div>
                 <div class="{$this->blockClass('content')}">
                     <div class="{$this->blockClass('row')}">
                         <div class="{$this->blockClass('team-home')}">
-                            <span class="{$this->blockClass('team-name')}">{$match->getTeam1()->getTeamName()}</span>
-                            <span class="{$this->blockClass('team-shortname')}">{$match->getTeam1()->getShortName()}</span>
+                            <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam1()->getTeamName())}</span>
+                            <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam1()->getShortName())}</span>
                         </div>
-                        <div class="{$this->blockClass('result')}">$resultDisplay</div>
+                        <div class="{$this->blockClass('result')}">{$this->esc($resultDisplay)}</div>
                         <div class="{$this->blockClass('team-away')}">
-                            <span class="{$this->blockClass('team-name')}">{$match->getTeam2()->getTeamName()}</span>
-                            <span class="{$this->blockClass('team-shortname')}">{$match->getTeam2()->getShortName()}</span>
+                            <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam2()->getTeamName())}</span>
+                            <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam2()->getShortName())}</span>
                         </div>
                     </div>
                 </div>

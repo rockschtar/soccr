@@ -21,7 +21,7 @@ abstract class Block
 
     private function absBlockDirectory(): string
     {
-        return SOCCR_PLUGIN_DIR . $this->blockDirectory();
+        return rtrim(SOCCR_PLUGIN_DIR, '/') . '/' . ltrim($this->blockDirectory(), '/');
     }
 
     protected function blockname(): string
@@ -39,6 +39,11 @@ abstract class Block
         return rtrim(SOCCR_PLUGIN_URL, '/') . $this->blockDirectory();
     }
 
+    final protected function esc(mixed $value): string
+    {
+        return esc_html((string) $value);
+    }
+
     final public function blockClasses(
         array $attributes = [],
         array $additionalClasses = []
@@ -50,7 +55,7 @@ abstract class Block
         }
 
         if (isset($attributes['className']) && $attributes['className']) {
-            $classes[] = $attributes['className'];
+            $classes[] = sanitize_html_class($attributes['className']);
         }
 
         foreach ($additionalClasses as $class) {
