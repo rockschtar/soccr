@@ -14,12 +14,14 @@ class StandingsBlock extends Block
             'leagueSeason' => 0,
             'align' => 'left',
             'title' => '',
+            'showTitle' => true,
         ];
 
         $parsedAttributes = wp_parse_args($attributes, $defaultAttributes);
         $leagueShortcut = $parsedAttributes['leagueShortcut'];
         $leagueSeason = $parsedAttributes['leagueSeason'];
         $title = $parsedAttributes['title'];
+        $showTitle = $parsedAttributes['showTitle'];
 
         try {
             $openLigaDBStandings = OpenLigaDBApi::getStandings(
@@ -61,7 +63,7 @@ class StandingsBlock extends Block
         $isEditorPreview = defined('REST_REQUEST') && REST_REQUEST;
 
         $headlineHTML = '';
-        if (!$isEditorPreview && $title !== '') {
+        if (!$isEditorPreview && $showTitle && $title !== '') {
             $headlineHTML = <<<HTML
                     <div class="{$this->blockClass('header')}">
                         <h2 class="{$this->blockClass('headline')}">{$this->esc($title)}</h2>

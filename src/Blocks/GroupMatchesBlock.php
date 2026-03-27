@@ -18,6 +18,8 @@ class GroupMatchesBlock extends Block
             'pagination' => false,
             'align' => 'center',
             'blockId' => null,
+            'title' => '',
+            'showTitle' => true,
         ];
 
         $parsedAttributes = wp_parse_args($attributes, $defaultAttributes);
@@ -68,11 +70,8 @@ class GroupMatchesBlock extends Block
                 $leagueSeason,
                 $groupOrderId,
             );
-
         } catch (Exception $e) {
             do_action('openligadb_exception', $e);
-
-
 
             if (defined('WP_DEBUG') && true === WP_DEBUG) {
                 return $e->getMessage();
@@ -136,6 +135,9 @@ class GroupMatchesBlock extends Block
             }
         }
 
+        $title = $parsedAttributes['title'];
+        $showTitle = $parsedAttributes['showTitle'];
+
         $leagueSeasonDisplay = $openLigaDBGroupMatches->getLeagueSeasonDisplay();
         $group = $openLigaDBGroupMatches->getGroup();
         $groupName = $openLigaDBGroupMatches->getGroup()->getGroupName();
@@ -153,6 +155,17 @@ class GroupMatchesBlock extends Block
             $group,
         );
 
+        $isEditorPreview = defined('REST_REQUEST') && REST_REQUEST;
+
+        $headlineHTML = '';
+        if (!$isEditorPreview && $showTitle) {
+            $displayTitle = $title !== '' ? $this->esc($title) : $headline;
+            $headlineHTML = <<<HTML
+                <div class="{$this->blockClass('header')}">
+                     <h2 class="{$this->blockClass('headline')}">$displayTitle</h2>
+                </div>
+            HTML;
+        }
 
         $wrapperAttributes = get_block_wrapper_attributes([
             'class' => $this->blockClasses($parsedAttributes),
@@ -161,9 +174,7 @@ class GroupMatchesBlock extends Block
         $html = <<<HTML
             $content
             <div $wrapperAttributes>
-                <div class="{$this->blockClass('header')}">
-                     <h1 class="{$this->blockClass('headline')}">$headline</h1>
-                </div>
+                $headlineHTML
                 <div class="{$this->blockClass('content')}">
         HTML;
 

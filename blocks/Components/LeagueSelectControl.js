@@ -57,7 +57,9 @@ export const LeagueSelectControl = (props) => {
   const onLeagueChange = (value) => {
     if (!value) return;
     const [leagueShortcut, leagueSeason] = value.split('###');
-    props.onChange(leagueShortcut, leagueSeason);
+    const selectedLeague = leagues.find(l => l.value === value);
+    const leagueName = selectedLeague ? selectedLeague.label : '';
+    props.onChange(leagueShortcut, leagueSeason, leagueName);
     setLeagueShortcutSeason(value);
   }
 

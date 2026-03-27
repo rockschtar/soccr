@@ -4,7 +4,6 @@
   "name": "soccr/group-matches",
   "title": "Soccr Spieltag",
   "category": "soccr",
-  "icon": "forms",
   "description": "OpenligaDB Spieltag",
   "keywords": [ "OpenligaDB", "liga", "spieltag", "soccr"],
   "textdomain": "soccr",
@@ -35,6 +34,14 @@
     },
     "blockId": {
       "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "showTitle": {
+      "type": "boolean",
+      "default": true
     }
   },
   "supports": {

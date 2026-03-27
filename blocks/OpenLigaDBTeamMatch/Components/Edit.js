@@ -1,6 +1,7 @@
 import { default as ServerSideRender } from '@wordpress/server-side-render';
-import { SelectControl, Panel, PanelBody } from '@wordpress/components';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import { SelectControl, ToggleControl, Panel, PanelBody } from '@wordpress/components';
+import { InspectorControls, useBlockProps, RichText } from '@wordpress/block-editor';
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { LeagueSelectControl } from '../../Components/LeagueSelectControl';
 import { TeamSelectControl } from '../../Components/TeamSelectControl';
@@ -12,13 +13,19 @@ const Edit = (props) => {
     } = props;
 
     const blockProps = useBlockProps();
+    const [leagueName, setLeagueName] = useState('');
 
-    const onLeagueChange = (leagueShortcut, leagueSeason) => {
-        setAttributes({
+    const onLeagueChange = (leagueShortcut, leagueSeason, name) => {
+        setLeagueName(name || '');
+        const newAttributes = {
             leagueShortcut,
             leagueSeason: parseInt(leagueSeason),
             teamId: 0,
-        });
+        };
+        if (!attributes.title && name) {
+            newAttributes.title = name;
+        }
+        setAttributes(newAttributes);
     };
 
     const onTeamChange = (teamId) => {
@@ -36,6 +43,11 @@ const Edit = (props) => {
             <InspectorControls key={'openligadb-team-match-ic'}>
                 <Panel key={'openligadb-team-match-ic-panel'}>
                     <PanelBody key={'openligadb-team-match-ic-panel-body'}>
+                        <ToggleControl
+                            label="Titel anzeigen"
+                            checked={attributes.showTitle}
+                            onChange={(showTitle) => setAttributes({ showTitle })}
+                        />
                         <LeagueSelectControl
                             key={'openligadb-team-match-league-select'}
                             leagueShortcut={attributes.leagueShortcut}
@@ -63,6 +75,16 @@ const Edit = (props) => {
                     </PanelBody>
                 </Panel>
             </InspectorControls>
+
+            {attributes.showTitle && (
+                <RichText
+                    tagName="h2"
+                    value={attributes.title}
+                    onChange={(title) => setAttributes({ title })}
+                    placeholder={leagueName || 'Team Spiel'}
+                />
+            )}
+
             <ServerSideRender
                 key={'openligadb-team-match-ssr'}
                 block={props.name}

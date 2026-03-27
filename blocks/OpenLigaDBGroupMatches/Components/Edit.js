@@ -1,7 +1,7 @@
 import { default as ServerSideRender } from '@wordpress/server-side-render';
-import { TextControl, CheckboxControl, Panel, PanelBody } from '@wordpress/components';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { useEffect } from '@wordpress/element';
+import { TextControl, CheckboxControl, ToggleControl, Panel, PanelBody } from '@wordpress/components';
+import { InspectorControls, useBlockProps, RichText } from '@wordpress/block-editor';
+import { useEffect, useState } from '@wordpress/element';
 import { LeagueSelectControl } from '../../Components/LeagueSelectControl';
 
 const Edit = (props) => {
@@ -15,6 +15,7 @@ const Edit = (props) => {
   const { blockId } = attributes;
 
   const blockProps = useBlockProps();
+  const [leagueName, setLeagueName] = useState('');
 
   useEffect(() => {
     if (!blockId) {
@@ -30,11 +31,21 @@ const Edit = (props) => {
       <InspectorControls key={'openligadb-group-matches-ic'}>
         <Panel key={'openligadb-group-matches-ic-panel'}>
           <PanelBody key={'openligadb-group-matches-ic-panel-body'}>
+            <ToggleControl
+              label="Titel anzeigen"
+              checked={attributes.showTitle}
+              onChange={(showTitle) => setAttributes({ showTitle })}
+            />
             <LeagueSelectControl
               leagueShortcut={attributes.leagueShortcut}
               leagueSeason={attributes.leagueSeason}
-              onChange={(leagueShortcut, leagueSeason) => {
-                setAttributes({ leagueShortcut, leagueSeason: parseInt(leagueSeason) });
+              onChange={(leagueShortcut, leagueSeason, name) => {
+                setLeagueName(name || '');
+                const newAttributes = { leagueShortcut, leagueSeason: parseInt(leagueSeason) };
+                if (!attributes.title && name) {
+                  newAttributes.title = name;
+                }
+                setAttributes(newAttributes);
               }}
             />
 
@@ -61,6 +72,15 @@ const Edit = (props) => {
           </PanelBody>
         </Panel>
       </InspectorControls>
+
+      {attributes.showTitle && (
+        <RichText
+          tagName="h2"
+          value={attributes.title}
+          onChange={(title) => setAttributes({ title })}
+          placeholder={leagueName || 'Spieltag'}
+        />
+      )}
 
       <ServerSideRender
         key={'openligadb-group-matches-ssr'}
