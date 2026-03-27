@@ -47,10 +47,10 @@ class GroupMatchesBlock extends Block
                 $blockIdInput = filter_input(
                     INPUT_GET,
                     'oldb-block-id',
-                    FILTER_UNSAFE_RAW,
+                    FILTER_SANITIZE_SPECIAL_CHARS,
                 );
 
-                $blockIdInput = $blockIdInput !== null ? html_entity_decode($blockIdInput) : $blockIdInput;
+                $blockIdInput = $blockIdInput !== null ? sanitize_text_field($blockIdInput) : $blockIdInput;
 
                 if ($blockIdInput === $blockId) {
                     $groupOrderIdInput = filter_input(
@@ -110,7 +110,7 @@ class GroupMatchesBlock extends Block
 
                 $paginationPreviousHref =
                     '<a href="' .
-                    $paginationPreviousUrl .
+                    esc_url($paginationPreviousUrl) .
                     '">' .
                     __('Vorheriger Spieltag', 'soccr') .
                     '</a>';
@@ -129,7 +129,7 @@ class GroupMatchesBlock extends Block
 
                 $paginationNextHref =
                     '<a href="' .
-                    $paginationNextUrl .
+                    esc_url($paginationNextUrl) .
                     '">' .
                     __('Nächster Spieltag', 'soccr') .
                     '</a>';
@@ -141,7 +141,11 @@ class GroupMatchesBlock extends Block
         $groupName = $openLigaDBGroupMatches->getGroup()->getGroupName();
 
         /* translators: %1$s is the group name, %2$s is the league season */
-        $headline = sprintf(__('%1$s | Saison %2$s', 'soccr'), $groupName, $leagueSeasonDisplay);
+        $headline = sprintf(
+            __('%1$s | Saison %2$s', 'soccr'),
+            esc_html($groupName),
+            esc_html($leagueSeasonDisplay)
+        );
 
         $headline = apply_filters(
             'soccr_group_matchtes_headline',
@@ -173,20 +177,20 @@ class GroupMatchesBlock extends Block
                 $currentMatchTimestamp = $match->getDateTime()->getTimestamp();
                 $matchDateTimeString = DateFormat::toWordPress($match->getDateTime());
                 $html .= <<<HTML
-                    <div class="{$this->blockClass('datetime')}">$matchDateTimeString</div>
+                    <div class="{$this->blockClass('datetime')}">{$this->esc($matchDateTimeString)}</div>
                 HTML;
             }
 
             $html .= <<<HTML
                 <div class="{$this->blockClass('row')}">
                     <div class='{$this->blockClass('team-home')}'>
-                        <span class="{$this->blockClass('team-name')}">{$match->getTeam1()->getTeamName()}</span>
-                        <span class="{$this->blockClass('team-shortname')}">{$match->getTeam1()->getShortName()}</span>
+                        <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam1()->getTeamName())}</span>
+                        <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam1()->getShortName())}</span>
                     </div>
-                    <div class="{$this->blockClass('result')}">{$match->getResultByType(2,)}</div>
+                    <div class="{$this->blockClass('result')}">{$this->esc($match->getResultByType(2,))}</div>
                     <div class="{$this->blockClass('team-away')}">
-                        <span class="{$this->blockClass('team-name')}">{$match->getTeam2()->getTeamName()}</span>
-                        <span class="{$this->blockClass('team-shortname')}">{$match->getTeam2()->getShortName()}</span>
+                        <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam2()->getTeamName())}</span>
+                        <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam2()->getShortName())}</span>
                     </div>
                 </div>
             HTML;

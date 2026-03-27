@@ -60,7 +60,7 @@ class StandingsBlock extends Block
 
         $leagueSeasonDisplay = $openLigaDBStandings->getLeague()->getLeagueSeasonDisplay();
 
-        $headline = sprintf(__('Tabelle | %s', 'soccr'), $leagueSeasonDisplay);
+        $headline = sprintf(__('Tabelle | %s', 'soccr'), esc_html($leagueSeasonDisplay));
         $headline = apply_filters('openligab_standings_headline', $headline, $openLigaDBStandings);
 
         $headlineHTML = <<<HTML
@@ -110,8 +110,8 @@ class StandingsBlock extends Block
                 <div class="{$this->blockClass('row')} {$this->blockClass('team-' . $openLigaDBStanding->getTeam()->getTeamId())}">
                     <div class="{$this->blockClass('position')} {$this->blockClass('position')}-$standingsPosition">{$standingsPosition}</div>
                     <div class="{$this->blockClass('team')}">
-                        <span class="{$this->blockClass('team-name')}">{$openLigaDBStanding->getTeam()->getTeamName()}</span>
-                        <span class="{$this->blockClass('team-shortname')}">{$openLigaDBStanding->getTeam()->getShortName()}</span>
+                        <span class="{$this->blockClass('team-name')}">{$this->esc($openLigaDBStanding->getTeam()->getTeamName())}</span>
+                        <span class="{$this->blockClass('team-shortname')}">{$this->esc($openLigaDBStanding->getTeam()->getShortName())}</span>
                     </div>
 
                     <div class="{$this->blockClass('matches')}">{$openLigaDBStanding->getMatches()}</div>
