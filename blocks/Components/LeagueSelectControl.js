@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from '@wordpress/element';
-import { SelectControl } from '@wordpress/components';
+import { ComboboxControl } from '@wordpress/components';
 import PropTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
@@ -11,19 +11,19 @@ export const LeagueSelectControl = (props) => {
   const componentMounted = useRef(true);
 
   useEffect(() => {
+    let path = '/openligadb/v1/leagues';
 
-    apiFetch({ path: '/openligadb/v1/leagues' }).then(leagues => {
+    if (props.leagueShortcut && props.leagueSeason) {
+      path += `?includeShortcut=${props.leagueShortcut}&includeSeason=${props.leagueSeason}`;
+    }
 
-      let leagueOptions = leagues.map(league => {
+    apiFetch({ path }).then(leagues => {
+
+      const leagueOptions = leagues.map(league => {
         return {
           value: league.leagueShortcut + '###' + league.leagueSeason,
           label: league.leagueName,
         };
-      });
-
-      leagueOptions.unshift({
-        value: 0,
-        label: __('Select League', 'openligadb'),
       });
 
       if (componentMounted.current) {
@@ -38,13 +38,16 @@ export const LeagueSelectControl = (props) => {
   }, [setLeagues]);
 
   const onLeagueChange = (value) => {
-    let league = value.split('###');
+    if (!value) {
+      return;
+    }
+    const league = value.split('###');
     props.onChange(league[0], league[1]);
     setLeagueShortcutSeason(value);
   }
 
   return (
-    <SelectControl
+    <ComboboxControl
       label={__('Liga:', 'openligadb')}
       value={leagueShortcutSeason}
       onChange={onLeagueChange}

@@ -1,18 +1,20 @@
 import { default as ServerSideRender } from '@wordpress/server-side-render';
 import { TextControl, CheckboxControl, Panel, PanelBody } from '@wordpress/components';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { useEffect } from '@wordpress/element';
+import { LeagueSelectControl } from '../../Components/LeagueSelectControl';
 
 const Edit = (props) => {
 
   const {
     setAttributes,
     attributes,
-    className,
     clientId,
   } = props;
 
   const { blockId } = attributes;
+
+  const blockProps = useBlockProps();
 
   useEffect(() => {
     if (!blockId) {
@@ -23,57 +25,50 @@ const Edit = (props) => {
 
   }, [clientId]);
 
-  return [
-    <InspectorControls key={'openligadb-group-matches-ic'}>
-      <Panel key={'openligadb-group-matches-ic-panel'}>
-        <PanelBody key={'openligadb-group-matches-ic-panel-body'}>
-          <TextControl key={'openligadb-attribute-league-shortcut'}
-                       label="OpenLigaDB League Shortcut"
-                       value={attributes.leagueShortcut}
-                       onChange={(leagueShortcut) => {
-                         setAttributes({ leagueShortcut });
-                       }}/>
+  return (
+    <div {...blockProps}>
+      <InspectorControls key={'openligadb-group-matches-ic'}>
+        <Panel key={'openligadb-group-matches-ic-panel'}>
+          <PanelBody key={'openligadb-group-matches-ic-panel-body'}>
+            <LeagueSelectControl
+              leagueShortcut={attributes.leagueShortcut}
+              leagueSeason={attributes.leagueSeason}
+              onChange={(leagueShortcut, leagueSeason) => {
+                setAttributes({ leagueShortcut, leagueSeason: parseInt(leagueSeason) });
+              }}
+            />
 
-          <CheckboxControl key={'openligadb-attribute-league-defaultcurrentgroup'}
-                           label="Aktuelle GroupOrderId anzeigen"
-                           checked={attributes.defaultCurrentGroup}
-                           onChange={(defaultCurrentGroup) => {
-                             setAttributes({ defaultCurrentGroup });
-                           }}/>
+            <CheckboxControl key={'openligadb-attribute-league-defaultcurrentgroup'}
+                             label="Aktuelle GroupOrderId anzeigen"
+                             checked={attributes.defaultCurrentGroup}
+                             onChange={(defaultCurrentGroup) => {
+                               setAttributes({ defaultCurrentGroup });
+                             }}/>
 
-          {attributes.defaultCurrentGroup === false &&
-          <>
-            <TextControl key={'openligadb-attribute-league-season'} type="number"
-                         label="OpenLigaDB League Season" value={attributes.leagueSeason}
-                         onChange={(leagueSeason) => {
-                           setAttributes({ leagueSeason });
-                         }}/>
-
-
+            {attributes.defaultCurrentGroup === false &&
             <TextControl key={'openligadb-attribute-league-grouporderid'} type="number" min={1}
                          label="OpenLigaDB GroupOrderId" value={attributes.groupOrderId ?? 1}
                          onChange={(groupOrderId) => {
                            setAttributes({ groupOrderId: parseInt(groupOrderId) });
                          }}/>
-          </>
-          }
-          <CheckboxControl key={'openligadb-attribute-league-pagination'} label="Blättern anzeigen"
-                           checked={attributes.pagination}
-                           onChange={(pagination) => {
-                             setAttributes({ pagination });
-                           }}/>
+            }
+            <CheckboxControl key={'openligadb-attribute-league-pagination'} label="Blättern anzeigen"
+                             checked={attributes.pagination}
+                             onChange={(pagination) => {
+                               setAttributes({ pagination });
+                             }}/>
 
-        </PanelBody>
-      </Panel>
-    </InspectorControls>,
+          </PanelBody>
+        </Panel>
+      </InspectorControls>
 
-    <ServerSideRender
-      key={'openligadb-group-matches-ssr'}
-      block={props.name}
-      attributes={props.attributes}
-    />,
-
-  ];
+      <ServerSideRender
+        key={'openligadb-group-matches-ssr'}
+        block={props.name}
+        attributes={props.attributes}
+      />
+    </div>
+  );
 
 };
 

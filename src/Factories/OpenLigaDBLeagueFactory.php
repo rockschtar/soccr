@@ -14,6 +14,7 @@ class OpenLigaDBLeagueFactory
         $openLigaDBLeague->setLeagueName($league->leagueName);
         $openLigaDBLeague->setLeagueShortcut($league->leagueShortcut);
         $openLigaDBLeague->setLeagueSeason((int) $league->leagueSeason);
+        $openLigaDBLeague->setSportId((int) $league->sport->sportId);
 
         return $openLigaDBLeague;
     }

@@ -1,5 +1,11 @@
 .wp-block-soccr-team-match {
     max-width: 700px;
+
+    &.alignfull,
+    &.alignwide {
+        max-width: none;
+        width: 100%;
+    }
 }
 .wp-block-soccr-team-match .wp-block-soccr-team-match-header {
     margin-bottom: 10px;

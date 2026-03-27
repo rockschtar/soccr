@@ -398,6 +398,19 @@ class OpenLigaDBApi
     {
         $leagues = self::getAvailableLeagues();
 
+        $leagues = array_filter($leagues, static function (OpenligaDBLeague $league) {
+            return $league->getSportId() === 1;
+        });
+
+        if (count($leagueQuery->getLeagueShortcuts()) > 0) {
+            $leagues = array_filter(
+                $leagues,
+                static function (OpenligaDBLeague $league) use ($leagueQuery) {
+                    return in_array($league->getLeagueShortcut(), $leagueQuery->getLeagueShortcuts(), true);
+                }
+            );
+        }
+
         $leagues = array_filter($leagues, static function (OpenligaDBLeague $league) use ($leagueQuery) {
             if (!$leagueQuery->getLeagueShortcut()) {
                 return true;
@@ -423,6 +436,36 @@ class OpenLigaDBApi
         };
 
         usort($leagues, $sortByLeagueName);
+
+        $includeShortcut = $leagueQuery->getIncludeLeagueShortcut();
+        $includeSeason = $leagueQuery->getIncludeLeagueSeason();
+
+        if ($includeShortcut !== null && $includeSeason !== null) {
+            $alreadyIncluded = array_filter(
+                $leagues,
+                static function (OpenligaDBLeague $league) use ($includeShortcut, $includeSeason) {
+                    return $league->getLeagueShortcut() === $includeShortcut
+                        && $league->getLeagueSeason() === $includeSeason;
+                }
+            );
+
+            if (count($alreadyIncluded) === 0) {
+                $allLeagues = self::getAvailableLeagues();
+                $found = array_filter(
+                    $allLeagues,
+                    static function (OpenligaDBLeague $league) use ($includeShortcut, $includeSeason) {
+                        return $league->getLeagueShortcut() === $includeShortcut
+                            && $league->getLeagueSeason() === $includeSeason;
+                    }
+                );
+
+                $includeLeague = array_shift($found);
+
+                if ($includeLeague !== null) {
+                    array_unshift($leagues, $includeLeague);
+                }
+            }
+        }
 
         return $leagues;
     }
