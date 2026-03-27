@@ -36,7 +36,7 @@ abstract class Block
 
     private function distUrl(): string
     {
-        return SOCCR_PLUGIN_URL . '/' . $this->blockDirectory();
+        return rtrim(SOCCR_PLUGIN_URL, '/') . $this->blockDirectory();
     }
 
     final public function blockClasses(
@@ -84,6 +84,7 @@ abstract class Block
             wp_register_style(
                 $handle,
                 $this->distUrl() . '/style-index.css',
+                [],
                 $assets['version']
             );
 

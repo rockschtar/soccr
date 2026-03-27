@@ -150,7 +150,9 @@ class GroupMatchesBlock extends Block
         );
 
 
-        $wrapperAttributes = get_block_wrapper_attributes();
+        $wrapperAttributes = get_block_wrapper_attributes([
+            'class' => $this->blockClasses($parsedAttributes),
+        ]);
 
         $html = <<<HTML
             $content

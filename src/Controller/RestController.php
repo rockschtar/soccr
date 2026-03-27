@@ -3,6 +3,7 @@
 namespace Rockschtar\WordPress\Soccr\Controller;
 
 use Rockschtar\WordPress\Soccr\Api\OpenLigaDBApi;
+use Rockschtar\WordPress\Soccr\Models\OpenLigaDBLeagueQuery;
 use Rockschtar\WordPress\Soccr\Traits\Singelton;
 
 class RestController
@@ -21,7 +22,25 @@ class RestController
             'methods' => 'GET',
             'callback' => static function (\WP_REST_Request $request) {
                 $response = new \WP_REST_Response();
-                $leagues = OpenLigaDBApi::getAvailableLeagues();
+
+                $allowedShortcuts = apply_filters(
+                    'soccr_allowed_league_shortcuts',
+                    ['bl1', 'bl2', 'bl3']
+                );
+
+                $leagueQuery = new OpenLigaDBLeagueQuery();
+                $leagueQuery->setLeagueShortcuts($allowedShortcuts);
+                $leagueQuery->setLeagueSeasonGreaterThan((int) $request->get_param('minSeason'));
+
+                $includeShortcut = $request->get_param('includeShortcut');
+                $includeSeason = $request->get_param('includeSeason');
+
+                if ($includeShortcut !== null && $includeSeason !== null) {
+                    $leagueQuery->setIncludeLeagueShortcut($includeShortcut);
+                    $leagueQuery->setIncludeLeagueSeason((int) $includeSeason);
+                }
+
+                $leagues = OpenLigaDBApi::queryLeagues($leagueQuery);
                 $response->set_data($leagues);
                 return $response;
             },
@@ -29,11 +48,28 @@ class RestController
                 return current_user_can('edit_posts');
             },
             'args' => [
-                'tag' => [
+                'minSeason' => [
                     'required' => false,
-                    'description' => 'the tag',
+                    'default' => (int) date('Y') - 3,
+                    'description' => 'Only return leagues from this season onwards',
+                    'type' => 'integer',
+                    'sanitize_callback' => static function ($value) {
+                        return (int) $value;
+                    },
+                ],
+                'includeShortcut' => [
+                    'required' => false,
+                    'description' => 'Always include this league shortcut regardless of minSeason',
                     'type' => 'string',
                     'sanitize_callback' => 'sanitize_text_field',
+                ],
+                'includeSeason' => [
+                    'required' => false,
+                    'description' => 'Season of the league to always include',
+                    'type' => 'integer',
+                    'sanitize_callback' => static function ($value) {
+                        return (int) $value;
+                    },
                 ],
             ],
         ]);

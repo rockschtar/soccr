@@ -14,6 +14,8 @@ class OpenligaDBLeague implements JsonSerializable
 
     private int $leagueSeason;
 
+    private int $sportId;
+
     /**
      * @return int
      */
@@ -85,6 +87,16 @@ class OpenligaDBLeague implements JsonSerializable
     public function setLeagueSeason(int $leagueSeason): void
     {
         $this->leagueSeason = $leagueSeason;
+    }
+
+    public function getSportId(): int
+    {
+        return $this->sportId;
+    }
+
+    public function setSportId(int $sportId): void
+    {
+        $this->sportId = $sportId;
     }
 
     public function jsonSerialize(): array
