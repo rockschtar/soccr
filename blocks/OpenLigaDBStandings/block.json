@@ -4,7 +4,6 @@
   "name": "soccr/standings",
   "title": "Soccr Tabelle",
   "category": "soccr",
-  "icon": "forms",
   "description": "OpenligaDB Tabelle",
   "keywords": [ "OpenligaDB", "tabelle", "spieltag", "soccr"],
   "textdomain": "soccr",
@@ -24,6 +23,10 @@
     "title": {
       "type": "string",
       "default": ""
+    },
+    "showTitle": {
+      "type": "boolean",
+      "default": true
     }
   },
   "supports": {

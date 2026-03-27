@@ -4,7 +4,6 @@
   "name": "soccr/team-match",
   "title": "Soccr Team Spiel",
   "category": "soccr",
-  "icon": "groups",
   "description": "OpenligaDB nächstes, aktuelles oder letztes Spiel einer Mannschaft",
   "keywords": [ "OpenligaDB", "liga", "spiel", "mannschaft", "soccr"],
   "textdomain": "soccr",
@@ -29,6 +28,14 @@
     "align": {
       "type": "string",
       "default": "center"
+    },
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "showTitle": {
+      "type": "boolean",
+      "default": true
     }
   },
   "supports": {

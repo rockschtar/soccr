@@ -18,6 +18,8 @@ class TeamMatchBlock extends Block
             'teamId' => 0,
             'displayMode' => 'current',
             'align' => 'center',
+            'title' => '',
+            'showTitle' => true,
         ];
 
         $parsedAttributes = wp_parse_args($attributes, $defaultAttributes);
@@ -72,6 +74,19 @@ class TeamMatchBlock extends Block
             ? $result
             : '-:-';
 
+        $title = $parsedAttributes['title'];
+        $showTitle = $parsedAttributes['showTitle'];
+        $isEditorPreview = defined('REST_REQUEST') && REST_REQUEST;
+
+        $headlineHTML = '';
+        if (!$isEditorPreview && $showTitle && $title !== '') {
+            $headlineHTML = <<<HTML
+                <div class="{$this->blockClass('header')}">
+                    <h2 class="{$this->blockClass('headline')}">{$this->esc($title)}</h2>
+                </div>
+            HTML;
+        }
+
         $wrapperAttributes = get_block_wrapper_attributes([
             'class' => $this->blockClasses($parsedAttributes),
         ]);
@@ -81,6 +96,7 @@ class TeamMatchBlock extends Block
         $html = <<<HTML
             $content
             <div $wrapperAttributes>
+                $headlineHTML
                 <div class="{$this->blockClass('header')}">
                     <div class="{$this->blockClass('datetime')}">{$this->esc($matchDateTimeString)}</div>
                 </div>

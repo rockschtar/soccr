@@ -113,9 +113,9 @@ class OpenLigaDBApi
     ): OpenLigaDBGroupMatches {
         $cacheKey = "cu-openligadb-group-matches-$leagueShortcut-$leagueSeason-$groutOrderId";
 
-        $openLigaDBGroupMatches = wp_cache_get($cacheKey, 'openligadb');
+        $openLigaDBGroupMatches = get_transient($cacheKey);
 
-        if ($openLigaDBGroupMatches) {
+        if ($openLigaDBGroupMatches !== false) {
             return $openLigaDBGroupMatches;
         }
 
@@ -168,12 +168,7 @@ class OpenLigaDBApi
         $openLigaDBGroupMatches->setLeagueShortcut($leagueShortcut);
         $openLigaDBGroupMatches->setLeagueSeason($leagueSeason);
 
-        wp_cache_set(
-            $cacheKey,
-            $openLigaDBGroupMatches,
-            'openligadb',
-            60 * 60 * 1,
-        );
+        set_transient($cacheKey, $openLigaDBGroupMatches, HOUR_IN_SECONDS);
         return $openLigaDBGroupMatches;
     }
 
@@ -186,9 +181,9 @@ class OpenLigaDBApi
     {
         $cacheKey = "cu-openligadb-matches-$leagueShortcut-$leagueSeason-$groupOrderId";
 
-        $openLigaDBMatches = wp_cache_get($cacheKey, 'openligadb');
+        $openLigaDBMatches = get_transient($cacheKey);
 
-        if ($openLigaDBMatches) {
+        if ($openLigaDBMatches !== false) {
             return $openLigaDBMatches;
         }
 
@@ -227,7 +222,7 @@ class OpenLigaDBApi
 
         usort($openLigaDBMatches, $sortByTimestamp);
 
-        wp_cache_set($cacheKey, $openLigaDBMatches, 'openligadb', 60 * 60 * 1);
+        set_transient($cacheKey, $openLigaDBMatches, HOUR_IN_SECONDS);
 
         return $openLigaDBMatches;
     }
@@ -243,9 +238,9 @@ class OpenLigaDBApi
     {
         $cacheKey = "soccr-openligadb-current-group-$leagueShortcut";
 
-        $openLigaDBGroup = wp_cache_get($cacheKey, 'openligadb');
+        $openLigaDBGroup = get_transient($cacheKey);
 
-        if ($openLigaDBGroup) {
+        if ($openLigaDBGroup !== false) {
             return $openLigaDBGroup;
         }
 
@@ -261,7 +256,7 @@ class OpenLigaDBApi
         );
         $openLigaDBGroup = OpenLigaDBGroupFactory::createFromJSON($group);
 
-        wp_cache_set($cacheKey, $openLigaDBGroup, 'openligadb', 60 * 60 * 2);
+        set_transient($cacheKey, $openLigaDBGroup, 2 * HOUR_IN_SECONDS);
 
         return $openLigaDBGroup;
     }
@@ -277,9 +272,9 @@ class OpenLigaDBApi
     {
         $cacheKey = "soccr-openligadb-available-groups-$leagueShortcut-$leagueSeason";
 
-        $openLigaDBGroups = wp_cache_get($cacheKey, 'openligadb');
+        $openLigaDBGroups = get_transient($cacheKey);
 
-        if ($openLigaDBGroups) {
+        if ($openLigaDBGroups !== false) {
             return $openLigaDBGroups;
         }
 
@@ -304,7 +299,7 @@ class OpenLigaDBApi
             );
         }
 
-        wp_cache_set($cacheKey, $openLigaDBGroups, 'openligadb', 60 * 60 * 12);
+        set_transient($cacheKey, $openLigaDBGroups, 12 * HOUR_IN_SECONDS);
 
         return $openLigaDBGroups;
     }
@@ -318,9 +313,9 @@ class OpenLigaDBApi
     {
         $cacheKey = 'soccr-openligadb-available-leagues';
 
-        $openLigaDBLeagues = wp_cache_get($cacheKey, 'openligadb');
+        $openLigaDBLeagues = get_transient($cacheKey);
 
-        if ($openLigaDBLeagues) {
+        if ($openLigaDBLeagues !== false) {
             return $openLigaDBLeagues;
         }
 
@@ -345,7 +340,7 @@ class OpenLigaDBApi
             );
         }
 
-        wp_cache_set($cacheKey, $openLigaDBLeagues, 'openligadb', 60 * 60 * 24);
+        set_transient($cacheKey, $openLigaDBLeagues, DAY_IN_SECONDS);
 
         return $openLigaDBLeagues;
     }
@@ -359,9 +354,9 @@ class OpenLigaDBApi
     {
         $cacheKey = "soccr-openligadb-available-teams-$leagueShortcut-$leagueSeason";
 
-        $openLigaDBTeams = wp_cache_get($cacheKey);
+        $openLigaDBTeams = get_transient($cacheKey);
 
-        if ($openLigaDBTeams) {
+        if ($openLigaDBTeams !== false) {
             return $openLigaDBTeams;
         }
 
@@ -384,7 +379,7 @@ class OpenLigaDBApi
             $openLigaDBTeams[] = OpenLigaDBTeamFactory::createFromJSON($team);
         }
 
-        wp_cache_set($cacheKey, $openLigaDBTeams, 'openligadb', 60 * 60 * 24);
+        set_transient($cacheKey, $openLigaDBTeams, DAY_IN_SECONDS);
 
         return $openLigaDBTeams;
     }
@@ -478,10 +473,10 @@ class OpenLigaDBApi
     {
         $cacheKey = "soccr-openligadb-current-league-season-$leagueShortcut";
 
-        $openLigaDBLeagues = wp_cache_get($cacheKey, 'openligadb');
+        $openLigaDBLeague = get_transient($cacheKey);
 
-        if ($openLigaDBLeagues) {
-            return $openLigaDBLeagues;
+        if ($openLigaDBLeague !== false) {
+            return $openLigaDBLeague;
         }
 
         $openLigaDBLeagues = self::getAvailableLeagues();
@@ -513,16 +508,11 @@ class OpenLigaDBApi
             $openLigaDBLeague->getLeagueSeason(),
         );
 
-        if( count($matches) === 0 && count($openLigaDBLeaguesByShortcut) > 1 ) {
+        if (count($matches) === 0 && count($openLigaDBLeaguesByShortcut) > 1) {
             $openLigaDBLeague = array_shift($openLigaDBLeaguesByShortcut);
         }
 
-        wp_cache_set(
-            $cacheKey,
-            $openLigaDBLeague,
-            'openligadb',
-            WEEK_IN_SECONDS,
-        );
+        set_transient($cacheKey, $openLigaDBLeague, WEEK_IN_SECONDS);
 
         return $openLigaDBLeague;
     }
@@ -576,9 +566,9 @@ class OpenLigaDBApi
 
         $url = "https://api.openligadb.de/getbltable/$leagueShortcut/$leagueSeason";
 
-        $openLigaDBStandings = wp_cache_get($cacheKey, 'openligadb');
+        $openLigaDBStandings = get_transient($cacheKey);
 
-        if ($openLigaDBStandings) {
+        if ($openLigaDBStandings !== false) {
             return $openLigaDBStandings;
         }
 
@@ -616,7 +606,7 @@ class OpenLigaDBApi
             $openLigaDBStandings->addStanding($openLigaDBStanding);
         }
 
-        wp_cache_set($cacheKey, $openLigaDBStandings, 'openligadb', 60 * 60);
+        set_transient($cacheKey, $openLigaDBStandings, HOUR_IN_SECONDS);
 
         return $openLigaDBStandings;
     }
