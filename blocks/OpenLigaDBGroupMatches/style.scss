@@ -55,6 +55,22 @@
     display: none;
 }
 
+.wp-block-soccr-attribution {
+    font-size: 0.65em;
+    color: #bbb;
+    text-align: right;
+    margin-top: 6px;
+
+    a {
+        color: #bbb;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
 @media screen and (max-width: 580px) {
     .wp-block-soccr-group-matches .wp-block-soccr-group-matches-team-name {
         display: none;

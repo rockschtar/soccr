@@ -10,8 +10,6 @@ class GroupMatchesBlock extends Block
 {
     protected function render(array $attributes, string $content = ''): string
     {
-        global $post;
-
         $defaultAttributes = [
             'leagueShortcut' => 'bl1',
             'leagueSeason' => 2021,
@@ -92,7 +90,9 @@ class GroupMatchesBlock extends Block
             return '';
         }
 
-        $paginationUrl = get_permalink($post);
+        global $post;
+        $paginationUrl = $post ? get_permalink($post) : home_url(add_query_arg([]));
+
         $paginationPreviousHref = '';
         $paginationNextHref = '#';
 
@@ -207,6 +207,7 @@ class GroupMatchesBlock extends Block
             HTML;
         }
 
+        $html .= $this->attributionHtml();
         $html .= '</div>';
 
         return apply_filters(

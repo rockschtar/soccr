@@ -28,6 +28,18 @@ higher versions... this is just the highest one you've verified.
 *   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
 stable.
 
+== Third-Party Services ==
+
+This plugin retrieves data from the **OpenLigaDB** API (https://www.openligadb.de).
+
+* API endpoint: https://api.openligadb.de
+* The data is provided under the **Open Database License (ODbL) v1.0**: https://opendatacommons.org/licenses/odbl/
+* Privacy policy / Impressum of OpenLigaDB: https://www.openligadb.de/impressum
+
+By using this plugin, your WordPress site will make requests to the OpenLigaDB API to retrieve match and standings data. No personal user data is transmitted to OpenLigaDB.
+
+Each block displays a small attribution notice ("Daten: OpenLigaDB (ODbL)") as required by the ODbL license.
+
     Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
 if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
 for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
