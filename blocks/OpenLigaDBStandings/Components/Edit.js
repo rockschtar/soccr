@@ -1,56 +1,48 @@
-import { InspectorControls, useBlockProps, InnerBlocks } from '@wordpress/block-editor';
-import { Panel, PanelBody, TextControl, CheckboxControl } from '@wordpress/components';
+import { InspectorControls, useBlockProps, RichText } from '@wordpress/block-editor';
+import { Panel, PanelBody } from '@wordpress/components';
 import { default as ServerSideRender } from '@wordpress/server-side-render';
+import { LeagueSelectControl } from '../../Components/LeagueSelectControl';
 
 const Edit = (props) => {
     const {
         setAttributes,
-        attributes
+        attributes,
     } = props;
 
     const blockProps = useBlockProps();
 
-    const TEMPLATE = [
-        [ 'core/paragraph', { placeholder: 'Your default text...' } ],
-    ];
-
+    const placeholder = attributes.leagueShortcut
+        ? `Tabelle | ${attributes.leagueShortcut.toUpperCase()} ${attributes.leagueSeason}`
+        : 'Tabelle';
 
     return (
         <div {...blockProps}>
             <InspectorControls key={'openligadb-standings-ic'}>
                 <Panel key={'openligadb-standings-ic-panel'}>
                     <PanelBody key={'openligadb-standings-ic-panel-body'}>
-                        <TextControl key={'openligadb-standings-league-shortcut'}
-                                     label="OpenLigaDB League Shortcut"
-                                     value={attributes.leagueShortcut}
-                                     onChange={(leagueShortcut) => { setAttributes({ leagueShortcut });}}
-                        />
-                        <TextControl key={'openligadb-standings-league-season'}
-                                     type="number"
-                                     label="OpenLigaDB League Season"
-                                     value={attributes.leagueSeason}
-                                     onChange={(leagueSeason) => {
-                                         setAttributes({ leagueSeason: parseInt(leagueSeason) });
-                                     }}
-                        />
-                        <CheckboxControl key={'openligadb-standings-hide-title'}
-                                         label="Hide Title"
-                                         onChange={(hideTitle) => {
-                                             setAttributes({ hideTitle: hideTitle});
-                                         }}
+                        <LeagueSelectControl
+                            leagueShortcut={attributes.leagueShortcut}
+                            leagueSeason={attributes.leagueSeason}
+                            autoSelect={true}
+                            onChange={(leagueShortcut, leagueSeason) => {
+                                setAttributes({ leagueShortcut, leagueSeason: parseInt(leagueSeason) });
+                            }}
                         />
                     </PanelBody>
                 </Panel>
             </InspectorControls>
 
-            <InnerBlocks template={ TEMPLATE } temlpateLock={false}
-                         allowedBlocks={ [ 'core/paragraph', 'core/image', 'core/heading' ] }
+            <RichText
+                tagName="h2"
+                value={attributes.title}
+                onChange={(title) => setAttributes({ title })}
+                placeholder={placeholder}
             />
 
             <ServerSideRender
-              key={'openligadb-standings-ssr'}
-              block={props.name}
-              attributes={props.attributes}
+                key={'openligadb-standings-ssr'}
+                block={props.name}
+                attributes={props.attributes}
             />
         </div>
     );

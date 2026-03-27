@@ -1,5 +1,6 @@
 .wp-block-soccr-standings {
     max-width: 700px;
+    container-type: inline-size;
 
     &.alignfull,
     &.alignwide {
@@ -67,32 +68,55 @@
     text-align: right;
 }
 
-.wp-block-soccr-standings .wp-block-soccr-standings-team .wp-block-soccr-standings-team-name {
+.wp-block-soccr-standings-team-name {
     display: block;
 }
 
-.wp-block-soccr-standings .wp-block-soccr-standings-team .wp-block-soccr-standings-team-shortname {
+:where(.wp-block-soccr-standings-team-shortname) {
     display: none;
 }
 
-@media screen and (max-width: 580px) {
-    .wp-block-soccr-standings .wp-block-soccr-standings-team .wp-block-soccr-standings-team-name {
+.wp-block-soccr-attribution {
+    font-size: 0.65em;
+    color: #bbb;
+    text-align: right;
+    margin-top: 6px;
+
+    a {
+        color: #bbb;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+@container (max-width: 580px) {
+    .wp-block-soccr-standings-team-name {
         display: none;
     }
 
-    .wp-block-soccr-standings .wp-block-soccr-standings-team .wp-block-soccr-standings-team-shortname {
+    .wp-block-soccr-standings-team-shortname {
         display: block;
     }
 
-    .wp-block-soccr-standings .wp-block-soccr-standings-wins,
-    .wp-block-soccr-standings .wp-block-soccr-standings-draws,
-    .wp-block-soccr-standings .wp-block-soccr-standings-looses {
+    .wp-block-soccr-standings-wins,
+    .wp-block-soccr-standings-draws,
+    .wp-block-soccr-standings-looses {
         display: none;
     }
 }
 
-@media screen and (max-width: 520px) {
-    .wp-block-soccr-standings .wp-block-soccr-standings-goals {
+@container (max-width: 480px) {
+    .wp-block-soccr-standings-goals,
+    .wp-block-soccr-standings-goals-difference {
+        display: none;
+    }
+}
+
+@container (max-width: 360px) {
+    .wp-block-soccr-standings-matches {
         display: none;
     }
 }

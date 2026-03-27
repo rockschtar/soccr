@@ -9,12 +9,11 @@ abstract class Block
 {
     use Singelton;
 
-    private ?WP_Block_Type $blockType = null;
+    private WP_Block_Type|false|null $blockType = null;
 
     private function __construct()
     {
         add_action('init', $this->registerBlock(...));
-        add_filter('plugins_url', $this->pluginsUrl(...), 10, 3);
     }
 
     abstract public function blockDirectory(): string;
@@ -26,12 +25,7 @@ abstract class Block
 
     protected function blockname(): string
     {
-        return $this->blockType->name;
-    }
-
-    private function blockUrl(): string
-    {
-        return home_url(str_replace('/web', '', $this->blockDirectory()));
+        return $this->blockType instanceof WP_Block_Type ? $this->blockType->name : '';
     }
 
     private function distUrl(): string
@@ -42,6 +36,11 @@ abstract class Block
     final protected function esc(mixed $value): string
     {
         return esc_html((string) $value);
+    }
+
+    final protected function attributionHtml(): string
+    {
+        return '<div class="wp-block-soccr-attribution">Daten: <a href="https://www.openligadb.de" target="_blank" rel="noopener noreferrer">OpenLigaDB</a> (ODbL)</div>';
     }
 
     final public function blockClasses(
@@ -100,12 +99,4 @@ abstract class Block
         $this->blockType = register_block_type($this->absBlockDirectory(), $args);
     }
 
-    private function pluginsUrl(string $url, string $path, string $plugin): string
-    {
-        if (str_contains($plugin, $this->absBlockDirectory())) {
-            return home_url(str_replace('/web', '', $this->blockDirectory()) . '/' . $path);
-        }
-
-        return $url;
-    }
 }

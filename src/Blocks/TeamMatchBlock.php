@@ -76,6 +76,8 @@ class TeamMatchBlock extends Block
             'class' => $this->blockClasses($parsedAttributes),
         ]);
 
+        $attributionHtml = $this->attributionHtml();
+
         $html = <<<HTML
             $content
             <div $wrapperAttributes>
@@ -95,6 +97,7 @@ class TeamMatchBlock extends Block
                         </div>
                     </div>
                 </div>
+                {$attributionHtml}
             </div>
         HTML;
 

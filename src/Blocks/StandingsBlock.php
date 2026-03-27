@@ -13,13 +13,13 @@ class StandingsBlock extends Block
             'leagueShortcut' => '',
             'leagueSeason' => 0,
             'align' => 'left',
-            'hideTitle' => false,
+            'title' => '',
         ];
 
         $parsedAttributes = wp_parse_args($attributes, $defaultAttributes);
         $leagueShortcut = $parsedAttributes['leagueShortcut'];
         $leagueSeason = $parsedAttributes['leagueSeason'];
-        $hideTitle = $parsedAttributes['hideTitle'];
+        $title = $parsedAttributes['title'];
 
         try {
             $openLigaDBStandings = OpenLigaDBApi::getStandings(
@@ -58,26 +58,16 @@ class StandingsBlock extends Block
 
         $cssClasses = $this->blockClasses($parsedAttributes, $additionalClasses);
 
-        $leagueSeasonDisplay = $openLigaDBStandings->getLeague()->getLeagueSeasonDisplay();
+        $isEditorPreview = defined('REST_REQUEST') && REST_REQUEST;
 
-        $headline = sprintf(__('Tabelle | %s', 'soccr'), esc_html($leagueSeasonDisplay));
-        $headline = apply_filters('openligab_standings_headline', $headline, $openLigaDBStandings);
-
-        $headlineHTML = <<<HTML
-                <div class="{$this->blockClass('header')}">
-                    <h1 class="{$this->blockClass('headline')}">$headline</h1>
-                </div>
-           HTML;
-
-        if ($hideTitle) {
-            $headlineHTML = '';
+        $headlineHTML = '';
+        if (!$isEditorPreview && $title !== '') {
+            $headlineHTML = <<<HTML
+                    <div class="{$this->blockClass('header')}">
+                        <h2 class="{$this->blockClass('headline')}">{$this->esc($title)}</h2>
+                    </div>
+               HTML;
         }
-
-        $headlineHTML = apply_filters(
-            'openligab_standings_headline_html',
-            $headlineHTML,
-            $openLigaDBStandings,
-        );
 
         $standingsHTMLHeader = <<<HTML
            <div class="{$this->blockClass('thead')}">
@@ -87,13 +77,13 @@ class StandingsBlock extends Block
                 <div class="{$this->blockClass('tr')}">
                     <div class="{$this->blockClass('th')} {$this->blockClass('position')}"></div>
                     <div class="{$this->blockClass('th')} {$this->blockClass('team')}"></div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('matches')}">Spiele</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('points')}">Punkte</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('matches')}">Sp</div>
                     <div class="{$this->blockClass('th')} {$this->blockClass('wins')}">S</div>
                     <div class="{$this->blockClass('th')} {$this->blockClass('draws')}">U</div>
                     <div class="{$this->blockClass('th')} {$this->blockClass('looses')}">N</div>
                     <div class="{$this->blockClass('th')} {$this->blockClass('goals')}">Tore</div>
                     <div class="{$this->blockClass('th')} {$this->blockClass('goals-difference')}">Diff</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('points')}">Pkt</div>
                 </div>
 
            </div>
@@ -115,12 +105,12 @@ class StandingsBlock extends Block
                     </div>
 
                     <div class="{$this->blockClass('matches')}">{$openLigaDBStanding->getMatches()}</div>
-                    <div class="{$this->blockClass('points')}">{$openLigaDBStanding->getPoints()}</div>
                     <div class="{$this->blockClass('wins')}">{$openLigaDBStanding->getWins()}</div>
                     <div class="{$this->blockClass('draws')}">{$openLigaDBStanding->getDraws()}</div>
                     <div class="{$this->blockClass('looses')}">{$openLigaDBStanding->getLooses()}</div>
                     <div class="{$this->blockClass('goals')}">{$openLigaDBStanding->getGoalsScored()}:{$openLigaDBStanding->getGoalsConceded()}</div>
                     <div class="{$this->blockClass('goals-difference')}">{$openLigaDBStanding->getGoalDifference()}</div>
+                    <div class="{$this->blockClass('points')}">{$openLigaDBStanding->getPoints()}</div>
                 </div>
             HTML;
         }
@@ -131,6 +121,8 @@ class StandingsBlock extends Block
             'class' => $cssClasses,
         ]);
 
+        $attributionHtml = $this->attributionHtml();
+
         return <<<HTML
             <div {$wrapperAttributes}>
                 <div class="{$this->blockClass('content')}">
@@ -139,6 +131,7 @@ class StandingsBlock extends Block
                         {$standingsHTMLBody}
                     </div>
                 </div>
+                {$attributionHtml}
             </div>
         HTML;
     }
