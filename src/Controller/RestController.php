@@ -10,10 +10,16 @@ class RestController
 {
     use Singelton;
 
+    private const ICON_ALLOWED_HOSTS = [
+        'openligadb.de',
+        'upload.wikimedia.org',
+    ];
+
     private function __construct()
     {
         add_action('rest_api_init', $this->restGetLeagues(...));
         add_action('rest_api_init', $this->restGetAvailableTeams(...));
+        add_action('rest_api_init', $this->restGetTeamIcon(...));
     }
 
     private function restGetLeagues(): void
@@ -70,6 +76,66 @@ class RestController
                     'sanitize_callback' => static function ($value) {
                         return (int) $value;
                     },
+                ],
+            ],
+        ]);
+    }
+
+    private function restGetTeamIcon(): void
+    {
+        register_rest_route('openligadb/v1', '/team-icon', [
+            'methods' => 'GET',
+            'callback' => static function (\WP_REST_Request $request) {
+                $url = $request->get_param('url');
+
+                $host = parse_url($url, PHP_URL_HOST);
+                $allowed = array_filter(
+                    self::ICON_ALLOWED_HOSTS,
+                    static fn(string $allowed) => $host === $allowed || str_ends_with($host, '.' . $allowed),
+                );
+
+                if (empty($allowed)) {
+                    return new \WP_REST_Response(['error' => 'URL not allowed'], 403);
+                }
+
+                $cacheKey = 'soccr-team-icon-' . md5($url);
+                $cached = get_transient($cacheKey);
+
+                if ($cached !== false) {
+                    header('Content-Type: ' . $cached['type']);
+                    header('Cache-Control: public, max-age=86400');
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                    echo base64_decode($cached['data']);
+                    exit;
+                }
+
+                $response = wp_remote_get($url, ['timeout' => 10]);
+
+                if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) {
+                    return new \WP_REST_Response(['error' => 'Could not fetch icon'], 502);
+                }
+
+                $body = wp_remote_retrieve_body($response);
+                $contentType = wp_remote_retrieve_header($response, 'content-type') ?: 'image/png';
+                $contentType = explode(';', $contentType)[0];
+
+                set_transient($cacheKey, [
+                    'type' => $contentType,
+                    'data' => base64_encode($body),
+                ], DAY_IN_SECONDS);
+
+                header('Content-Type: ' . $contentType);
+                header('Cache-Control: public, max-age=86400');
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                echo $body;
+                exit;
+            },
+            'permission_callback' => '__return_true',
+            'args' => [
+                'url' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'sanitize_callback' => 'esc_url_raw',
                 ],
             ],
         ]);
