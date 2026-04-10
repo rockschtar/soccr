@@ -20,6 +20,7 @@ class TeamMatchBlock extends Block
             'align' => 'center',
             'title' => '',
             'showTitle' => true,
+            'showTeamIcons' => true,
         ];
 
         $parsedAttributes = wp_parse_args($attributes, $defaultAttributes);
@@ -74,15 +75,24 @@ class TeamMatchBlock extends Block
             ? $result
             : '-:-';
 
-        $title = $parsedAttributes['title'];
+        $displayModeLabels = [
+            'current' => __('Aktuelles Spiel', 'soccr'),
+            'next' => __('Nächstes Spiel', 'soccr'),
+            'last' => __('Letztes Spiel', 'soccr'),
+        ];
+
+        $title = $parsedAttributes['title'] !== ''
+            ? $parsedAttributes['title']
+            : ($displayModeLabels[$displayMode] ?? __('Aktuelles Spiel', 'soccr'));
         $showTitle = $parsedAttributes['showTitle'];
+        $showTeamIcons = (bool) $parsedAttributes['showTeamIcons'];
         $isEditorPreview = defined('REST_REQUEST') && REST_REQUEST;
 
         $headlineHTML = '';
         if (!$isEditorPreview && $showTitle && $title !== '') {
             $headlineHTML = <<<HTML
                 <div class="{$this->blockClass('header')}">
-                    <h2 class="{$this->blockClass('headline')}">{$this->esc($title)}</h2>
+                    <h4 class="{$this->blockClass('headline')}">{$this->esc($title)}</h4>
                 </div>
             HTML;
         }
@@ -103,11 +113,13 @@ class TeamMatchBlock extends Block
                 <div class="{$this->blockClass('content')}">
                     <div class="{$this->blockClass('row')}">
                         <div class="{$this->blockClass('team-home')}">
+                            {$this->teamIconHtml($match->getTeam1()->getIconUrl(), $match->getTeam1()->getTeamName(), $showTeamIcons)}
                             <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam1()->getTeamName())}</span>
                             <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam1()->getShortName())}</span>
                         </div>
                         <div class="{$this->blockClass('result')}">{$this->esc($resultDisplay)}</div>
                         <div class="{$this->blockClass('team-away')}">
+                            {$this->teamIconHtml($match->getTeam2()->getIconUrl(), $match->getTeam2()->getTeamName(), $showTeamIcons)}
                             <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam2()->getTeamName())}</span>
                             <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam2()->getShortName())}</span>
                         </div>
@@ -134,6 +146,19 @@ class TeamMatchBlock extends Block
             'current' => $this->getCurrentMatch($query),
             default => $this->getCurrentMatch($query),
         };
+    }
+
+    private function teamIconHtml(?string $iconUrl, string $teamName, bool $showTeamIcons): string
+    {
+        if (!$showTeamIcons || empty($iconUrl)) {
+            return '';
+        }
+
+        $src = esc_url($iconUrl);
+        $alt = esc_attr($teamName);
+        $class = $this->blockClass('team-icon');
+
+        return "<img class=\"{$class}\" src=\"{$src}\" alt=\"{$alt}\" />";
     }
 
     private function getCurrentMatch(OpenLigaDBMatchQuery $query): ?OpenLigaDBMatch

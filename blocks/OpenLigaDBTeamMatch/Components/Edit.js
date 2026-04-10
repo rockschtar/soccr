@@ -1,10 +1,15 @@
 import { default as ServerSideRender } from '@wordpress/server-side-render';
 import { SelectControl, ToggleControl, Panel, PanelBody } from '@wordpress/components';
 import { InspectorControls, useBlockProps, RichText } from '@wordpress/block-editor';
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { LeagueSelectControl } from '../../Components/LeagueSelectControl';
 import { TeamSelectControl } from '../../Components/TeamSelectControl';
+
+const displayModeLabels = {
+    current: __('Aktuelles Spiel', 'soccr'),
+    next: __('Nächstes Spiel', 'soccr'),
+    last: __('Letztes Spiel', 'soccr'),
+};
 
 const Edit = (props) => {
     const {
@@ -13,19 +18,13 @@ const Edit = (props) => {
     } = props;
 
     const blockProps = useBlockProps();
-    const [leagueName, setLeagueName] = useState('');
 
-    const onLeagueChange = (leagueShortcut, leagueSeason, name) => {
-        setLeagueName(name || '');
-        const newAttributes = {
+    const onLeagueChange = (leagueShortcut, leagueSeason) => {
+        setAttributes({
             leagueShortcut,
             leagueSeason: parseInt(leagueSeason),
             teamId: 0,
-        };
-        if (!attributes.title && name) {
-            newAttributes.title = name;
-        }
-        setAttributes(newAttributes);
+        });
     };
 
     const onTeamChange = (teamId) => {
@@ -33,9 +32,9 @@ const Edit = (props) => {
     };
 
     const displayModeOptions = [
-        { value: 'current', label: __('Aktuell', 'soccr') },
-        { value: 'next', label: __('Nächstes Spiel', 'soccr') },
-        { value: 'last', label: __('Letztes Spiel', 'soccr') },
+        { value: 'current', label: displayModeLabels.current },
+        { value: 'next', label: displayModeLabels.next },
+        { value: 'last', label: displayModeLabels.last },
     ];
 
     return (
@@ -47,6 +46,11 @@ const Edit = (props) => {
                             label="Titel anzeigen"
                             checked={attributes.showTitle}
                             onChange={(showTitle) => setAttributes({ showTitle })}
+                        />
+                        <ToggleControl
+                            label="Team-Icons anzeigen"
+                            checked={attributes.showTeamIcons}
+                            onChange={(showTeamIcons) => setAttributes({ showTeamIcons })}
                         />
                         <LeagueSelectControl
                             key={'openligadb-team-match-league-select'}
@@ -78,10 +82,10 @@ const Edit = (props) => {
 
             {attributes.showTitle && (
                 <RichText
-                    tagName="h2"
+                    tagName="h4"
                     value={attributes.title}
                     onChange={(title) => setAttributes({ title })}
-                    placeholder={leagueName || 'Team Spiel'}
+                    placeholder={displayModeLabels[attributes.displayMode]}
                 />
             )}
 
