@@ -154,7 +154,8 @@ class TeamMatchBlock extends Block
             return '';
         }
 
-        $src = esc_url($iconUrl);
+        $proxyUrl = add_query_arg('url', rawurlencode($iconUrl), rest_url('openligadb/v1/team-icon'));
+        $src = esc_url($proxyUrl);
         $alt = esc_attr($teamName);
         $class = $this->blockClass('team-icon');
 
