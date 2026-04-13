@@ -45,7 +45,12 @@
     }
   },
   "supports": {
-    "align": true
+    "align": true,
+    "color": {
+      "text": true,
+      "background": true,
+      "link": false
+    }
   },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./style.css",

@@ -85,11 +85,14 @@ abstract class Block
             $handle = sanitize_key(strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', get_class($this))));
 
 
+            $cssPath = $this->absBlockDirectory() . DIRECTORY_SEPARATOR . 'style-index.css';
+            $cssVersion = file_exists($cssPath) ? md5_file($cssPath) : $assets['version'];
+
             wp_register_style(
                 $handle,
                 $this->distUrl() . '/style-index.css',
                 [],
-                $assets['version']
+                $cssVersion
             );
 
             $args['editor_style'] = $handle;
@@ -98,5 +101,4 @@ abstract class Block
 
         $this->blockType = register_block_type($this->absBlockDirectory(), $args);
     }
-
 }

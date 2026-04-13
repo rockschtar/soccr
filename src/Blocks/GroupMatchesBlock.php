@@ -178,18 +178,32 @@ class GroupMatchesBlock extends Block
                 <div class="{$this->blockClass('content')}">
         HTML;
 
-        $currentMatchTimestamp = null;
-
+        $currentMatchDate = null;
 
         foreach ($openLigaDBGroupMatches->getMatches() as $match) {
-            if (
-                $currentMatchTimestamp !== $match->getDateTime()->getTimestamp()
-            ) {
-                $currentMatchTimestamp = $match->getDateTime()->getTimestamp();
-                $matchDateTimeString = DateFormat::toWordPress($match->getDateTime());
+            $matchDate = $match->getDateTime()->format('Y-m-d');
+
+            if ($currentMatchDate !== $matchDate) {
+                $currentMatchDate = $matchDate;
+                $matchDateString = $this->esc(DateFormat::toDate($match->getDateTime()));
                 $html .= <<<HTML
-                    <div class="{$this->blockClass('datetime')}">{$this->esc($matchDateTimeString)}</div>
+                    <div class="{$this->blockClass('datetime')}">$matchDateString</div>
                 HTML;
+            }
+
+            $result = $match->getResultByType(2);
+            $fullDateTimeTooltip = esc_attr(DateFormat::toWordPress($match->getDateTime()));
+
+            if ($result !== null) {
+                $resultContent = $this->esc((string) $result);
+                $resultClass = $this->blockClass('result');
+            } else {
+                $weekdayEscaped = $this->esc(date_i18n('D', $match->getDateTime()->getTimestamp()));
+                $timeEscaped = $this->esc(DateFormat::toTime($match->getDateTime()));
+                $weekdayClass = $this->blockClass('result-weekday');
+                $timeClass = $this->blockClass('result-time');
+                $resultContent = "<span class=\"{$weekdayClass}\">{$weekdayEscaped}</span><span class=\"{$timeClass}\">{$timeEscaped}</span>";
+                $resultClass = $this->blockClass('result') . ' ' . $this->blockClass('result-kickoff');
             }
 
             $html .= <<<HTML
@@ -198,7 +212,7 @@ class GroupMatchesBlock extends Block
                         <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam1()->getTeamName())}</span>
                         <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam1()->getShortName())}</span>
                     </div>
-                    <div class="{$this->blockClass('result')}">{$this->esc($match->getResultByType(2,))}</div>
+                    <div class="{$resultClass}"><span title="{$fullDateTimeTooltip}">{$resultContent}</span></div>
                     <div class="{$this->blockClass('team-away')}">
                         <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam2()->getTeamName())}</span>
                         <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam2()->getShortName())}</span>
