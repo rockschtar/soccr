@@ -1,5 +1,6 @@
 .wp-block-soccr-team-match {
     max-width: 700px;
+    container-type: inline-size;
 
     &.alignfull,
     &.alignwide {
@@ -69,7 +70,7 @@
     }
 }
 
-@media screen and (max-width: 400px) {
+@container (max-width: 400px) {
     .wp-block-soccr-team-match .wp-block-soccr-team-match-team-name {
         display: none;
     }
