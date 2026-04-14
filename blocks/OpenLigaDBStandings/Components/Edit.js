@@ -3,16 +3,24 @@ import {
 	useBlockProps,
 	RichText,
 } from '@wordpress/block-editor';
-import { Panel, PanelBody, ToggleControl } from '@wordpress/components';
+import { Panel, PanelBody, SelectControl, ToggleControl } from '@wordpress/components';
 import { default as ServerSideRender } from '@wordpress/server-side-render';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { LeagueSelectControl } from '../../Components/LeagueSelectControl';
+import { TeamSelectControl } from '../../Components/TeamSelectControl';
 
 const Edit = ( props ) => {
 	const { setAttributes, attributes } = props;
 
 	const blockProps = useBlockProps();
 	const [ leagueName, setLeagueName ] = useState( '' );
+	const [ leagueSelected, setLeagueSelected ] = useState(
+		!! attributes.leagueShortcut
+	);
+
+	useEffect( () => {
+		setLeagueSelected( !! attributes.leagueShortcut );
+	}, [ attributes.leagueShortcut ] );
 
 	return (
 		<div { ...blockProps }>
@@ -39,6 +47,7 @@ const Edit = ( props ) => {
 								const newAttributes = {
 									leagueShortcut,
 									leagueSeason: parseInt( leagueSeason ),
+									highlightTeamId: 0,
 								};
 								if ( ! attributes.title && name ) {
 									newAttributes.title = name;
@@ -46,6 +55,18 @@ const Edit = ( props ) => {
 								setAttributes( newAttributes );
 							} }
 						/>
+						{ leagueSelected && (
+							<TeamSelectControl
+								leagueShortcut={ attributes.leagueShortcut }
+								leagueSeason={ attributes.leagueSeason }
+								teamId={ attributes.highlightTeamId }
+								onChange={ ( value ) =>
+									setAttributes( {
+										highlightTeamId: parseInt( value ),
+									} )
+								}
+							/>
+						) }
 					</PanelBody>
 				</Panel>
 			</InspectorControls>

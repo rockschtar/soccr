@@ -27,6 +27,10 @@
     "showTitle": {
       "type": "boolean",
       "default": true
+    },
+    "highlightTeamId": {
+      "type": "number",
+      "default": 0
     }
   },
   "supports": {

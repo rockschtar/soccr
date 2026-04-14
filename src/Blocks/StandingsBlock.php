@@ -10,11 +10,12 @@ class StandingsBlock extends Block
     protected function render(array $attributes, string $content = ''): string
     {
         $defaultAttributes = [
-            'leagueShortcut' => '',
-            'leagueSeason' => 0,
-            'align' => 'left',
-            'title' => '',
-            'showTitle' => true,
+            'leagueShortcut'  => '',
+            'leagueSeason'    => 0,
+            'align'           => 'left',
+            'title'           => '',
+            'showTitle'       => true,
+            'highlightTeamId' => 0,
         ];
 
         $parsedAttributes = wp_parse_args($attributes, $defaultAttributes);
@@ -22,6 +23,7 @@ class StandingsBlock extends Block
         $leagueSeason = $parsedAttributes['leagueSeason'];
         $title = $parsedAttributes['title'];
         $showTitle = $parsedAttributes['showTitle'];
+        $highlightTeamId = (int) ($parsedAttributes['highlightTeamId'] ?? 0);
 
         try {
             $openLigaDBStandings = OpenLigaDBApi::getStandings(
@@ -98,8 +100,13 @@ class StandingsBlock extends Block
         foreach ($openLigaDBStandings->getStandings() as $openLigaDBStanding) {
             $standingsPosition++;
 
+            $teamId = $openLigaDBStanding->getTeam()->getTeamId();
+            $highlightClass = ($highlightTeamId > 0 && $teamId === $highlightTeamId)
+                ? ' ' . $this->blockClass('row--highlighted')
+                : '';
+
             $standingsHTMLBody .= <<<HTML
-                <div class="{$this->blockClass('row')} {$this->blockClass('team-' . $openLigaDBStanding->getTeam()->getTeamId())}">
+                <div class="{$this->blockClass('row')} {$this->blockClass('team-' . $teamId)}{$highlightClass}">
                     <div class="{$this->blockClass('position')} {$this->blockClass('position')}-$standingsPosition">{$standingsPosition}</div>
                     <div class="{$this->blockClass('team')}">
                         <span class="{$this->blockClass('team-name')}">{$this->esc($openLigaDBStanding->getTeam()->getTeamName())}</span>
