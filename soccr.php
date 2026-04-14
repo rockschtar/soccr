@@ -1,17 +1,18 @@
 <?php
 
-/**
- * Plugin Name:     Soccr Reloaded
- * Plugin URI:      PLUGIN SITE HERE
- * Description:     PLUGIN DESCRIPTION HERE
- * Author:          YOUR NAME HERE
- * Author URI:      YOUR SITE HERE
- * Text Domain:     soccr
- * Domain Path:     /languages
- * Version:         2.0.0
- *
- * @package         Rockschtar\WordPress\Soccr
- */
+/*
+* Plugin Name: Soccr Reloaded
+* Plugin URI: https://wordpress.org/plugins/soccr-reloaded/
+* Description: Display football match results, standings, and upcoming matches from OpenLigaDB as Gutenberg blocks.
+* Author: rockschtar
+* Author URI: http://www.eracer.de
+* Version: develop
+* Requires at least: 6.0
+* Requires PHP: 8.4
+* License: MIT
+* Text Domain: soccr
+* Domain Path: /languages
+*/
 
 define('SOCCR_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SOCCR_PLUGIN_URL', plugin_dir_url(__FILE__));
