@@ -76,13 +76,13 @@ jobs:
         run: composer install --no-dev --no-suggest --optimize-autoloader --no-interaction
 
       - name: Set Version in PHP File
-        run: sed -i "s/Version:.*$/Version: ${{ github.ref_name }}/" soccr.php
-        shell: bash
+        run: |
+          sed -i "s/Version:.*$/Version: ${{ github.ref_name }}/" soccr.php
 
       - name: Set Stable tag in readme.txt (stable releases only)
         if: "!contains(github.ref_name, '-')"
-        run: sed -i "s/Stable tag:.*$/Stable tag: ${{ github.ref_name }}/" readme.txt
-        shell: bash
+        run: |
+          sed -i "s/Stable tag:.*$/Stable tag: ${{ github.ref_name }}/" readme.txt
 
       - name: zip
         run: npm run plugin-zip
@@ -148,7 +148,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Update Stable tag
-        run: sed -i "s/Stable tag:.*$/Stable tag: ${{ github.ref_name }}/" readme.txt
+        run: |
+          sed -i "s/Stable tag:.*$/Stable tag: ${{ github.ref_name }}/" readme.txt
       - name: WordPress.org plugin asset/readme update
         uses: 10up/action-wordpress-plugin-asset-update@stable
         env:
