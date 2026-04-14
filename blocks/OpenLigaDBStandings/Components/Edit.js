@@ -4,6 +4,7 @@ import {
 	RichText,
 } from '@wordpress/block-editor';
 import { Panel, PanelBody, ToggleControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 import { default as ServerSideRender } from '@wordpress/server-side-render';
 import { useEffect, useState } from '@wordpress/element';
 import { LeagueSelectControl } from '../../Components/LeagueSelectControl';
@@ -28,7 +29,7 @@ const Edit = ( props ) => {
 				<Panel key={ 'openligadb-standings-ic-panel' }>
 					<PanelBody key={ 'openligadb-standings-ic-panel-body' }>
 						<ToggleControl
-							label="Titel anzeigen"
+							label={ __( 'Titel anzeigen', 'soccr' ) }
 							checked={ attributes.showTitle }
 							onChange={ ( showTitle ) =>
 								setAttributes( { showTitle } )
@@ -57,7 +58,10 @@ const Edit = ( props ) => {
 						/>
 						{ leagueSelected && (
 							<TeamSelectControl
-								label="Hervorgehobene Mannschaft:"
+								label={ __(
+									'Hervorgehobene Mannschaft:',
+									'soccr'
+								) }
 								leagueShortcut={ attributes.leagueShortcut }
 								leagueSeason={ attributes.leagueSeason }
 								teamId={ attributes.highlightTeamId }
@@ -77,7 +81,7 @@ const Edit = ( props ) => {
 					tagName="h2"
 					value={ attributes.title }
 					onChange={ ( title ) => setAttributes( { title } ) }
-					placeholder={ leagueName || 'Tabelle' }
+					placeholder={ leagueName || __( 'Tabelle', 'soccr' ) }
 				/>
 			) }
 

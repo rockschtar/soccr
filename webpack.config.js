@@ -7,12 +7,12 @@ const path = require( 'path' );
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config.js' );
 const defaultEntryPoints = defaultConfig.entry();
 const entryPoints = {
-  ...defaultEntryPoints
-}
+	...defaultEntryPoints,
+};
 
 module.exports = {
-  ...defaultConfig,
-  ...{
-    entry: entryPoints
-  }
-}
+	...defaultConfig,
+	...{
+		entry: entryPoints,
+	},
+};

@@ -40,7 +40,13 @@ abstract class Block
 
     final protected function attributionHtml(): string
     {
-        return '<div class="wp-block-soccr-attribution">Daten: <a href="https://www.openligadb.de" target="_blank" rel="noopener noreferrer">OpenLigaDB</a> (ODbL)</div>';
+        $attribution = sprintf(
+            /* translators: %s is a link to openligadb.de */
+            __('Daten: %s (ODbL)', 'soccr'),
+            '<a href="https://www.openligadb.de" target="_blank" rel="noopener noreferrer">OpenLigaDB</a>'
+        );
+
+        return '<div class="wp-block-soccr-attribution">' . $attribution . '</div>';
     }
 
     final public function blockClasses(

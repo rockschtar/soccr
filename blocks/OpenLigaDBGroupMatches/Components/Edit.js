@@ -8,6 +8,7 @@ import {
 } from '@wordpress/components';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { useEffect } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import { LeagueSelectControl } from '../../Components/LeagueSelectControl';
 
 const Edit = ( props ) => {
@@ -31,7 +32,7 @@ const Edit = ( props ) => {
 				<Panel key={ 'openligadb-group-matches-ic-panel' }>
 					<PanelBody key={ 'openligadb-group-matches-ic-panel-body' }>
 						<ToggleControl
-							label="Titel anzeigen"
+							label={ __( 'Titel anzeigen', 'soccr' ) }
 							checked={ attributes.showTitle }
 							onChange={ ( showTitle ) =>
 								setAttributes( { showTitle } )
@@ -52,7 +53,10 @@ const Edit = ( props ) => {
 							key={
 								'openligadb-attribute-league-defaultcurrentgroup'
 							}
-							label="Aktuelle GroupOrderId anzeigen"
+							label={ __(
+								'Aktuellen Spieltag anzeigen',
+								'soccr'
+							) }
 							checked={ attributes.defaultCurrentGroup }
 							onChange={ ( defaultCurrentGroup ) => {
 								setAttributes( { defaultCurrentGroup } );
@@ -66,7 +70,10 @@ const Edit = ( props ) => {
 								}
 								type="number"
 								min={ 1 }
-								label="OpenLigaDB GroupOrderId"
+								label={ __(
+									'Spieltag (GroupOrderId)',
+									'soccr'
+								) }
 								value={ attributes.groupOrderId ?? 1 }
 								onChange={ ( groupOrderId ) => {
 									setAttributes( {
@@ -77,7 +84,7 @@ const Edit = ( props ) => {
 						) }
 						<CheckboxControl
 							key={ 'openligadb-attribute-league-pagination' }
-							label="Blättern anzeigen"
+							label={ __( 'Blättern anzeigen', 'soccr' ) }
 							checked={ attributes.pagination }
 							onChange={ ( pagination ) => {
 								setAttributes( { pagination } );
