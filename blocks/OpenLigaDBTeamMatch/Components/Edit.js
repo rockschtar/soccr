@@ -49,14 +49,14 @@ const Edit = ( props ) => {
 				<Panel key={ 'openligadb-team-match-ic-panel' }>
 					<PanelBody key={ 'openligadb-team-match-ic-panel-body' }>
 						<ToggleControl
-							label="Titel anzeigen"
+							label={ __( 'Titel anzeigen', 'soccr' ) }
 							checked={ attributes.showTitle }
 							onChange={ ( showTitle ) =>
 								setAttributes( { showTitle } )
 							}
 						/>
 						<ToggleControl
-							label="Team-Icons anzeigen"
+							label={ __( 'Team-Icons anzeigen', 'soccr' ) }
 							checked={ attributes.showTeamIcons }
 							onChange={ ( showTeamIcons ) =>
 								setAttributes( { showTeamIcons } )

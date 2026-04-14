@@ -5,7 +5,11 @@ import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 
 export const TeamSelectControl = ( props ) => {
-	const { leagueShortcut, leagueSeason, label = __( 'Mannschaft:', 'soccr' ) } = props;
+	const {
+		leagueShortcut,
+		leagueSeason,
+		label = __( 'Mannschaft:', 'soccr' ),
+	} = props;
 	const [ teams, setTeams ] = useState( [] );
 	const [ teamId, setTeamId ] = useState( props.teamId );
 
@@ -33,7 +37,7 @@ export const TeamSelectControl = ( props ) => {
 
 			teamOptions.unshift( {
 				value: 0,
-				label: __( 'Mannschaft auswählen', 'openligadb' ),
+				label: __( 'Mannschaft auswählen', 'soccr' ),
 			} );
 
 			if ( componentMounted.current ) {

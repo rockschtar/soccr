@@ -66,7 +66,7 @@ export const LeagueSelectControl = ( props ) => {
 
 	return (
 		<ComboboxControl
-			label={ __( 'Liga:', 'openligadb' ) }
+			label={ __( 'Liga:', 'soccr' ) }
 			value={ leagueShortcutSeason }
 			onChange={ onLeagueChange }
 			options={ leagues }
