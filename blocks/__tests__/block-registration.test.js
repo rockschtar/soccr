@@ -5,17 +5,13 @@ import {
 	setCategories,
 	unregisterBlockType,
 } from '@wordpress/blocks';
+import groupMatchesMetadata from '../OpenLigaDBGroupMatches/block.json';
+import standingsMetadata from '../OpenLigaDBStandings/block.json';
+import teamMatchMetadata from '../OpenLigaDBTeamMatch/block.json';
 
 beforeAll( () => {
-	setCategories( [
-		...getCategories(),
-		{ slug: 'soccr', title: 'Soccr' },
-	] );
+	setCategories( [ ...getCategories(), { slug: 'soccr', title: 'Soccr' } ] );
 } );
-
-import standingsMetadata from '../OpenLigaDBStandings/block.json';
-import groupMatchesMetadata from '../OpenLigaDBGroupMatches/block.json';
-import teamMatchMetadata from '../OpenLigaDBTeamMatch/block.json';
 
 const noop = () => null;
 
