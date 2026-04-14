@@ -34,7 +34,7 @@ By default, the following German leagues from OpenLigaDB are available:
 * 2. Bundesliga (bl2)
 * 3. Liga (bl3)
 
-Additional leagues can be added via the `soccr_allowed_league_shortcuts` filter.
+Additional leagues can be added via the `soccr_league_shortcuts` filter.
 
 = Features =
 
@@ -56,7 +56,7 @@ By using this plugin, your WordPress site will make requests to `https://api.ope
 
 Available filters:
 
-* `soccr_allowed_league_shortcuts` — Customize which leagues are available in the block inspector (default: `['bl1', 'bl2', 'bl3']`)
+* `soccr_league_shortcuts` — Customize which leagues are available in the block inspector (default: `['bl1', 'bl2', 'bl3']`)
 * `soccr_team_match_html` — Modify the Team Match block HTML output
 * `soccr_group_matches_html` — Modify the Group Matches block HTML output
 * `soccr_group_matchtes_headline` — Modify the Group Matches headline text
@@ -76,7 +76,7 @@ Available actions:
 
 = Which leagues are supported? =
 
-By default, the 1. Bundesliga, 2. Bundesliga, and 3. Liga from OpenLigaDB are available. You can add other leagues available on OpenLigaDB using the `soccr_allowed_league_shortcuts` filter.
+By default, the 1. Bundesliga, 2. Bundesliga, and 3. Liga from OpenLigaDB are available. You can add other leagues available on OpenLigaDB using the `soccr_league_shortcuts` filter.
 
 = Is an API key required? =
 
