@@ -397,14 +397,18 @@ class OpenLigaDBApi
             return $league->getSportId() === 1;
         });
 
-        if (count($leagueQuery->getLeagueShortcuts()) > 0) {
-            $leagues = array_filter(
-                $leagues,
-                static function (OpenligaDBLeague $league) use ($leagueQuery) {
-                    return in_array($league->getLeagueShortcut(), $leagueQuery->getLeagueShortcuts(), true);
-                }
-            );
+        $shortcuts = $leagueQuery->getLeagueShortcuts();
+
+        if (empty($shortcuts)) {
+            $shortcuts = apply_filters('soccr_allowed_league_shortcuts', ['bl1', 'bl2', 'bl3']);
         }
+
+        $leagues = array_filter(
+            $leagues,
+            static function (OpenligaDBLeague $league) use ($shortcuts) {
+                return in_array($league->getLeagueShortcut(), $shortcuts, true);
+            }
+        );
 
         $leagues = array_filter($leagues, static function (OpenligaDBLeague $league) use ($leagueQuery) {
             if (!$leagueQuery->getLeagueShortcut()) {

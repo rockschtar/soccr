@@ -12,7 +12,7 @@ const displayModeLabels = {
 };
 
 const Edit = (props) => {
-    const {
+    const { 	
         setAttributes,
         attributes,
     } = props;

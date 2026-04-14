@@ -1,127 +1,116 @@
 === Soccr Reloaded ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: https://example.com/
-Tags: comments, spam
-Requires at least: 4.5
-Tested up to: 6.3.2
-Requires PHP: 5.6
+Contributors: rockschtar
+Donate link: https://github.com/rockschtar/soccr-reloaded
+Tags: football, soccer, bundesliga, openligadb, gutenberg
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 8.4
 Stable tag: 0.1.0
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+License: MIT
+License URI: https://opensource.org/licenses/MIT
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+Display football match results, standings, and upcoming matches from OpenLigaDB as Gutenberg blocks.
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+**Soccr Reloaded** integrates live football data from [OpenLigaDB](https://www.openligadb.de) into the WordPress block editor. The plugin provides three fully configurable Gutenberg blocks for displaying match results, league standings, and team-specific match information — all server-side rendered and cached for performance.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+= Blocks =
 
-A few notes about the sections above:
+**Tabelle (Standings)**
+Displays a full league table for a selected league and season. The table shows position, team name, matches played, wins, draws, losses, goals, goal difference, and points. The league and season can be selected directly in the block inspector.
 
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+**Spieltag (Group Matches)**
+Displays all matches for a specific matchday. Automatically shows the current matchday by default. Includes optional pagination to browse through all matchdays of a season. Matches are grouped by date and show kickoff times for upcoming games and final scores for finished ones.
 
-== Third-Party Services ==
+**Team-Spiel (Team Match)**
+Displays a match for a specific team. Three display modes are available: current match (next upcoming or last finished), next match, or last match. Optionally shows team crests/icons. The team can be selected from a list of all teams in the chosen league.
 
-This plugin retrieves data from the **OpenLigaDB** API (https://www.openligadb.de).
+= Supported Leagues =
 
-* API endpoint: https://api.openligadb.de
-* The data is provided under the **Open Database License (ODbL) v1.0**: https://opendatacommons.org/licenses/odbl/
-* Privacy policy / Impressum of OpenLigaDB: https://www.openligadb.de/impressum
+By default, the following German leagues from OpenLigaDB are available:
 
-By using this plugin, your WordPress site will make requests to the OpenLigaDB API to retrieve match and standings data. No personal user data is transmitted to OpenLigaDB.
+* 1. Bundesliga (bl1)
+* 2. Bundesliga (bl2)
+* 3. Liga (bl3)
 
-Each block displays a small attribution notice ("Daten: OpenLigaDB (ODbL)") as required by the ODbL license.
+Additional leagues can be added via the `soccr_allowed_league_shortcuts` filter.
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
+= Features =
 
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+* Three ready-to-use Gutenberg blocks
+* Server-side rendering — no JavaScript required on the frontend
+* Configurable caching (1 hour for matches and standings, 12 hours for matchday data, 24 hours for teams and leagues)
+* Alignment support (left, center, right, wide, full) for all blocks
+* Optional custom block title for each block
+* Team crest display with built-in image proxy and caching
+* Pagination for matchday browsing
+
+= Data Attribution =
+
+All data is provided by **OpenLigaDB** under the [Open Database License (ODbL) v1.0](https://opendatacommons.org/licenses/odbl/). Each block automatically displays the required attribution notice.
+
+By using this plugin, your WordPress site will make requests to `https://api.openligadb.de`. No personal user data is transmitted to OpenLigaDB.
+
+= For Developers =
+
+Available filters:
+
+* `soccr_allowed_league_shortcuts` — Customize which leagues are available in the block inspector (default: `['bl1', 'bl2', 'bl3']`)
+* `soccr_team_match_html` — Modify the Team Match block HTML output
+* `soccr_group_matches_html` — Modify the Group Matches block HTML output
+* `soccr_group_matchtes_headline` — Modify the Group Matches headline text
+
+Available actions:
+
+* `soccr_exception` — Triggered on API or rendering errors; use for custom error logging
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
-
-e.g.
-
-1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+1. Upload the `soccr-reloaded` folder to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the *Plugins* menu in WordPress.
+3. Add any of the three Soccr blocks via the block editor. The blocks are listed under the **Soccr** category in the block inserter.
+4. Select the desired league and season in the block inspector on the right-hand side.
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= Which leagues are supported? =
 
-An answer to that question.
+By default, the 1. Bundesliga, 2. Bundesliga, and 3. Liga from OpenLigaDB are available. You can add other leagues available on OpenLigaDB using the `soccr_allowed_league_shortcuts` filter.
 
-= What about foo bar? =
+= Is an API key required? =
 
-Answer to foo bar dilemma.
+No. OpenLigaDB is a free, open service and does not require registration or an API key.
+
+= Why does the block show outdated data? =
+
+The plugin caches API responses in the WordPress object cache. Match and standings data is cached for 1 hour. If you need to refresh data immediately, you can flush the object cache via a caching plugin or `wp cache flush` on the command line.
+
+= Can I add custom styles? =
+
+Yes. All blocks use BEM-style CSS classes prefixed with `wp-block-soccr-` (e.g., `.wp-block-soccr-standings`, `.wp-block-soccr-team-match`, `.wp-block-soccr-group-matches`). You can target these classes in your theme's stylesheet.
+
+= Are team crests displayed? =
+
+The Team Match block optionally displays team crests sourced from OpenLigaDB and Wikimedia Commons. The crest display can be toggled in the block inspector. Images are proxied through WordPress to avoid mixed-content issues and cached for 24 hours.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. Standings block showing the 2. Bundesliga table.
+2. Group Matches block showing a matchday with pagination.
+3. Team Match block showing the next match for a selected team.
+4. Block inspector panel for the Standings block.
 
 == Changelog ==
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
-
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
+= 2.0.0 =
+* Complete rewrite as Gutenberg block plugin
+* Three server-side rendered blocks: Standings, Group Matches, Team Match
+* Team crest support with image proxy
+* Matchday pagination
+* Caching layer via WordPress object cache
 
 == Upgrade Notice ==
 
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](https://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: https://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`
+= 2.0.0 =
+Complete rewrite — requires PHP 8.4 and WordPress 6.0. The old shortcode-based blocks are replaced by native Gutenberg blocks.
