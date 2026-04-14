@@ -3,7 +3,7 @@ import {
 	useBlockProps,
 	RichText,
 } from '@wordpress/block-editor';
-import { Panel, PanelBody, SelectControl, ToggleControl } from '@wordpress/components';
+import { Panel, PanelBody, ToggleControl } from '@wordpress/components';
 import { default as ServerSideRender } from '@wordpress/server-side-render';
 import { useEffect, useState } from '@wordpress/element';
 import { LeagueSelectControl } from '../../Components/LeagueSelectControl';
