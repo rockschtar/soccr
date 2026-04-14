@@ -59,7 +59,7 @@ Available filters:
 * `soccr_league_shortcuts` — Customize which leagues are available in the block inspector (default: `['bl1', 'bl2', 'bl3']`)
 * `soccr_team_match_html` — Modify the Team Match block HTML output
 * `soccr_group_matches_html` — Modify the Group Matches block HTML output
-* `soccr_group_matchtes_headline` — Modify the Group Matches headline text
+* `soccr_group_matches_headline` — Modify the Group Matches headline text
 
 Available actions:
 
