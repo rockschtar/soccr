@@ -57,6 +57,7 @@ const Edit = ( props ) => {
 						/>
 						{ leagueSelected && (
 							<TeamSelectControl
+								label="Hervorgehobene Mannschaft:"
 								leagueShortcut={ attributes.leagueShortcut }
 								leagueSeason={ attributes.leagueSeason }
 								teamId={ attributes.highlightTeamId }

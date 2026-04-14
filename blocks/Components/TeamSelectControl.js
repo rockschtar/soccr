@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 
 export const TeamSelectControl = ( props ) => {
-	const { leagueShortcut, leagueSeason } = props;
+	const { leagueShortcut, leagueSeason, label = __( 'Mannschaft:', 'soccr' ) } = props;
 	const [ teams, setTeams ] = useState( [] );
 	const [ teamId, setTeamId ] = useState( props.teamId );
 
@@ -53,7 +53,7 @@ export const TeamSelectControl = ( props ) => {
 
 	return (
 		<SelectControl
-			label={ __( 'Mannschaft:', 'clubfans-united' ) }
+			label={ label }
 			value={ teamId }
 			onChange={ onTeamChange }
 			options={ teams }
@@ -64,5 +64,6 @@ export const TeamSelectControl = ( props ) => {
 TeamSelectControl.propTypes = {
 	leagueShortcut: PropTypes.string,
 	leagueSeason: PropTypes.number,
+	label: PropTypes.string,
 	onChange: PropTypes.func,
 };
