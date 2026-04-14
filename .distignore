@@ -37,6 +37,8 @@ README.md
 webpack.config.js
 wp-cli.local.yml
 yarn.lock
+bun.lock
+bun.lockb
 tests
 vendor
 blocks

@@ -37,16 +37,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: npm install
+        run: bun install
 
       - name: Run ESLint
-        run: npm run lint-js
+        run: bun run lint-js
 
   phpunit:
     runs-on: ubuntu-latest
@@ -71,16 +69,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: npm install
+        run: bun install
 
       - name: Run Jest
-        run: npm run test-unit-js -- --ci
+        run: bun run test-unit-js -- --ci
 
   build:
     runs-on: ubuntu-latest
@@ -90,16 +86,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: npm install
+        run: bun install
 
-      - name: NPM Build
-        run: npm run build
+      - name: Build
+        run: bun run build
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -119,7 +113,7 @@ jobs:
           sed -i "s/Stable tag:.*$/Stable tag: ${{ github.ref_name }}/" readme.txt
 
       - name: zip
-        run: npm run plugin-zip
+        run: bun run plugin-zip
 
       - name: Copy zip with version suffix
         run: cp soccr-reloaded.zip soccr-reloaded-${{ github.ref_name }}.zip
