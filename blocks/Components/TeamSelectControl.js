@@ -4,62 +4,65 @@ import PropTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 
-export const TeamSelectControl = (props) => {
+export const TeamSelectControl = ( props ) => {
+	const { leagueShortcut, leagueSeason } = props;
+	const [ teams, setTeams ] = useState( [] );
+	const [ teamId, setTeamId ] = useState( props.teamId );
 
-  const { leagueShortcut, leagueSeason } = props;
-  const [teams, setTeams] = useState([]);
-  const [teamId, setTeamId] = useState(props.teamId);
+	useEffect( () => {
+		setTeamId( props.teamId );
+	}, [ props.teamId ] );
+	const componentMounted = useRef( true );
 
-  useEffect(() => {
-    setTeamId(props.teamId);
-  }, [props.teamId]);
-  const componentMounted = useRef(true);
+	useEffect( () => {
+		componentMounted.current = true;
 
-  useEffect(() => {
-    componentMounted.current = true;
+		apiFetch( {
+			path:
+				'/openligadb/v1/teams?leagueShortcut=' +
+				leagueShortcut +
+				'&leagueSeason=' +
+				leagueSeason,
+		} ).then( ( teamData ) => {
+			const teamOptions = teamData.map( ( league ) => {
+				return {
+					value: league.teamId,
+					label: league.teamName,
+				};
+			} );
 
-    apiFetch({ path: '/openligadb/v1/teams?leagueShortcut=' + leagueShortcut + '&leagueSeason=' + leagueSeason }).then(
-      teams => {
+			teamOptions.unshift( {
+				value: 0,
+				label: __( 'Mannschaft auswählen', 'openligadb' ),
+			} );
 
-        let teamOptions = teams.map(league => {
-          return {
-            value: league.teamId,
-            label: league.teamName,
-          };
-        });
+			if ( componentMounted.current ) {
+				setTeams( teamOptions );
+			}
+		} );
 
-        teamOptions.unshift({
-          value: 0,
-          label: __('Mannschaft auswählen', 'openligadb'),
-        });
+		return () => {
+			componentMounted.current = false;
+		};
+	}, [ leagueShortcut, leagueSeason ] );
 
-        if (componentMounted.current) {
-          setTeams(teamOptions);
-        }
-      });
+	const onTeamChange = ( value ) => {
+		props.onChange( value );
+		setTeamId( value );
+	};
 
-    return () => {
-      componentMounted.current = false;
-    }
-  }, [leagueShortcut, leagueSeason]);
-
-  const onTeamChange = (value) => {
-    props.onChange(value);
-    setTeamId(value);
-  };
-
-  return (
-    <SelectControl
-      label={__('Mannschaft:', 'clubfans-united')}
-      value={teamId}
-      onChange={onTeamChange}
-      options={teams}
-    />
-  );
+	return (
+		<SelectControl
+			label={ __( 'Mannschaft:', 'clubfans-united' ) }
+			value={ teamId }
+			onChange={ onTeamChange }
+			options={ teams }
+		/>
+	);
 };
 
 TeamSelectControl.propTypes = {
-  leagueShortcut: PropTypes.string,
-  leagueSeason: PropTypes.number,
-  onChange: PropTypes.func,
+	leagueShortcut: PropTypes.string,
+	leagueSeason: PropTypes.number,
+	onChange: PropTypes.func,
 };

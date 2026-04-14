@@ -1,61 +1,71 @@
-import { InspectorControls, useBlockProps, RichText } from '@wordpress/block-editor';
+import {
+	InspectorControls,
+	useBlockProps,
+	RichText,
+} from '@wordpress/block-editor';
 import { Panel, PanelBody, ToggleControl } from '@wordpress/components';
 import { default as ServerSideRender } from '@wordpress/server-side-render';
 import { useState } from '@wordpress/element';
 import { LeagueSelectControl } from '../../Components/LeagueSelectControl';
 
-const Edit = (props) => {
-    const {
-        setAttributes,
-        attributes,
-    } = props;
+const Edit = ( props ) => {
+	const { setAttributes, attributes } = props;
 
-    const blockProps = useBlockProps();
-    const [leagueName, setLeagueName] = useState('');
+	const blockProps = useBlockProps();
+	const [ leagueName, setLeagueName ] = useState( '' );
 
-    return (
-        <div {...blockProps}>
-            <InspectorControls key={'openligadb-standings-ic'}>
-                <Panel key={'openligadb-standings-ic-panel'}>
-                    <PanelBody key={'openligadb-standings-ic-panel-body'}>
-                        <ToggleControl
-                            label="Titel anzeigen"
-                            checked={attributes.showTitle}
-                            onChange={(showTitle) => setAttributes({ showTitle })}
-                        />
-                        <LeagueSelectControl
-                            leagueShortcut={attributes.leagueShortcut}
-                            leagueSeason={attributes.leagueSeason}
-                            autoSelect={true}
-                            onChange={(leagueShortcut, leagueSeason, name) => {
-                                setLeagueName(name || '');
-                                const newAttributes = { leagueShortcut, leagueSeason: parseInt(leagueSeason) };
-                                if (!attributes.title && name) {
-                                    newAttributes.title = name;
-                                }
-                                setAttributes(newAttributes);
-                            }}
-                        />
-                    </PanelBody>
-                </Panel>
-            </InspectorControls>
+	return (
+		<div { ...blockProps }>
+			<InspectorControls key={ 'openligadb-standings-ic' }>
+				<Panel key={ 'openligadb-standings-ic-panel' }>
+					<PanelBody key={ 'openligadb-standings-ic-panel-body' }>
+						<ToggleControl
+							label="Titel anzeigen"
+							checked={ attributes.showTitle }
+							onChange={ ( showTitle ) =>
+								setAttributes( { showTitle } )
+							}
+						/>
+						<LeagueSelectControl
+							leagueShortcut={ attributes.leagueShortcut }
+							leagueSeason={ attributes.leagueSeason }
+							autoSelect={ true }
+							onChange={ (
+								leagueShortcut,
+								leagueSeason,
+								name
+							) => {
+								setLeagueName( name || '' );
+								const newAttributes = {
+									leagueShortcut,
+									leagueSeason: parseInt( leagueSeason ),
+								};
+								if ( ! attributes.title && name ) {
+									newAttributes.title = name;
+								}
+								setAttributes( newAttributes );
+							} }
+						/>
+					</PanelBody>
+				</Panel>
+			</InspectorControls>
 
-            {attributes.showTitle && (
-                <RichText
-                    tagName="h2"
-                    value={attributes.title}
-                    onChange={(title) => setAttributes({ title })}
-                    placeholder={leagueName || 'Tabelle'}
-                />
-            )}
+			{ attributes.showTitle && (
+				<RichText
+					tagName="h2"
+					value={ attributes.title }
+					onChange={ ( title ) => setAttributes( { title } ) }
+					placeholder={ leagueName || 'Tabelle' }
+				/>
+			) }
 
-            <ServerSideRender
-                key={'openligadb-standings-ssr'}
-                block={props.name}
-                attributes={props.attributes}
-            />
-        </div>
-    );
-}
+			<ServerSideRender
+				key={ 'openligadb-standings-ssr' }
+				block={ props.name }
+				attributes={ props.attributes }
+			/>
+		</div>
+	);
+};
 
 export default Edit;

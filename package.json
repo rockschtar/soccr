@@ -14,15 +14,20 @@
     "build": "wp-scripts build --webpack-copy-php --webpack-src-dir=$npm_package_config_webpack_src_dir --output-path=$npm_package_config_output_path",
     "start": "wp-scripts start --webpack-copy-php --webpack-src-dir=$npm_package_config_webpack_src_dir --output-path=$npm_package_config_output_path",
     "packages-update": "wp-scripts packages-update --dist-tag=wp-6.4",
-    "lint-js": "wp-scripts lint-js",
+    "lint-js": "wp-scripts lint-js blocks/",
     "plugin-zip": "wp-scripts plugin-zip"
   },
-  "files": [ "dist", "soccr.php", "src" ],
+  "files": [
+    "dist",
+    "soccr.php",
+    "src"
+  ],
   "devDependencies": {
     "@wordpress/components": "^25.8.13",
     "@wordpress/scripts": "^27.5.0",
     "grunt": "~1.6.1",
     "grunt-wp-i18n": "~1.0.3",
-    "grunt-wp-readme-to-markdown": "~2.1.0"
+    "grunt-wp-readme-to-markdown": "~2.1.0",
+    "prop-types": "^15.8.1"
   }
 }
