@@ -7,7 +7,7 @@
 * Author: rockschtar
 * Author URI: http://www.eracer.de
 * Version: develop
-* Requires at least: 6.0
+* Requires at least: 6.9
 * Requires PHP: 8.4
 * License: MIT
 * Text Domain: soccr

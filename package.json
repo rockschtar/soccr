@@ -15,6 +15,7 @@
     "start": "wp-scripts start --webpack-copy-php --webpack-src-dir=$npm_package_config_webpack_src_dir --output-path=$npm_package_config_output_path",
     "packages-update": "wp-scripts packages-update --dist-tag=wp-6.4",
     "lint-js": "wp-scripts lint-js blocks/",
+    "test-unit-js": "wp-scripts test-unit-js",
     "plugin-zip": "wp-scripts plugin-zip"
   },
   "files": [
@@ -23,6 +24,7 @@
     "src"
   ],
   "devDependencies": {
+    "@wordpress/blocks": "^15.16.0",
     "@wordpress/components": "^25.8.13",
     "@wordpress/scripts": "^27.5.0",
     "grunt": "~1.6.1",

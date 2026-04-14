@@ -2,10 +2,10 @@
 Contributors: rockschtar
 Donate link: https://github.com/rockschtar/soccr-reloaded
 Tags: football, soccer, bundesliga, openligadb, gutenberg
-Requires at least: 6.0
-Tested up to: 6.7
+Requires at least: 6.9
+Tested up to: 6.9
 Requires PHP: 8.4
-Stable tag: 0.1.0
+Stable tag: develop
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
