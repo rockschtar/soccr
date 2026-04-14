@@ -81,13 +81,13 @@ class StandingsBlock extends Block
                 <div class="{$this->blockClass('tr')}">
                     <div class="{$this->blockClass('th')} {$this->blockClass('position')}"></div>
                     <div class="{$this->blockClass('th')} {$this->blockClass('team')}"></div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('matches')}">Sp</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('wins')}">S</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('draws')}">U</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('looses')}">N</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('goals')}">Tore</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('goals-difference')}">Diff</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('points')}">Pkt</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('matches')}">{$this->esc(__('Sp', 'soccr'))}</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('wins')}">{$this->esc(__('S', 'soccr'))}</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('draws')}">{$this->esc(__('U', 'soccr'))}</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('looses')}">{$this->esc(__('N', 'soccr'))}</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('goals')}">{$this->esc(__('Tore', 'soccr'))}</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('goals-difference')}">{$this->esc(__('Diff', 'soccr'))}</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('points')}">{$this->esc(__('Pkt', 'soccr'))}</div>
                 </div>
 
            </div>
