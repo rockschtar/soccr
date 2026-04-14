@@ -7,9 +7,20 @@
             "Rockschtar\\WordPress\\Soccr\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Rockschtar\\WordPress\\Soccr\\Tests\\": "tests/"
+        }
+    },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "squizlabs/php_codesniffer": "^3.5.8"
+        "squizlabs/php_codesniffer": "^3.5.8",
+        "phpunit/phpunit": "^11",
+        "brain/monkey": "^2.6"
+    },
+    "scripts": {
+        "phpunit": "phpunit",
+        "phpcs": "phpcs"
     },
     "authors": [
         {
