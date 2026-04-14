@@ -150,15 +150,21 @@ class GroupMatchesBlock extends Block
         );
 
         $headline = apply_filters(
-            'soccr_group_matchtes_headline',
+            'soccr_group_matches_headline',
             $headline,
             $group,
+            [
+                'leagueShortcut'      => $leagueShortcut,
+                'leagueSeason'        => $leagueSeason,
+                'leagueSeasonDisplay' => $leagueSeasonDisplay,
+                'groupOrderId'        => $group->getGroupOrderId(),
+                'groupName'           => $group->getGroupName(),
+                'groupId'             => $group->getGroupId(),
+            ],
         );
 
-        $isEditorPreview = defined('REST_REQUEST') && REST_REQUEST;
-
         $headlineHTML = '';
-        if (!$isEditorPreview && $showTitle) {
+        if ($showTitle) {
             $displayTitle = $title !== '' ? $this->esc($title) : $headline;
             $headlineHTML = <<<HTML
                 <div class="{$this->blockClass('header')}">

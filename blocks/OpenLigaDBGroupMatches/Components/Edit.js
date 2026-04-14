@@ -51,14 +51,10 @@ const Edit = ( props ) => {
 								name
 							) => {
 								setLeagueName( name || '' );
-								const newAttributes = {
+								setAttributes( {
 									leagueShortcut,
 									leagueSeason: parseInt( leagueSeason ),
-								};
-								if ( ! attributes.title && name ) {
-									newAttributes.title = name;
-								}
-								setAttributes( newAttributes );
+								} );
 							} }
 						/>
 
