@@ -10,6 +10,9 @@ on:
     tags:
       - '*'
 
+permissions:
+  contents: write
+
 jobs:
   phpcs:
     runs-on: ubuntu-latest
@@ -42,6 +45,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Run ESLint
+        run: npm run lint-js
+
   build:
     runs-on: ubuntu-latest
     needs: [phpcs, eslint]
@@ -51,7 +57,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
 
@@ -59,7 +65,7 @@ jobs:
         run: npm install
 
       - name: NPM Build
-        run: npm run build  # Replace with your npm build script
+        run: npm run build
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -70,24 +76,32 @@ jobs:
         run: composer install --no-dev --no-suggest --optimize-autoloader --no-interaction
 
       - name: Set Version in PHP File
-        run: |
-          sed -i "s/Version:.*$/Version: ${{ github.ref_name }}/" soccr.php
+        run: sed -i "s/Version:.*$/Version: ${{ github.ref_name }}/" soccr.php
+        shell: bash
+
+      - name: Set Stable tag in readme.txt (stable releases only)
+        if: "!contains(github.ref_name, '-')"
+        run: sed -i "s/Stable tag:.*$/Stable tag: ${{ github.ref_name }}/" readme.txt
         shell: bash
 
       - name: zip
         run: npm run plugin-zip
 
+      - name: Copy zip with version suffix
+        run: cp soccr-reloaded.zip soccr-reloaded-${{ github.ref_name }}.zip
+
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: build
-          path: soccr-reloaded.zip
+          path: |
+            soccr-reloaded.zip
+            soccr-reloaded-${{ github.ref_name }}.zip
 
   release:
     runs-on: ubuntu-latest
     needs: build
     steps:
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -100,17 +114,62 @@ jobs:
             Release ${{ github.ref }}
 
       - name: Download build
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: build
 
-      - name: Upload Release Asset
+      - name: Upload Release Asset (versioned)
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./soccr-reloaded.zip
+          asset_path: ./soccr-reloaded-${{ github.ref_name }}.zip
           asset_name: soccr-reloaded-${{ github.ref_name }}.zip
           asset_content_type: application/zip
+
+      - name: Upload Release Asset (without version)
+        id: upload-release-asset-without-version
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./soccr-reloaded.zip
+          asset_name: soccr-reloaded.zip
+          asset_content_type: application/zip
+
+  wporg-assets-trunk:
+    name: Push to trunk
+    runs-on: ubuntu-latest
+    needs: release
+    if: "!contains(github.ref_name, '-')"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update Stable tag
+        run: sed -i "s/Stable tag:.*$/Stable tag: ${{ github.ref_name }}/" readme.txt
+      - name: WordPress.org plugin asset/readme update
+        uses: 10up/action-wordpress-plugin-asset-update@stable
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SLUG: soccr-reloaded
+
+  wporg-deploy:
+    name: wordpress.org Deploy
+    needs: wporg-assets-trunk
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set version and stable tag
+        run: |
+          sed -i "s/Version:.*$/Version: ${{ github.ref_name }}/" soccr.php
+          sed -i "s/Stable tag:.*$/Stable tag: ${{ github.ref_name }}/" readme.txt
+        shell: bash
+      - name: WordPress Plugin Deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SLUG: soccr-reloaded

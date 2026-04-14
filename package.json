@@ -14,6 +14,7 @@
     "build": "wp-scripts build --webpack-copy-php --webpack-src-dir=$npm_package_config_webpack_src_dir --output-path=$npm_package_config_output_path",
     "start": "wp-scripts start --webpack-copy-php --webpack-src-dir=$npm_package_config_webpack_src_dir --output-path=$npm_package_config_output_path",
     "packages-update": "wp-scripts packages-update --dist-tag=wp-6.4",
+    "lint-js": "wp-scripts lint-js",
     "plugin-zip": "wp-scripts plugin-zip"
   },
   "files": [ "dist", "soccr.php", "src" ],

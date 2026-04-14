@@ -29,13 +29,7 @@ class RestController
             'callback' => static function (\WP_REST_Request $request) {
                 $response = new \WP_REST_Response();
 
-                $allowedShortcuts = apply_filters(
-                    'soccr_allowed_league_shortcuts',
-                    ['bl1', 'bl2', 'bl3']
-                );
-
                 $leagueQuery = new OpenLigaDBLeagueQuery();
-                $leagueQuery->setLeagueShortcuts($allowedShortcuts);
                 $leagueQuery->setLeagueSeasonGreaterThan((int) $request->get_param('minSeason'));
 
                 $includeShortcut = $request->get_param('includeShortcut');
