@@ -1,6 +1,6 @@
-=== Soccr Reloaded ===
+=== Soccr ===
 Contributors: rockschtar
-Donate link: https://github.com/rockschtar/soccr-reloaded
+Donate link: https://github.com/rockschtar/soccr
 Tags: football, soccer, bundesliga, openligadb, gutenberg
 Requires at least: 6.9
 Tested up to: 6.9
@@ -13,7 +13,7 @@ Display football match results, standings, and upcoming matches from OpenLigaDB 
 
 == Description ==
 
-**Soccr Reloaded** integrates live football data from [OpenLigaDB](https://www.openligadb.de) into the WordPress block editor. The plugin provides three fully configurable Gutenberg blocks for displaying match results, league standings, and team-specific match information — all server-side rendered and cached for performance.
+**Soccr** integrates live football data from [OpenLigaDB](https://www.openligadb.de) into the WordPress block editor. The plugin provides three fully configurable Gutenberg blocks for displaying match results, league standings, and team-specific match information — all server-side rendered and cached for performance.
 
 = Blocks =
 
@@ -28,13 +28,23 @@ Displays a match for a specific team. Three display modes are available: current
 
 = Supported Leagues =
 
-By default, the following German leagues from OpenLigaDB are available:
+By default, the following leagues and competitions from OpenLigaDB are available:
 
 * 1. Bundesliga (bl1)
 * 2. Bundesliga (bl2)
 * 3. Liga (bl3)
+* Frauen-Bundesliga (fbl1)
+* 2. Frauen-Bundesliga (fbl2)
+* UEFA Champions League (ucl)
+* DFB-Pokal (dfb)
 
-Additional leagues can be added via the `soccr_league_shortcuts` filter.
+Additional leagues can be added via the `soccr_league_shortcuts` filter. Use any shortcut available on OpenLigaDB:
+
+`add_filter('soccr_league_shortcuts', static function (array $shortcuts): array {
+    $shortcuts[] = 'uefaeuro2024'; // UEFA Euro 2024
+    $shortcuts[] = 'wm2022';       // FIFA World Cup 2022
+    return $shortcuts;
+});`
 
 = Features =
 
@@ -67,7 +77,7 @@ Available actions:
 
 == Installation ==
 
-1. Upload the `soccr-reloaded` folder to the `/wp-content/plugins/` directory.
+1. Upload the `soccr` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the *Plugins* menu in WordPress.
 3. Add any of the three Soccr blocks via the block editor. The blocks are listed under the **Soccr** category in the block inserter.
 4. Select the desired league and season in the block inspector on the right-hand side.
@@ -76,7 +86,7 @@ Available actions:
 
 = Which leagues are supported? =
 
-By default, the 1. Bundesliga, 2. Bundesliga, and 3. Liga from OpenLigaDB are available. You can add other leagues available on OpenLigaDB using the `soccr_league_shortcuts` filter.
+By default, the 1. Bundesliga, 2. Bundesliga, 3. Liga, Frauen-Bundesliga, 2. Frauen-Bundesliga, UEFA Champions League, and DFB-Pokal from OpenLigaDB are available. You can add other leagues available on OpenLigaDB using the `soccr_league_shortcuts` filter.
 
 = Is an API key required? =
 
@@ -93,24 +103,3 @@ Yes. All blocks use BEM-style CSS classes prefixed with `wp-block-soccr-` (e.g.,
 = Are team crests displayed? =
 
 The Team Match block optionally displays team crests sourced from OpenLigaDB and Wikimedia Commons. The crest display can be toggled in the block inspector. Images are proxied through WordPress to avoid mixed-content issues and cached for 24 hours.
-
-== Screenshots ==
-
-1. Standings block showing the 2. Bundesliga table.
-2. Group Matches block showing a matchday with pagination.
-3. Team Match block showing the next match for a selected team.
-4. Block inspector panel for the Standings block.
-
-== Changelog ==
-
-= 2.0.0 =
-* Complete rewrite as Gutenberg block plugin
-* Three server-side rendered blocks: Standings, Group Matches, Team Match
-* Team crest support with image proxy
-* Matchday pagination
-* Caching layer via WordPress object cache
-
-== Upgrade Notice ==
-
-= 2.0.0 =
-Complete rewrite — requires PHP 8.4 and WordPress 6.0. The old shortcode-based blocks are replaced by native Gutenberg blocks.

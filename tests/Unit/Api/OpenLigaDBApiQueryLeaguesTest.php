@@ -24,6 +24,7 @@ class OpenLigaDBApiQueryLeaguesTest extends UnitTestCase
             $this->makeLeague(4, 'bl1', '1. Bundesliga', 2023, 1),
             $this->makeLeague(5, 'dfb', 'DFB Pokal', 2024, 1),
             $this->makeLeague(6, 'tennis', 'ATP Tour', 2024, 2), // non-soccer sport
+            $this->makeLeague(7, 'oberliga', 'Oberliga', 2024, 1), // soccer but not in defaults
         ];
 
         Functions\when('get_transient')->alias(function ($key) {
@@ -63,7 +64,8 @@ class OpenLigaDBApiQueryLeaguesTest extends UnitTestCase
         $this->assertContains('bl1', $shortcuts);
         $this->assertContains('bl2', $shortcuts);
         $this->assertContains('bl3', $shortcuts);
-        $this->assertNotContains('dfb', $shortcuts);
+        $this->assertContains('dfb', $shortcuts);
+        $this->assertNotContains('oberliga', $shortcuts);
     }
 
     public function test_filter_hook_customizes_shortcuts(): void
