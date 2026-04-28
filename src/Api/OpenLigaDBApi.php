@@ -400,7 +400,7 @@ class OpenLigaDBApi
         $shortcuts = $leagueQuery->getLeagueShortcuts();
 
         if (empty($shortcuts)) {
-            $shortcuts = apply_filters('soccr_league_shortcuts', ['bl1', 'bl2', 'bl3']);
+            $shortcuts = apply_filters('soccr_league_shortcuts', ['bl1', 'bl2', 'bl3', 'fbl1', 'fbl2', 'ucl', 'dfb']);
         }
 
         $leagues = array_filter(
