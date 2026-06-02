@@ -93,7 +93,7 @@ class GroupMatchesBlock extends Block
         $paginationUrl = $post ? get_permalink($post) : home_url(add_query_arg([]));
 
         $paginationPreviousHref = '';
-        $paginationNextHref = '#';
+        $paginationNextHref = '';
 
         if ($pagination) {
             if ($openLigaDBGroupMatches->getPreviousGroup() !== null) {
