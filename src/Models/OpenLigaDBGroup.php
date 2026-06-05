@@ -20,7 +20,7 @@ class OpenLigaDBGroup implements JsonSerializable
     public function __construct(
         string $groupName,
         string $groupOrderId,
-        string $groupId
+        string $groupId,
     ) {
         $this->groupName = $groupName;
         $this->groupOrderId = $groupOrderId;

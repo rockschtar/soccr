@@ -78,12 +78,12 @@ class GroupMatchesBlock extends Block
             }
 
             if ($e->getCode() === 404) {
-                return '<p>' .
-                    __(
+                return '<p>'
+                    . __(
                         'Fehler, Spieltag, Liga oder Saison nicht gefunden',
                         'soccr',
-                    ) .
-                    '</p>';
+                    )
+                    . '</p>';
             }
 
             return '';
@@ -107,12 +107,12 @@ class GroupMatchesBlock extends Block
                     $paginationUrl,
                 );
 
-                $paginationPreviousHref =
-                    '<a href="' .
-                    esc_url($paginationPreviousUrl) .
-                    '">' .
-                    __('Vorheriger Spieltag', 'soccr') .
-                    '</a>';
+                $paginationPreviousHref
+                    = '<a href="'
+                    . esc_url($paginationPreviousUrl)
+                    . '">'
+                    . __('Vorheriger Spieltag', 'soccr')
+                    . '</a>';
             }
 
             if ($openLigaDBGroupMatches->getNextGroup() !== null) {
@@ -126,12 +126,12 @@ class GroupMatchesBlock extends Block
                     $paginationUrl,
                 );
 
-                $paginationNextHref =
-                    '<a href="' .
-                    esc_url($paginationNextUrl) .
-                    '">' .
-                    __('Nächster Spieltag', 'soccr') .
-                    '</a>';
+                $paginationNextHref
+                    = '<a href="'
+                    . esc_url($paginationNextUrl)
+                    . '">'
+                    . __('Nächster Spieltag', 'soccr')
+                    . '</a>';
             }
         }
 
@@ -146,7 +146,7 @@ class GroupMatchesBlock extends Block
         $headline = sprintf(
             __('%1$s | Saison %2$s', 'soccr'),
             esc_html($groupName),
-            esc_html($leagueSeasonDisplay)
+            esc_html($leagueSeasonDisplay),
         );
 
         $headline = apply_filters(

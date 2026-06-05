@@ -45,7 +45,7 @@ class OpenLigaDBStandings
     }
 
     public function addStanding(
-        OpenLigaDBStanding $standing
+        OpenLigaDBStanding $standing,
     ): OpenLigaDBStandings {
         $this->standings[] = $standing;
         return $this;

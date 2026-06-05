@@ -40,12 +40,12 @@ class StandingsBlock extends Block
             }
 
             if ($e->getCode() === 404) {
-                return '<p>' .
-                    __(
+                return '<p>'
+                    . __(
                         'Fehler: Spieltag, Liga oder Saison nicht gefunden',
                         'soccr',
-                    ) .
-                    '</p>';
+                    )
+                    . '</p>';
             }
 
             do_action('soccr_exception', $e);
@@ -55,10 +55,10 @@ class StandingsBlock extends Block
 
         $additionalClasses = [];
         $additionalClasses[] = $openLigaDBStandings->getLeague()->getLeagueShortcut();
-        $additionalClasses[] =
-            $openLigaDBStandings->getLeague()->getLeagueShortcut() .
-            '-' .
-            $openLigaDBStandings->getLeague()->getLeagueSeason();
+        $additionalClasses[]
+            = $openLigaDBStandings->getLeague()->getLeagueShortcut()
+            . '-'
+            . $openLigaDBStandings->getLeague()->getLeagueSeason();
 
         $cssClasses = $this->blockClasses($parsedAttributes, $additionalClasses);
 
