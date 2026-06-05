@@ -23,7 +23,7 @@ class OpenLigaDBMatchQuery
 
     public function addLeagueSeason(
         string $leagueShortcut,
-        int $leagueSeason
+        int $leagueSeason,
     ): OpenLigaDBMatchQuery {
         $this->leagueSeasons[] = new OpenLigaDBLeagueSeason(
             $leagueShortcut,

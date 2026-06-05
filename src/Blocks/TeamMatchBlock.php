@@ -42,12 +42,12 @@ class TeamMatchBlock extends Block
             $match = $this->getMatchByDisplayMode($query, $displayMode);
 
             if ($match === null) {
-                return '<p>' .
-                    __(
+                return '<p>'
+                    . __(
                         'Kein Spiel gefunden',
                         'soccr',
-                    ) .
-                    '</p>';
+                    )
+                    . '</p>';
             }
         } catch (Exception $e) {
             do_action('soccr_exception', $e);
@@ -57,12 +57,12 @@ class TeamMatchBlock extends Block
             }
 
             if ($e->getCode() === 404) {
-                return '<p>' .
-                    __(
+                return '<p>'
+                    . __(
                         'Fehler: Spiel, Liga oder Saison nicht gefunden',
                         'soccr',
-                    ) .
-                    '</p>';
+                    )
+                    . '</p>';
             }
 
             return '';
@@ -138,7 +138,7 @@ class TeamMatchBlock extends Block
 
     private function getMatchByDisplayMode(
         OpenLigaDBMatchQuery $query,
-        string $displayMode
+        string $displayMode,
     ): ?OpenLigaDBMatch {
         return match ($displayMode) {
             'next' => OpenLigaDBApi::getNextMatchByTeamid($query),

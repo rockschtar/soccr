@@ -43,7 +43,7 @@ abstract class Block
         $attribution = sprintf(
             /* translators: %s is a link to openligadb.de */
             __('Daten: %s (ODbL)', 'soccr'),
-            '<a href="https://www.openligadb.de" target="_blank" rel="noopener noreferrer">OpenLigaDB</a>'
+            '<a href="https://www.openligadb.de" target="_blank" rel="noopener noreferrer">OpenLigaDB</a>',
         );
 
         return '<div class="wp-block-soccr-attribution">' . $attribution . '</div>';
@@ -51,7 +51,7 @@ abstract class Block
 
     final public function blockClasses(
         array $attributes = [],
-        array $additionalClasses = []
+        array $additionalClasses = [],
     ): string {
         $classes = [$this->blockClass()];
 
@@ -98,7 +98,7 @@ abstract class Block
                 $handle,
                 $this->distUrl() . '/style-index.css',
                 [],
-                $cssVersion
+                $cssVersion,
             );
 
             $args['editor_style'] = $handle;

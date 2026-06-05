@@ -42,10 +42,10 @@ class OpenLigaDBApi
             $openligaDBMatches = array_filter(
                 $openligaDBMatches,
                 static function (OpenLigaDBMatch $match) use ($query) {
-                    return $match->getTeam1()->getTeamId() ===
-                        $query->getTeamId() ||
-                        $match->getTeam2()->getTeamId() === $query->getTeamId();
-                }
+                    return $match->getTeam1()->getTeamId()
+                        === $query->getTeamId()
+                        || $match->getTeam2()->getTeamId() === $query->getTeamId();
+                },
             );
         }
 
@@ -109,7 +109,7 @@ class OpenLigaDBApi
     public static function getGroupMatches(
         string $leagueShortcut,
         int $leagueSeason,
-        int $groutOrderId
+        int $groutOrderId,
     ): OpenLigaDBGroupMatches {
         $cacheKey = "cu-openligadb-group-matches-$leagueShortcut-$leagueSeason-$groutOrderId";
 
@@ -407,7 +407,7 @@ class OpenLigaDBApi
             $leagues,
             static function (OpenligaDBLeague $league) use ($shortcuts) {
                 return in_array($league->getLeagueShortcut(), $shortcuts, true);
-            }
+            },
         );
 
         $leagues = array_filter($leagues, static function (OpenligaDBLeague $league) use ($leagueQuery) {
@@ -445,7 +445,7 @@ class OpenLigaDBApi
                 static function (OpenligaDBLeague $league) use ($includeShortcut, $includeSeason) {
                     return $league->getLeagueShortcut() === $includeShortcut
                         && $league->getLeagueSeason() === $includeSeason;
-                }
+                },
             );
 
             if (count($alreadyIncluded) === 0) {
@@ -455,7 +455,7 @@ class OpenLigaDBApi
                     static function (OpenligaDBLeague $league) use ($includeShortcut, $includeSeason) {
                         return $league->getLeagueShortcut() === $includeShortcut
                             && $league->getLeagueSeason() === $includeSeason;
-                    }
+                    },
                 );
 
                 $includeLeague = array_shift($found);
@@ -489,7 +489,7 @@ class OpenLigaDBApi
             $openLigaDBLeagues,
             static function (OpenligaDBLeague $league) use ($leagueShortcut) {
                 return $league->getLeagueShortcut() === $leagueShortcut;
-            }
+            },
         );
 
         if (count($openLigaDBLeaguesByShortcut) === 0) {
@@ -533,7 +533,7 @@ class OpenLigaDBApi
             $openLigaDBLeagues,
             static function (OpenligaDBLeague $league) use ($leagueShortcut, $leagueSeason) {
                 return $league->getLeagueShortcut() === $leagueShortcut && $league->getLeagueSeason() === $leagueSeason;
-            }
+            },
         );
 
         $openLigaDBLeague = array_shift($openLigaDBLeague);

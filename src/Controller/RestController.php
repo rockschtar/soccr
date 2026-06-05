@@ -167,7 +167,7 @@ class RestController
                     'description' => 'OpenLigaDB League Season',
                     'type' => 'integer',
                     'sanitize_callback' => static function ($value) {
-                        return (int)$value;
+                        return (int) $value;
                     },
                 ],
             ],

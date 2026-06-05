@@ -31,7 +31,7 @@ class OpenLigaDBLeagueSeason
      * @return OpenLigaDBLeagueSeason
      */
     public function setLeagueShortcut(
-        string $leagueShortcut
+        string $leagueShortcut,
     ): OpenLigaDBLeagueSeason {
         $this->leagueShortcut = $leagueShortcut;
         return $this;
