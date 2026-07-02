@@ -507,14 +507,17 @@ class OpenLigaDBApi
 
         $openLigaDBLeague = array_shift($openLigaDBLeaguesByShortcut);
 
-        $matches = self::getMatches(
-            $openLigaDBLeague->getLeagueShortcut(),
-            $openLigaDBLeague->getLeagueSeason(),
-        );
+		foreach ($openLigaDBLeaguesByShortcut as $currentOpenLigaDBLeague) {
+			$matches = self::getMatches(
+				$currentOpenLigaDBLeague->getLeagueShortcut(),
+				$currentOpenLigaDBLeague->getLeagueSeason(),
+			);
 
-        if (count($matches) === 0 && count($openLigaDBLeaguesByShortcut) > 1) {
-            $openLigaDBLeague = array_shift($openLigaDBLeaguesByShortcut);
-        }
+			if (count($matches) > 0) {
+				$openLigaDBLeague = $currentOpenLigaDBLeague;
+				break;
+			}
+		}
 
         set_transient($cacheKey, $openLigaDBLeague, WEEK_IN_SECONDS);
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from '@wordpress/element';
-import { ComboboxControl } from '@wordpress/components';
+import { ComboboxControl, Disabled } from '@wordpress/components';
 import PropTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
@@ -65,12 +65,14 @@ export const LeagueSelectControl = ( props ) => {
 	};
 
 	return (
-		<ComboboxControl
-			label={ __( 'Liga:', 'soccr' ) }
-			value={ leagueShortcutSeason }
-			onChange={ onLeagueChange }
-			options={ leagues }
-		/>
+		<Disabled isDisabled={ props.disabled }>
+			<ComboboxControl
+				label={ __( 'Liga:', 'soccr' ) }
+				value={ leagueShortcutSeason }
+				onChange={ onLeagueChange }
+				options={ leagues }
+			/>
+		</Disabled>
 	);
 };
 
@@ -78,5 +80,6 @@ LeagueSelectControl.propTypes = {
 	leagueShortcut: PropTypes.string,
 	leagueSeason: PropTypes.number,
 	onChange: PropTypes.func,
+	disabled: PropTypes.bool,
 	autoSelect: PropTypes.bool,
 };

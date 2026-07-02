@@ -38,9 +38,12 @@ const Edit = ( props ) => {
 								setAttributes( { showTitle } )
 							}
 						/>
+
+
 						<LeagueSelectControl
 							leagueShortcut={ attributes.leagueShortcut }
 							leagueSeason={ attributes.leagueSeason }
+							disabled={ attributes.defaultCurrentGroup }
 							onChange={ ( leagueShortcut, leagueSeason ) => {
 								setAttributes( {
 									leagueShortcut,

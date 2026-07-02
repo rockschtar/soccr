@@ -33,13 +33,11 @@ class GroupMatchesBlock extends Block
 
         try {
             if ($defaultCurrentGroup) {
-                $openLigaDBCurrentGroup = OpenLigaDBApi::getCurrentGroup(
-                    $leagueShortcut,
-                );
-                $openLigaDBCurrentLeagueSeason = OpenLigaDBApi::getCurrentLeagueSeason(
-                    $leagueShortcut,
-                );
-                $leagueSeason = $openLigaDBCurrentLeagueSeason->getLeagueSeason();
+
+				$openLigaDBCurrentGroup = OpenLigaDBApi::getCurrentGroup($leagueShortcut);
+                $openLigaDBCurrentLeagueSeason = OpenLigaDBApi::getCurrentLeagueSeason($leagueShortcut);
+
+				$leagueSeason = $openLigaDBCurrentLeagueSeason->getLeagueSeason();
                 $groupOrderId = $openLigaDBCurrentGroup->getGroupOrderId();
             }
 
