@@ -83,7 +83,7 @@ class OpenLigaDBApiQueryLeaguesTest extends UnitTestCase
         $this->assertNotContains('bl3', $shortcuts);
     }
 
-    public function test_explicit_shortcuts_on_query_override_filter(): void
+    public function test_query_shortcuts_narrow_within_allowed_shortcuts(): void
     {
         $query = new OpenLigaDBLeagueQuery();
         $query->setLeagueShortcuts(['dfb']);
@@ -96,12 +96,23 @@ class OpenLigaDBApiQueryLeaguesTest extends UnitTestCase
         $this->assertNotContains('bl1', $shortcuts);
     }
 
-    public function test_excludes_non_soccer_sports(): void
+    public function test_query_shortcuts_cannot_bypass_allowed_shortcuts(): void
     {
         $query = new OpenLigaDBLeagueQuery();
-        $query->setLeagueShortcuts(['bl1', 'tennis']);
+        $query->setLeagueShortcuts(['oberliga']);
 
         $result = OpenLigaDBApi::queryLeagues($query);
+
+        $this->assertSame([], $result);
+    }
+
+    public function test_excludes_non_soccer_sports(): void
+    {
+        Functions\when('apply_filters')->alias(
+            static fn($hook, $value) => $hook === 'soccr_league_shortcuts' ? ['bl1', 'tennis'] : $value
+        );
+
+        $result = OpenLigaDBApi::queryLeagues(new OpenLigaDBLeagueQuery());
 
         $shortcuts = array_map(fn($l) => $l->getLeagueShortcut(), $result);
 
