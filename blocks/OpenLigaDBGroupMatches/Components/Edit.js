@@ -5,6 +5,7 @@ import {
 	ToggleControl,
 	Panel,
 	PanelBody,
+	__experimentalSpacer as Spacer,
 } from '@wordpress/components';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { useEffect } from '@wordpress/element';
@@ -39,7 +40,6 @@ const Edit = ( props ) => {
 							}
 						/>
 
-
 						<LeagueSelectControl
 							leagueShortcut={ attributes.leagueShortcut }
 							leagueSeason={ attributes.leagueSeason }
@@ -51,6 +51,8 @@ const Edit = ( props ) => {
 								} );
 							} }
 						/>
+
+						<Spacer marginBottom={ 4 } />
 
 						<CheckboxControl
 							key={
