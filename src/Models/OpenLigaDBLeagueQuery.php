@@ -6,8 +6,6 @@ class OpenLigaDBLeagueQuery
 {
     private ?int $leagueSeasonGreaterThan = null;
 
-    private ?string $leagueShortcut = null;
-
     private ?string $includeLeagueShortcut = null;
 
     private ?int $includeLeagueSeason = null;
@@ -17,41 +15,15 @@ class OpenLigaDBLeagueQuery
 
     public function __construct() {}
 
-    /**
-     * @return int
-     */
     public function getLeagueSeasonGreaterThan(): ?int
     {
         return $this->leagueSeasonGreaterThan;
     }
 
-    /**
-     * @param int $leagueSeasonGreaterThan
-     * @return OpenLigaDBLeagueQuery
-     */
     public function setLeagueSeasonGreaterThan(
         int $leagueSeasonGreaterThan,
     ): OpenLigaDBLeagueQuery {
         $this->leagueSeasonGreaterThan = $leagueSeasonGreaterThan;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getLeagueShortcut(): ?string
-    {
-        return $this->leagueShortcut;
-    }
-
-    /**
-     * @param string|null $leagueShortcut
-     * @return OpenLigaDBLeagueQuery
-     */
-    public function setLeagueShortcut(
-        ?string $leagueShortcut,
-    ): OpenLigaDBLeagueQuery {
-        $this->leagueShortcut = $leagueShortcut;
         return $this;
     }
 

@@ -66,7 +66,7 @@ Bei der Nutzung des Plugins sendet deine WordPress-Seite Anfragen an `https://ap
 
 Verfügbare Filter:
 
-* `soccr_league_shortcuts` — Anpassen, welche Ligen im Block-Inspector verfügbar sind (Standard: `['bl1', 'bl2', 'bl3']`)
+* `soccr_league_shortcuts` — Anpassen, welche Ligen im Block-Inspector verfügbar sind (Standard: `['bl1', 'bl2', 'bl3', 'fbl1', 'fbl2', 'ucl', 'dfb']`)
 * `soccr_team_match_html` — HTML-Ausgabe des Team-Spiel-Blocks anpassen
 * `soccr_group_matches_html` — HTML-Ausgabe des Spieltag-Blocks anpassen
 * `soccr_group_matches_headline` — Überschrift des Spieltag-Blocks anpassen

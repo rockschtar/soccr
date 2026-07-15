@@ -397,26 +397,25 @@ class OpenLigaDBApi
             return $league->getSportId() === 1;
         });
 
-        $shortcuts = $leagueQuery->getLeagueShortcuts();
-
-        if (empty($shortcuts)) {
-            $shortcuts = apply_filters('soccr_league_shortcuts', ['bl1', 'bl2', 'bl3', 'fbl1', 'fbl2', 'ucl', 'dfb']);
-        }
+        $allowedShortcuts = apply_filters('soccr_league_shortcuts', ['bl1', 'bl2', 'bl3', 'fbl1', 'fbl2', 'ucl', 'dfb']);
 
         $leagues = array_filter(
             $leagues,
-            static function (OpenligaDBLeague $league) use ($shortcuts) {
-                return in_array($league->getLeagueShortcut(), $shortcuts, true);
+            static function (OpenligaDBLeague $league) use ($allowedShortcuts) {
+                return in_array($league->getLeagueShortcut(), $allowedShortcuts, true);
             },
         );
 
-        $leagues = array_filter($leagues, static function (OpenligaDBLeague $league) use ($leagueQuery) {
-            if (!$leagueQuery->getLeagueShortcut()) {
-                return true;
-            }
+        $queryShortcuts = $leagueQuery->getLeagueShortcuts();
 
-            return $league->getLeagueShortcut() === $leagueQuery->getLeagueShortcut();
-        });
+        if (!empty($queryShortcuts)) {
+            $leagues = array_filter(
+                $leagues,
+                static function (OpenligaDBLeague $league) use ($queryShortcuts) {
+                    return in_array($league->getLeagueShortcut(), $queryShortcuts, true);
+                },
+            );
+        }
 
         $leagues = array_filter($leagues, static function (OpenligaDBLeague $league) use ($leagueQuery) {
             if (!$leagueQuery->getLeagueSeasonGreaterThan()) {
@@ -505,7 +504,7 @@ class OpenLigaDBApi
 
         usort($openLigaDBLeaguesByShortcut, $sortByLeagueSeason);
 
-		$openLigaDBLeague = false;
+        $openLigaDBLeague = false;
 
         foreach ($openLigaDBLeaguesByShortcut as $currentOpenLigaDBLeague) {
             $matches = self::getMatches(
@@ -519,9 +518,9 @@ class OpenLigaDBApi
             }
         }
 
-		if(!$openLigaDBLeague) {
-			$openLigaDBLeague = array_shift($openLigaDBLeaguesByShortcut);
-		}
+        if (!$openLigaDBLeague) {
+            $openLigaDBLeague = array_shift($openLigaDBLeaguesByShortcut);
+        }
 
         set_transient($cacheKey, $openLigaDBLeague, 3 * DAY_IN_SECONDS);
 
