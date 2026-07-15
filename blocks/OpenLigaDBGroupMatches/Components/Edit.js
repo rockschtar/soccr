@@ -5,7 +5,6 @@ import {
 	ToggleControl,
 	Panel,
 	PanelBody,
-	__experimentalSpacer as Spacer,
 } from '@wordpress/components';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { useEffect } from '@wordpress/element';
@@ -52,7 +51,7 @@ const Edit = ( props ) => {
 							} }
 						/>
 
-						<Spacer marginBottom={ 4 } />
+						<div style={ { height: '16px' } } />
 
 						<CheckboxControl
 							key={

@@ -31,6 +31,10 @@
     "highlightTeamId": {
       "type": "number",
       "default": 0
+    },
+    "defaultCurrentSeason": {
+      "type": "boolean",
+      "default": true
     }
   },
   "supports": {

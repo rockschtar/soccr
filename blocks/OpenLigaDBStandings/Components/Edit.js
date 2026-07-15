@@ -3,7 +3,7 @@ import {
 	useBlockProps,
 	RichText,
 } from '@wordpress/block-editor';
-import { Panel, PanelBody, ToggleControl } from '@wordpress/components';
+import {__experimentalSpacer as Spacer, CheckboxControl, Panel, PanelBody, ToggleControl} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { default as ServerSideRender } from '@wordpress/server-side-render';
 import { useEffect, useState } from '@wordpress/element';
@@ -56,6 +56,23 @@ const Edit = ( props ) => {
 								setAttributes( newAttributes );
 							} }
 						/>
+						<Spacer marginBottom={ 4 } />
+
+						<CheckboxControl
+							key={
+								'openligadb-attribute-league-defaultcurrentgroup'
+							}
+							label={ __(
+								'Aktuelle Saison anzeigen',
+								'soccr'
+							) }
+							checked={ attributes.defaultCurrentSeason }
+							onChange={ ( defaultCurrentSeason ) => {
+								setAttributes( { defaultCurrentSeason } );
+							} }
+						/>
+
+
 						{ leagueSelected && (
 							<TeamSelectControl
 								label={ __(
