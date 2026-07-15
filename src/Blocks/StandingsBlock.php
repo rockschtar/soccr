@@ -23,9 +23,16 @@ class StandingsBlock extends Block
         $leagueSeason = $parsedAttributes['leagueSeason'];
         $title = $parsedAttributes['title'];
         $showTitle = $parsedAttributes['showTitle'];
+		$defaultCurrentSeason = $parsedAttributes['defaultCurrentSeason'];
         $highlightTeamId = (int) ($parsedAttributes['highlightTeamId'] ?? 0);
 
         try {
+
+			if ($defaultCurrentSeason) {
+				$openLigaDBCurrentLeagueSeason = OpenLigaDBApi::getCurrentLeagueSeason($leagueShortcut);
+				$leagueSeason = $openLigaDBCurrentLeagueSeason->getLeagueSeason();
+			}
+
             $openLigaDBStandings = OpenLigaDBApi::getStandings(
                 $leagueShortcut,
                 $leagueSeason,

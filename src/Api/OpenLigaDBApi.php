@@ -505,21 +505,25 @@ class OpenLigaDBApi
 
         usort($openLigaDBLeaguesByShortcut, $sortByLeagueSeason);
 
-        $openLigaDBLeague = array_shift($openLigaDBLeaguesByShortcut);
+		$openLigaDBLeague = false;
 
-		foreach ($openLigaDBLeaguesByShortcut as $currentOpenLigaDBLeague) {
-			$matches = self::getMatches(
-				$currentOpenLigaDBLeague->getLeagueShortcut(),
-				$currentOpenLigaDBLeague->getLeagueSeason(),
-			);
+        foreach ($openLigaDBLeaguesByShortcut as $currentOpenLigaDBLeague) {
+            $matches = self::getMatches(
+                $currentOpenLigaDBLeague->getLeagueShortcut(),
+                $currentOpenLigaDBLeague->getLeagueSeason(),
+            );
 
-			if (count($matches) > 0) {
-				$openLigaDBLeague = $currentOpenLigaDBLeague;
-				break;
-			}
+            if (count($matches) > 0) {
+                $openLigaDBLeague = $currentOpenLigaDBLeague;
+                break;
+            }
+        }
+
+		if(!$openLigaDBLeague) {
+			$openLigaDBLeague = array_shift($openLigaDBLeaguesByShortcut);
 		}
 
-        set_transient($cacheKey, $openLigaDBLeague, WEEK_IN_SECONDS);
+        set_transient($cacheKey, $openLigaDBLeague, 3 * DAY_IN_SECONDS);
 
         return $openLigaDBLeague;
     }
