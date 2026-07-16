@@ -23,7 +23,9 @@ export const LeagueSelectControl = ( props ) => {
 
 		apiFetch( { path } )
 			.then( ( data ) => {
-				if ( cancelled ) return;
+				if ( cancelled ) {
+					return;
+				}
 
 				const leagueOptions = data.map( ( league ) => ( {
 					value: league.leagueShortcut + '###' + league.leagueSeason,
@@ -40,7 +42,9 @@ export const LeagueSelectControl = ( props ) => {
 	}, [] );
 
 	useEffect( () => {
-		if ( leagues.length === 0 ) return;
+		if ( leagues.length === 0 ) {
+			return;
+		}
 
 		const valueExistsInOptions = leagues.some(
 			( l ) => l.value === leagueShortcutSeason
@@ -56,7 +60,9 @@ export const LeagueSelectControl = ( props ) => {
 	}, [ leagues ] );
 
 	const onLeagueChange = ( value ) => {
-		if ( ! value ) return;
+		if ( ! value ) {
+			return;
+		}
 		const [ leagueShortcut, leagueSeason ] = value.split( '###' );
 		const selectedLeague = leagues.find( ( l ) => l.value === value );
 		const leagueName = selectedLeague ? selectedLeague.label : '';

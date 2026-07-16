@@ -1,58 +1,58 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "soccr/group-matches",
-  "title": "Soccr Spieltag",
-  "category": "soccr",
-  "description": "OpenligaDB Spieltag",
-  "keywords": [ "OpenligaDB", "liga", "spieltag", "soccr"],
-  "textdomain": "soccr",
-  "attributes": {
-    "leagueShortcut": {
-      "type": "string",
-      "default": "bl2"
-    },
-    "leagueSeason": {
-      "type": "number",
-      "default": 2021
-    },
-    "defaultCurrentGroup": {
-      "type": "boolean",
-      "default": true
-    },
-    "groupOrderId": {
-      "type": "number",
-      "default": 1
-    },
-    "pagination": {
-      "type": "boolean",
-      "default": true
-    },
-    "align": {
-      "type": "string",
-      "default": "center"
-    },
-    "blockId": {
-      "type": "string"
-    },
-    "title": {
-      "type": "string",
-      "default": ""
-    },
-    "showTitle": {
-      "type": "boolean",
-      "default": true
-    }
-  },
-  "supports": {
-    "align": true,
-    "color": {
-      "text": true,
-      "background": true,
-      "link": false
-    }
-  },
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:./style.css",
-  "style": "file:./style.scss"
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "soccr/group-matches",
+	"title": "Soccr Spieltag",
+	"category": "soccr",
+	"description": "OpenligaDB Spieltag",
+	"keywords": [ "OpenligaDB", "liga", "spieltag", "soccr" ],
+	"textdomain": "soccr",
+	"attributes": {
+		"leagueShortcut": {
+			"type": "string",
+			"default": "bl2"
+		},
+		"leagueSeason": {
+			"type": "number",
+			"default": 2021
+		},
+		"defaultCurrentGroup": {
+			"type": "boolean",
+			"default": true
+		},
+		"groupOrderId": {
+			"type": "number",
+			"default": 1
+		},
+		"pagination": {
+			"type": "boolean",
+			"default": true
+		},
+		"align": {
+			"type": "string",
+			"default": "center"
+		},
+		"blockId": {
+			"type": "string"
+		},
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"showTitle": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {
+		"align": true,
+		"color": {
+			"text": true,
+			"background": true,
+			"link": false
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./style.css",
+	"style": "file:./style.scss"
 }
