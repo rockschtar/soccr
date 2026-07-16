@@ -20,7 +20,6 @@ const Edit = ( props ) => {
 	const { setAttributes, attributes } = props;
 
 	const blockProps = useBlockProps();
-	const [ leagueName, setLeagueName ] = useState( '' );
 	const [ leagueSelected, setLeagueSelected ] = useState(
 		!! attributes.leagueShortcut
 	);
@@ -44,21 +43,14 @@ const Edit = ( props ) => {
 						<LeagueSelectControl
 							leagueShortcut={ attributes.leagueShortcut }
 							leagueSeason={ attributes.leagueSeason }
+							disabled={ attributes.defaultCurrentSeason }
 							autoSelect={ true }
-							onChange={ (
-								leagueShortcut,
-								leagueSeason,
-								name
-							) => {
-								setLeagueName( name || '' );
+							onChange={ ( leagueShortcut, leagueSeason ) => {
 								const newAttributes = {
 									leagueShortcut,
 									leagueSeason: parseInt( leagueSeason ),
 									highlightTeamId: 0,
 								};
-								if ( ! attributes.title && name ) {
-									newAttributes.title = name;
-								}
 								setAttributes( newAttributes );
 							} }
 						/>
@@ -100,7 +92,7 @@ const Edit = ( props ) => {
 					tagName="h2"
 					value={ attributes.title }
 					onChange={ ( title ) => setAttributes( { title } ) }
-					placeholder={ leagueName || __( 'Tabelle', 'soccr' ) }
+					placeholder={ __( 'Tabelle', 'soccr' ) }
 				/>
 			) }
 
