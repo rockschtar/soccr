@@ -24,7 +24,7 @@ const Edit = ( props ) => {
 				blockId: clientId,
 			} );
 		}
-	}, [ clientId ] );
+	}, [ blockId, clientId, setAttributes ] );
 
 	return (
 		<div { ...blockProps }>

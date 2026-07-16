@@ -39,7 +39,7 @@ export const LeagueSelectControl = ( props ) => {
 		return () => {
 			cancelled = true;
 		};
-	}, [] );
+	}, [ props.leagueShortcut, props.leagueSeason ] );
 
 	useEffect( () => {
 		if ( leagues.length === 0 ) {
@@ -57,6 +57,8 @@ export const LeagueSelectControl = ( props ) => {
 				setLeagueShortcutSeason( null );
 			}
 		}
+		// Bewusst nur bei neuen Optionen prüfen, nicht bei jeder Auswahländerung.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ leagues ] );
 
 	const onLeagueChange = ( value ) => {
