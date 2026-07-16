@@ -1,51 +1,51 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "soccr/standings",
-  "title": "Soccr Tabelle",
-  "category": "soccr",
-  "description": "OpenligaDB Tabelle",
-  "keywords": [ "OpenligaDB", "tabelle", "spieltag", "soccr"],
-  "textdomain": "soccr",
-  "attributes": {
-    "leagueShortcut": {
-      "type": "string",
-      "default": "bl2"
-    },
-    "leagueSeason": {
-      "type": "number",
-      "default": 2021
-    },
-    "align": {
-      "type": "string",
-      "default": "center"
-    },
-    "title": {
-      "type": "string",
-      "default": ""
-    },
-    "showTitle": {
-      "type": "boolean",
-      "default": true
-    },
-    "highlightTeamId": {
-      "type": "number",
-      "default": 0
-    },
-    "defaultCurrentSeason": {
-      "type": "boolean",
-      "default": true
-    }
-  },
-  "supports": {
-    "align": true,
-    "color": {
-      "text": true,
-      "background": true,
-      "link": false
-    }
-  },
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:./style.css",
-  "style": "file:./style.scss"
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "soccr/standings",
+	"title": "Soccr Tabelle",
+	"category": "soccr",
+	"description": "OpenligaDB Tabelle",
+	"keywords": [ "OpenligaDB", "tabelle", "spieltag", "soccr" ],
+	"textdomain": "soccr",
+	"attributes": {
+		"leagueShortcut": {
+			"type": "string",
+			"default": "bl2"
+		},
+		"leagueSeason": {
+			"type": "number",
+			"default": 2021
+		},
+		"align": {
+			"type": "string",
+			"default": "center"
+		},
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"showTitle": {
+			"type": "boolean",
+			"default": true
+		},
+		"highlightTeamId": {
+			"type": "number",
+			"default": 0
+		},
+		"defaultCurrentSeason": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {
+		"align": true,
+		"color": {
+			"text": true,
+			"background": true,
+			"link": false
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./style.css",
+	"style": "file:./style.scss"
 }

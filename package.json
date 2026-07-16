@@ -1,6 +1,5 @@
 {
   "name": "soccr",
-  "version": "0.1.0",
   "author": "Stefan Helmer",
   "config": {
     "webpack_src_dir": "blocks",
@@ -9,8 +8,9 @@
   "scripts": {
     "build": "wp-scripts build --webpack-copy-php --webpack-src-dir=$npm_package_config_webpack_src_dir --output-path=$npm_package_config_output_path",
     "start": "wp-scripts start --webpack-copy-php --webpack-src-dir=$npm_package_config_webpack_src_dir --output-path=$npm_package_config_output_path",
-    "packages-update": "wp-scripts packages-update --dist-tag=wp-6.4",
+    "packages-update": "wp-scripts packages-update --dist-tag=wp-7.0",
     "lint-js": "wp-scripts lint-js blocks/",
+    "format": "wp-scripts format blocks/",
     "plugin-zip": "wp-scripts plugin-zip"
   },
   "files": [
@@ -19,9 +19,15 @@
     "src"
   ],
   "devDependencies": {
-    "@wordpress/blocks": "^15.16.0",
-    "@wordpress/components": "^25.8.13",
-    "@wordpress/scripts": "^27.5.0",
+    "@wordpress/api-fetch": "^7.40.1",
+    "@wordpress/block-editor": "^15.13.2",
+    "@wordpress/blocks": "^15.13.1",
+    "@wordpress/components": "^32.2.1",
+    "@wordpress/element": "^6.40.1",
+    "@wordpress/i18n": "^6.13.1",
+    "@wordpress/primitives": "^4.40.1",
+    "@wordpress/scripts": "^31.5.1",
+    "@wordpress/server-side-render": "^6.16.1",
     "prop-types": "^15.8.1"
   }
 }

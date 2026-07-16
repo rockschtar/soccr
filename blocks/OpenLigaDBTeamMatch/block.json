@@ -1,56 +1,56 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "soccr/team-match",
-  "title": "Soccr Team Spiel",
-  "category": "soccr",
-  "description": "OpenligaDB nächstes, aktuelles oder letztes Spiel einer Mannschaft",
-  "keywords": [ "OpenligaDB", "liga", "spiel", "mannschaft", "soccr"],
-  "textdomain": "soccr",
-  "attributes": {
-    "leagueShortcut": {
-      "type": "string",
-      "default": ""
-    },
-    "leagueSeason": {
-      "type": "number",
-      "default": 2021
-    },
-    "teamId": {
-      "type": "number",
-      "default": 0
-    },
-    "displayMode": {
-      "type": "string",
-      "default": "current",
-      "enum": ["current", "next", "last"]
-    },
-    "align": {
-      "type": "string",
-      "default": "center"
-    },
-    "title": {
-      "type": "string",
-      "default": ""
-    },
-    "showTitle": {
-      "type": "boolean",
-      "default": true
-    },
-    "showTeamIcons": {
-      "type": "boolean",
-      "default": true
-    }
-  },
-  "supports": {
-    "align": true,
-    "color": {
-      "text": true,
-      "background": true,
-      "link": false
-    }
-  },
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:./style.css",
-  "style": "file:./style.scss"
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "soccr/team-match",
+	"title": "Soccr Team Spiel",
+	"category": "soccr",
+	"description": "OpenligaDB nächstes, aktuelles oder letztes Spiel einer Mannschaft",
+	"keywords": [ "OpenligaDB", "liga", "spiel", "mannschaft", "soccr" ],
+	"textdomain": "soccr",
+	"attributes": {
+		"leagueShortcut": {
+			"type": "string",
+			"default": ""
+		},
+		"leagueSeason": {
+			"type": "number",
+			"default": 2021
+		},
+		"teamId": {
+			"type": "number",
+			"default": 0
+		},
+		"displayMode": {
+			"type": "string",
+			"default": "current",
+			"enum": [ "current", "next", "last" ]
+		},
+		"align": {
+			"type": "string",
+			"default": "center"
+		},
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"showTitle": {
+			"type": "boolean",
+			"default": true
+		},
+		"showTeamIcons": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"supports": {
+		"align": true,
+		"color": {
+			"text": true,
+			"background": true,
+			"link": false
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./style.css",
+	"style": "file:./style.scss"
 }
