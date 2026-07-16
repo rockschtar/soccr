@@ -475,7 +475,6 @@ class OpenLigaDBApi
     public static function getCurrentLeagueSeason(string $leagueShortcut): OpenligaDBLeague
     {
         $cacheKey = "soccr-openligadb-current-league-season-$leagueShortcut";
-
         $openLigaDBLeague = get_transient($cacheKey);
 
         if ($openLigaDBLeague !== false) {
