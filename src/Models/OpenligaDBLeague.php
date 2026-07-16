@@ -16,6 +16,8 @@ class OpenligaDBLeague implements JsonSerializable
 
     private int $sportId;
 
+    private string $leagueNameShort;
+
     /**
      * @return int
      */
@@ -32,41 +34,26 @@ class OpenligaDBLeague implements JsonSerializable
         $this->leagueId = $leagueId;
     }
 
-    /**
-     * @return string
-     */
     public function getLeagueName(): string
     {
         return $this->leagueName;
     }
 
-    /**
-     * @param string $leagueName
-     */
     public function setLeagueName(string $leagueName): void
     {
         $this->leagueName = $leagueName;
     }
 
-    /**
-     * @return string
-     */
     public function getLeagueShortcut(): string
     {
         return $this->leagueShortcut;
     }
 
-    /**
-     * @param string $leagueShortcut
-     */
     public function setLeagueShortcut(string $leagueShortcut): void
     {
         $this->leagueShortcut = $leagueShortcut;
     }
 
-    /**
-     * @return int
-     */
     public function getLeagueSeason(): int
     {
         return $this->leagueSeason;
@@ -81,9 +68,6 @@ class OpenligaDBLeague implements JsonSerializable
         );
     }
 
-    /**
-     * @param int $leagueSeason
-     */
     public function setLeagueSeason(int $leagueSeason): void
     {
         $this->leagueSeason = $leagueSeason;
@@ -92,6 +76,16 @@ class OpenligaDBLeague implements JsonSerializable
     public function getSportId(): int
     {
         return $this->sportId;
+    }
+
+    public function getLeagueNameShort(): string
+    {
+        return $this->leagueNameShort;
+    }
+
+    public function setLeagueNameShort(string $leagueNameShort): void
+    {
+        $this->leagueNameShort = $leagueNameShort;
     }
 
     public function setSportId(int $sportId): void
@@ -104,6 +98,7 @@ class OpenligaDBLeague implements JsonSerializable
         return [
             'leagueId' => $this->getLeagueId(),
             'leagueName' => $this->getLeagueName(),
+            'leagueNameShort' => $this->getLeagueNameShort(),
             'leagueShortcut' => $this->getLeagueShortcut(),
             'leagueSeason' => $this->getLeagueSeason(),
         ];

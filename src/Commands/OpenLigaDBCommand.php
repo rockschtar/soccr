@@ -9,7 +9,7 @@ use WP_CLI;
 
 class OpenLigaDBCommand
 {
-    private const array LEAGUE_FIELDS = ['leagueId', 'leagueName', 'leagueShortcut', 'leagueSeason'];
+    private const array LEAGUE_FIELDS = ['leagueId', 'leagueName', 'leagueNameShort', 'leagueShortcut', 'leagueSeason'];
 
     /**
      * Listet Ligen über OpenLigaDBApi::queryLeagues().
