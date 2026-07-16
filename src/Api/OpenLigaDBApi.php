@@ -394,7 +394,7 @@ class OpenLigaDBApi
         $leagues = self::getAvailableLeagues();
 
         $leagues = array_filter($leagues, static function (OpenligaDBLeague $league) {
-			return in_array($league->getSportId(), [1, 79], true);
+            return in_array($league->getSportId(), [1, 79], true);
         });
 
         $allowedShortcuts = apply_filters('soccr_league_shortcuts', ['bl1', 'bl2', 'bl3', 'fbl1', 'fbl2', 'ucl', 'uel', 'uecl','dfb']);
