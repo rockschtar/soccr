@@ -12,5 +12,6 @@ class PluginController
     {
         BlockEditorController::init();
         RestController::init();
+        CommandController::init();
     }
 }

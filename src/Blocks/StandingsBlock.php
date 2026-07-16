@@ -15,7 +15,7 @@ class StandingsBlock extends Block
             'align'           => 'left',
             'title'           => '',
             'showTitle'       => true,
-			'defaultCurrentSeason' => true,
+            'defaultCurrentSeason' => true,
             'highlightTeamId' => 0,
         ];
 

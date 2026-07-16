@@ -35,11 +35,15 @@ class GroupMatchesBlock extends Block
             if ($defaultCurrentGroup) {
 
                 $openLigaDBCurrentGroup = OpenLigaDBApi::getCurrentGroup($leagueShortcut);
-                $openLigaDBCurrentLeagueSeason = OpenLigaDBApi::getCurrentLeagueSeason($leagueShortcut);
+                $openLigaDBLeagueSeason  = OpenLigaDBApi::getCurrentLeagueSeason($leagueShortcut);
 
-                $leagueSeason = $openLigaDBCurrentLeagueSeason->getLeagueSeason();
+                $leagueSeason = $openLigaDBLeagueSeason->getLeagueSeason();
                 $groupOrderId = $openLigaDBCurrentGroup->getGroupOrderId();
+            } else {
+                $openLigaDBLeagueSeason  = OpenLigaDBApi::getLeagueSeason($leagueShortcut, $leagueSeason);
             }
+
+            $leagueName = $openLigaDBLeagueSeason->getLeagueName();
 
             if ($pagination) {
                 $blockIdInput = filter_input(
@@ -62,6 +66,7 @@ class GroupMatchesBlock extends Block
                     }
                 }
             }
+
 
             $openLigaDBGroupMatches = OpenLigaDBApi::getGroupMatches(
                 $leagueShortcut,
@@ -142,9 +147,9 @@ class GroupMatchesBlock extends Block
 
         /* translators: %1$s is the group name, %2$s is the league season */
         $headline = sprintf(
-            __('%1$s | Saison %2$s', 'soccr'),
+            __('%1$s | %2$s', 'soccr'),
             esc_html($groupName),
-            esc_html($leagueSeasonDisplay),
+            esc_html($leagueName),
         );
 
         $headline = apply_filters(
@@ -152,6 +157,7 @@ class GroupMatchesBlock extends Block
             $headline,
             $group,
             [
+                'league'              => $openLigaDBLeagueSeason,
                 'leagueShortcut'      => $leagueShortcut,
                 'leagueSeason'        => $leagueSeason,
                 'leagueSeasonDisplay' => $leagueSeasonDisplay,
