@@ -18,17 +18,11 @@ class OpenligaDBLeague implements JsonSerializable
 
     private string $leagueNameShort;
 
-    /**
-     * @return int
-     */
     public function getLeagueId(): int
     {
         return $this->leagueId;
     }
 
-    /**
-     * @param int $leagueId
-     */
     public function setLeagueId(int $leagueId): void
     {
         $this->leagueId = $leagueId;

@@ -44,6 +44,7 @@ class GroupMatchesBlock extends Block
             }
 
             $leagueName = $openLigaDBLeagueSeason->getLeagueName();
+			$leagueNameShort = $openLigaDBLeagueSeason->getLeagueNameShort();
 
             if ($pagination) {
                 $blockIdInput = filter_input(
@@ -149,7 +150,7 @@ class GroupMatchesBlock extends Block
         $headline = sprintf(
             __('%1$s | %2$s', 'soccr'),
             esc_html($groupName),
-            esc_html($leagueName),
+            esc_html($leagueNameShort),
         );
 
         $headline = apply_filters(
