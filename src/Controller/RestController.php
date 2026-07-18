@@ -10,15 +10,11 @@ class RestController
 {
     use Singelton;
 
-    private const ICON_ALLOWED_HOSTS = [
-        'openligadb.de',
-        'upload.wikimedia.org',
-    ];
-
-    private const ICON_ALLOWED_TYPES = [
+    private const array ICON_ALLOWED_TYPES = [
         'image/png',
         'image/jpeg',
         'image/gif',
+
         'image/webp',
     ];
 
@@ -88,15 +84,10 @@ class RestController
             'methods' => 'GET',
             'callback' => static function (\WP_REST_Request $request) {
                 $url = $request->get_param('url');
+                $sig = $request->get_param('sig');
 
-                $host = parse_url($url, PHP_URL_HOST);
-                $allowed = array_filter(
-                    self::ICON_ALLOWED_HOSTS,
-                    static fn(string $allowed) => $host === $allowed || str_ends_with($host, '.' . $allowed),
-                );
-
-                if (empty($allowed)) {
-                    return new \WP_REST_Response(['error' => 'URL not allowed'], 403);
+                if (!is_string($sig) || !hash_equals(wp_hash($url), $sig)) {
+                    return new \WP_REST_Response(['error' => 'Invalid signature'], 403);
                 }
 
                 $cacheKey = 'soccr-team-icon-' . md5($url);
@@ -142,6 +133,11 @@ class RestController
                     'required' => true,
                     'type' => 'string',
                     'sanitize_callback' => 'esc_url_raw',
+                ],
+                'sig' => [
+                    'required' => true,
+                    'type' => 'string',
+                    'sanitize_callback' => 'sanitize_text_field',
                 ],
             ],
         ]);
