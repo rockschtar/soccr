@@ -20,6 +20,7 @@ const Edit = ( props ) => {
 	const { setAttributes, attributes } = props;
 
 	const blockProps = useBlockProps();
+	const [ leagueName, setLeagueName ] = useState( '' );
 	const [ leagueSelected, setLeagueSelected ] = useState(
 		!! attributes.leagueShortcut
 	);
@@ -40,20 +41,30 @@ const Edit = ( props ) => {
 								setAttributes( { showTitle } )
 							}
 						/>
+
 						<LeagueSelectControl
 							leagueShortcut={ attributes.leagueShortcut }
 							leagueSeason={ attributes.leagueSeason }
 							disabled={ attributes.defaultCurrentSeason }
 							autoSelect={ true }
-							onChange={ ( leagueShortcut, leagueSeason ) => {
+							onChange={ (
+								leagueShortcut,
+								leagueSeason,
+								name
+							) => {
+								setLeagueName( name || '' );
+
 								const newAttributes = {
 									leagueShortcut,
 									leagueSeason: parseInt( leagueSeason ),
 									highlightTeamId: 0,
 								};
+
+								newAttributes.title = name;
 								setAttributes( newAttributes );
 							} }
 						/>
+
 						<Spacer marginBottom={ 4 } />
 
 						<CheckboxControl
@@ -92,7 +103,7 @@ const Edit = ( props ) => {
 					tagName="h2"
 					value={ attributes.title }
 					onChange={ ( title ) => setAttributes( { title } ) }
-					placeholder={ __( 'Tabelle', 'soccr' ) }
+					placeholder={ leagueName || __( 'Tabelle', 'soccr' ) }
 				/>
 			) }
 

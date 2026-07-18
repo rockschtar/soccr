@@ -27,10 +27,15 @@ export const LeagueSelectControl = ( props ) => {
 					return;
 				}
 
+				console.log(data);
+
 				const leagueOptions = data.map( ( league ) => ( {
 					value: league.leagueShortcut + '###' + league.leagueSeason,
-					label: league.leagueName,
+					label: league.leagueNameShort,
 				} ) );
+
+
+				console.log(leagueOptions);
 
 				setLeagues( leagueOptions );
 			} )
@@ -57,19 +62,23 @@ export const LeagueSelectControl = ( props ) => {
 				setLeagueShortcutSeason( null );
 			}
 		}
-		// Bewusst nur bei neuen Optionen prüfen, nicht bei jeder Auswahländerung.
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [ leagues ] );
+	}, [] );
 
 	const onLeagueChange = ( value ) => {
 		if ( ! value ) {
 			return;
 		}
 		const [ leagueShortcut, leagueSeason ] = value.split( '###' );
+
 		const selectedLeague = leagues.find( ( l ) => l.value === value );
+
+		console.log(selectedLeague)
 		const leagueName = selectedLeague ? selectedLeague.label : '';
 		props.onChange( leagueShortcut, leagueSeason, leagueName );
 		setLeagueShortcutSeason( value );
+
+		console.log("onLeagueChange", value);
+
 	};
 
 	return (
