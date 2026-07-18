@@ -132,7 +132,7 @@ class RemoteRequest
             $args['user-agent'] = $this->userAgent;
         }
 
-        if ($this->sslVerify) {
+        if ($this->sslVerify !== null) {
             $args['sslverify'] = $this->sslVerify;
         }
 
