@@ -15,6 +15,7 @@
 
 define('SOCCR_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SOCCR_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('SOCCR_VERSION', get_file_data(__FILE__, ['Version' => 'Version'])['Version']);
 
 if(file_exists(SOCCR_PLUGIN_DIR . 'vendor/autoload.php')) {
     require_once SOCCR_PLUGIN_DIR . 'vendor/autoload.php';
