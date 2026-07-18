@@ -110,7 +110,7 @@ class RestController
                     exit;
                 }
 
-                $response = wp_remote_get($url, ['timeout' => 10]);
+                $response = wp_remote_get($url, ['timeout' => 10, 'redirection' => 0]);
 
                 if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) {
                     return new \WP_REST_Response(['error' => 'Could not fetch icon'], 502);
