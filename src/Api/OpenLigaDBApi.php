@@ -188,11 +188,9 @@ class OpenLigaDBApi
             return $openLigaDBMatches;
         }
 
-        $url = "https://api.openligadb.de/getmatchdata/$leagueShortcut/$leagueSeason";
-
-        if ($groupOrderId) {
-            $url .= "/$groupOrderId";
-        }
+        $url = $groupOrderId
+            ? self::apiUrl('getmatchdata', $leagueShortcut, $leagueSeason, $groupOrderId)
+            : self::apiUrl('getmatchdata', $leagueShortcut, $leagueSeason);
 
         $remoteRequest = new RemoteRequest($url);
 
@@ -246,7 +244,7 @@ class OpenLigaDBApi
         }
 
         $remoteRequest = new RemoteRequest(
-            "https://api.openligadb.de/getcurrentgroup/$leagueShortcut",
+            self::apiUrl('getcurrentgroup', $leagueShortcut),
         );
         $result = $remoteRequest->execute();
         $group = json_decode(
@@ -282,7 +280,7 @@ class OpenLigaDBApi
         $openLigaDBGroups = [];
 
         $remoteRequest = new RemoteRequest(
-            "https://api.openligadb.de/getavailablegroups/$leagueShortcut/$leagueSeason",
+            self::apiUrl('getavailablegroups', $leagueShortcut, $leagueSeason),
         );
 
         $result = $remoteRequest->execute();
@@ -323,7 +321,7 @@ class OpenLigaDBApi
         $openLigaDBLeagues = [];
 
         $remoteRequest = new RemoteRequest(
-            'https://api.openligadb.de/getavailableleagues',
+            self::apiUrl('getavailableleagues'),
         );
 
         $result = $remoteRequest->execute();
@@ -364,7 +362,7 @@ class OpenLigaDBApi
         $openLigaDBTeams = [];
 
         $remoteRequest = new RemoteRequest(
-            "https://api.openligadb.de/getavailableteams/$leagueShortcut/$leagueSeason",
+            self::apiUrl('getavailableteams', $leagueShortcut, $leagueSeason),
         );
 
         $result = $remoteRequest->execute();
@@ -574,7 +572,7 @@ class OpenLigaDBApi
     {
         $cacheKey = self::getCacheKey('soccr-oldb-standings', [$leagueShortcut, $leagueSeason]);
 
-        $url = "https://api.openligadb.de/getbltable/$leagueShortcut/$leagueSeason";
+        $url = self::apiUrl('getbltable', $leagueShortcut, $leagueSeason);
 
         $openLigaDBStandings = get_transient($cacheKey);
 
@@ -628,5 +626,12 @@ class OpenLigaDBApi
         }
 
         return $key . '-' . implode('-', $values) . "-" . SOCCR_VERSION;
+    }
+
+    private static function apiUrl(string|int ...$segments): string
+    {
+        $path = implode('/', array_map(static fn(string|int $segment) => rawurlencode((string) $segment), $segments));
+
+        return esc_url_raw('https://api.openligadb.de/' . $path);
     }
 }
