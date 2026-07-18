@@ -78,7 +78,7 @@ class GroupMatchesBlock extends Block
             do_action('openligadb_exception', $e);
 
             if (defined('WP_DEBUG') && true === WP_DEBUG) {
-                return $e->getMessage();
+                return $this->esc($e->getMessage());
             }
 
             if ($e->getCode() === 404) {
