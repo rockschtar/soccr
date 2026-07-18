@@ -53,7 +53,7 @@ class TeamMatchBlock extends Block
             do_action('soccr_exception', $e);
 
             if (defined('WP_DEBUG') && true === WP_DEBUG) {
-                return $e->getMessage();
+                return $this->esc($e->getMessage());
             }
 
             if ($e->getCode() === 404) {
