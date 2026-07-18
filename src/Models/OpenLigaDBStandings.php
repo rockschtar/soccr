@@ -1,6 +1,6 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Models;
+namespace Rockschtar\Soccr\Models;
 
 class OpenLigaDBStandings
 {

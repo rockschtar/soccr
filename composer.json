@@ -4,12 +4,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Rockschtar\\WordPress\\Soccr\\": "src/"
+            "Rockschtar\\Soccr\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Rockschtar\\WordPress\\Soccr\\Tests\\": "tests/"
+            "Rockschtar\\Soccr\\Tests\\": "tests/"
         }
     },
     "require-dev": {

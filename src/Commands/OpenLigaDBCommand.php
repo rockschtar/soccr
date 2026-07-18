@@ -1,10 +1,10 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Commands;
+namespace Rockschtar\Soccr\Commands;
 
 use Exception;
-use Rockschtar\WordPress\Soccr\Api\OpenLigaDBApi;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBLeagueQuery;
+use Rockschtar\Soccr\Api\OpenLigaDBApi;
+use Rockschtar\Soccr\Models\OpenLigaDBLeagueQuery;
 use WP_CLI;
 
 class OpenLigaDBCommand

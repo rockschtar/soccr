@@ -1,8 +1,8 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Factories;
+namespace Rockschtar\Soccr\Factories;
 
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBGroup;
+use Rockschtar\Soccr\Models\OpenLigaDBGroup;
 
 class OpenLigaDBGroupFactory
 {

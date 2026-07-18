@@ -1,12 +1,12 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Tests\Unit\Api;
+namespace Rockschtar\Soccr\Tests\Unit\Api;
 
 use Brain\Monkey\Functions;
-use Rockschtar\WordPress\Soccr\Api\OpenLigaDBApi;
-use Rockschtar\WordPress\Soccr\Models\OpenligaDBLeague;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBLeagueQuery;
-use Rockschtar\WordPress\Soccr\Tests\Unit\UnitTestCase;
+use Rockschtar\Soccr\Api\OpenLigaDBApi;
+use Rockschtar\Soccr\Models\OpenligaDBLeague;
+use Rockschtar\Soccr\Models\OpenLigaDBLeagueQuery;
+use Rockschtar\Soccr\Tests\Unit\UnitTestCase;
 
 class OpenLigaDBApiQueryLeaguesTest extends UnitTestCase
 {

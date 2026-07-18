@@ -1,10 +1,10 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Blocks;
+namespace Rockschtar\Soccr\Blocks;
 
 use Exception;
-use Rockschtar\WordPress\Soccr\Api\OpenLigaDBApi;
-use Rockschtar\WordPress\Soccr\Utils\DateFormat;
+use Rockschtar\Soccr\Api\OpenLigaDBApi;
+use Rockschtar\Soccr\Utils\DateFormat;
 
 class GroupMatchesBlock extends Block
 {

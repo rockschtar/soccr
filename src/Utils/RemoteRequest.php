@@ -1,9 +1,9 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Utils;
+namespace Rockschtar\Soccr\Utils;
 
-use Rockschtar\WordPress\Soccr\Exceptions\RemoteRequestException;
-use Rockschtar\WordPress\Soccr\Models\RemoteResponse;
+use Rockschtar\Soccr\Exceptions\RemoteRequestException;
+use Rockschtar\Soccr\Models\RemoteResponse;
 
 class RemoteRequest
 {

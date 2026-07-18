@@ -1,8 +1,8 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Controller;
+namespace Rockschtar\Soccr\Controller;
 
-use Rockschtar\WordPress\Soccr\Traits\Singelton;
+use Rockschtar\Soccr\Traits\Singelton;
 
 class OpenLigaDBController
 {

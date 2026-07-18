@@ -1,6 +1,6 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Tests\Unit;
+namespace Rockschtar\Soccr\Tests\Unit;
 
 use Brain\Monkey;
 use PHPUnit\Framework\TestCase;

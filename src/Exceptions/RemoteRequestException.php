@@ -1,5 +1,5 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Exceptions;
+namespace Rockschtar\Soccr\Exceptions;
 
 class RemoteRequestException extends \Exception {}
