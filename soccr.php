@@ -22,7 +22,7 @@ if(file_exists(SOCCR_PLUGIN_DIR . 'vendor/autoload.php')) {
 } else {
     spl_autoload_register(static function ($class) {
         $baseDir = __DIR__ . '/src/';
-        $prefix = 'Rockschtar\\WordPress\\Soccr\\';
+        $prefix = 'Rockschtar\\Soccr\\';
         $len = strlen($prefix);
 
         if (strncmp($prefix, $class, $len) !== 0) {
@@ -38,6 +38,6 @@ if(file_exists(SOCCR_PLUGIN_DIR . 'vendor/autoload.php')) {
     });
 }
 
-use Rockschtar\WordPress\Soccr\Controller\PluginController;
+use Rockschtar\Soccr\Controller\PluginController;
 
 PluginController::init();

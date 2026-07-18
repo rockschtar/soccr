@@ -1,9 +1,9 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Blocks;
+namespace Rockschtar\Soccr\Blocks;
 
 use Exception;
-use Rockschtar\WordPress\Soccr\Api\OpenLigaDBApi;
+use Rockschtar\Soccr\Api\OpenLigaDBApi;
 
 class StandingsBlock extends Block
 {

@@ -1,23 +1,23 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Api;
+namespace Rockschtar\Soccr\Api;
 
 use JsonException;
-use Rockschtar\WordPress\Soccr\Exceptions\RemoteRequestException;
-use Rockschtar\WordPress\Soccr\Factories\OpenLigaDBGroupFactory;
-use Rockschtar\WordPress\Soccr\Factories\OpenLigaDBLeagueFactory;
-use Rockschtar\WordPress\Soccr\Factories\OpenLigaDBMatchFactory;
-use Rockschtar\WordPress\Soccr\Factories\OpenLigaDBTeamFactory;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBGroup;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBGroupMatches;
-use Rockschtar\WordPress\Soccr\Models\OpenligaDBLeague;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBLeagueQuery;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBMatch;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBMatchQuery;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBStanding;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBStandings;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBTeam;
-use Rockschtar\WordPress\Soccr\Utils\RemoteRequest;
+use Rockschtar\Soccr\Exceptions\RemoteRequestException;
+use Rockschtar\Soccr\Factories\OpenLigaDBGroupFactory;
+use Rockschtar\Soccr\Factories\OpenLigaDBLeagueFactory;
+use Rockschtar\Soccr\Factories\OpenLigaDBMatchFactory;
+use Rockschtar\Soccr\Factories\OpenLigaDBTeamFactory;
+use Rockschtar\Soccr\Models\OpenLigaDBGroup;
+use Rockschtar\Soccr\Models\OpenLigaDBGroupMatches;
+use Rockschtar\Soccr\Models\OpenligaDBLeague;
+use Rockschtar\Soccr\Models\OpenLigaDBLeagueQuery;
+use Rockschtar\Soccr\Models\OpenLigaDBMatch;
+use Rockschtar\Soccr\Models\OpenLigaDBMatchQuery;
+use Rockschtar\Soccr\Models\OpenLigaDBStanding;
+use Rockschtar\Soccr\Models\OpenLigaDBStandings;
+use Rockschtar\Soccr\Models\OpenLigaDBTeam;
+use Rockschtar\Soccr\Utils\RemoteRequest;
 use RuntimeException;
 
 class OpenLigaDBApi

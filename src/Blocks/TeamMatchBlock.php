@@ -1,12 +1,12 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Blocks;
+namespace Rockschtar\Soccr\Blocks;
 
 use Exception;
-use Rockschtar\WordPress\Soccr\Api\OpenLigaDBApi;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBMatch;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBMatchQuery;
-use Rockschtar\WordPress\Soccr\Utils\DateFormat;
+use Rockschtar\Soccr\Api\OpenLigaDBApi;
+use Rockschtar\Soccr\Models\OpenLigaDBMatch;
+use Rockschtar\Soccr\Models\OpenLigaDBMatchQuery;
+use Rockschtar\Soccr\Utils\DateFormat;
 
 class TeamMatchBlock extends Block
 {

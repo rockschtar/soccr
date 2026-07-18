@@ -1,10 +1,10 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Tests\Unit\Factories;
+namespace Rockschtar\Soccr\Tests\Unit\Factories;
 
 use Brain\Monkey\Functions;
-use Rockschtar\WordPress\Soccr\Factories\OpenLigaDBMatchFactory;
-use Rockschtar\WordPress\Soccr\Tests\Unit\UnitTestCase;
+use Rockschtar\Soccr\Factories\OpenLigaDBMatchFactory;
+use Rockschtar\Soccr\Tests\Unit\UnitTestCase;
 
 class OpenLigaDBMatchFactoryTest extends UnitTestCase
 {

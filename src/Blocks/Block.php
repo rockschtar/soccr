@@ -1,8 +1,8 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Blocks;
+namespace Rockschtar\Soccr\Blocks;
 
-use Rockschtar\WordPress\Soccr\Traits\Singelton;
+use Rockschtar\Soccr\Traits\Singelton;
 use WP_Block_Type;
 
 abstract class Block

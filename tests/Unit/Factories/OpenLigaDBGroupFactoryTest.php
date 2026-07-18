@@ -1,9 +1,9 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Tests\Unit\Factories;
+namespace Rockschtar\Soccr\Tests\Unit\Factories;
 
-use Rockschtar\WordPress\Soccr\Factories\OpenLigaDBGroupFactory;
-use Rockschtar\WordPress\Soccr\Tests\Unit\UnitTestCase;
+use Rockschtar\Soccr\Factories\OpenLigaDBGroupFactory;
+use Rockschtar\Soccr\Tests\Unit\UnitTestCase;
 
 class OpenLigaDBGroupFactoryTest extends UnitTestCase
 {

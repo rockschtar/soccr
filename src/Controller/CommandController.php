@@ -1,9 +1,9 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Controller;
+namespace Rockschtar\Soccr\Controller;
 
-use Rockschtar\WordPress\Soccr\Commands\OpenLigaDBCommand;
-use Rockschtar\WordPress\Soccr\Traits\Singelton;
+use Rockschtar\Soccr\Commands\OpenLigaDBCommand;
+use Rockschtar\Soccr\Traits\Singelton;
 
 class CommandController
 {

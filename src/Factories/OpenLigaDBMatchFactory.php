@@ -1,11 +1,11 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Factories;
+namespace Rockschtar\Soccr\Factories;
 
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBGroup;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBLocation;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBMatch;
-use Rockschtar\WordPress\Soccr\Models\OpenLigaDBMatchResult;
+use Rockschtar\Soccr\Models\OpenLigaDBGroup;
+use Rockschtar\Soccr\Models\OpenLigaDBLocation;
+use Rockschtar\Soccr\Models\OpenLigaDBMatch;
+use Rockschtar\Soccr\Models\OpenLigaDBMatchResult;
 
 class OpenLigaDBMatchFactory
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Traits;
+namespace Rockschtar\Soccr\Traits;
 
 trait Singelton
 {

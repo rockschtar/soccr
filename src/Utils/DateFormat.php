@@ -1,6 +1,6 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Utils;
+namespace Rockschtar\Soccr\Utils;
 
 class DateFormat
 {

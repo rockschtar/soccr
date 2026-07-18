@@ -1,11 +1,11 @@
 <?php
 
-namespace Rockschtar\WordPress\Soccr\Controller;
+namespace Rockschtar\Soccr\Controller;
 
-use Rockschtar\WordPress\Soccr\Blocks\GroupMatchesBlock;
-use Rockschtar\WordPress\Soccr\Blocks\StandingsBlock;
-use Rockschtar\WordPress\Soccr\Blocks\TeamMatchBlock;
-use Rockschtar\WordPress\Soccr\Traits\Singelton;
+use Rockschtar\Soccr\Blocks\GroupMatchesBlock;
+use Rockschtar\Soccr\Blocks\StandingsBlock;
+use Rockschtar\Soccr\Blocks\TeamMatchBlock;
+use Rockschtar\Soccr\Traits\Singelton;
 
 class BlockEditorController
 {
