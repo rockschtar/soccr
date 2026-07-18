@@ -28,7 +28,7 @@ class OpenLigaDBApiQueryLeaguesTest extends UnitTestCase
         ];
 
         Functions\when('get_transient')->alias(function ($key) {
-            if ($key === 'soccr-openligadb-available-leagues') {
+            if (str_starts_with($key, 'soccr-oldb-available-leagues')) {
                 return $this->availableLeagues;
             }
             return false;
