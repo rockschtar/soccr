@@ -44,7 +44,7 @@ class GroupMatchesBlock extends Block
             }
 
             $leagueName = $openLigaDBLeagueSeason->getLeagueName();
-			$leagueNameShort = $openLigaDBLeagueSeason->getLeagueNameShort();
+            $leagueNameShort = $openLigaDBLeagueSeason->getLeagueNameShort();
 
             if ($pagination) {
                 $blockIdInput = filter_input(

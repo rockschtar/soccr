@@ -112,7 +112,7 @@ class OpenLigaDBApi
         int $groutOrderId,
     ): OpenLigaDBGroupMatches {
 
-		$cacheKey = self::getCacheKey('soccr-oldb-group-matches', [$leagueShortcut, $leagueSeason, $groutOrderId]);
+        $cacheKey = self::getCacheKey('soccr-oldb-group-matches', [$leagueShortcut, $leagueSeason, $groutOrderId]);
 
         $openLigaDBGroupMatches = get_transient($cacheKey);
 
@@ -180,7 +180,7 @@ class OpenLigaDBApi
      */
     public static function getMatches(string $leagueShortcut, int $leagueSeason, ?int $groupOrderId = null): array
     {
-		$cacheKey = self::getCacheKey('soccr-oldb-matches', [$leagueShortcut, $leagueSeason, $groupOrderId]);
+        $cacheKey = self::getCacheKey('soccr-oldb-matches', [$leagueShortcut, $leagueSeason, $groupOrderId]);
 
         $openLigaDBMatches = get_transient($cacheKey);
 
@@ -237,7 +237,7 @@ class OpenLigaDBApi
      */
     public static function getCurrentGroup(string $leagueShortcut): OpenLigaDBGroup
     {
-		$cacheKey = self::getCacheKey('soccr-oldb-current-group', [$leagueShortcut]);
+        $cacheKey = self::getCacheKey('soccr-oldb-current-group', [$leagueShortcut]);
 
         $openLigaDBGroup = get_transient($cacheKey);
 
@@ -271,7 +271,7 @@ class OpenLigaDBApi
      */
     public static function getAvailableGroups(string $leagueShortcut, string $leagueSeason): array
     {
-		$cacheKey = self::getCacheKey('soccr-oldb-available-groups', [$leagueShortcut, $leagueSeason]);
+        $cacheKey = self::getCacheKey('soccr-oldb-available-groups', [$leagueShortcut, $leagueSeason]);
 
         $openLigaDBGroups = get_transient($cacheKey);
 
@@ -312,7 +312,7 @@ class OpenLigaDBApi
      */
     public static function getAvailableLeagues(): array
     {
-		$cacheKey = self::getCacheKey('soccr-oldb-available-leagues');
+        $cacheKey = self::getCacheKey('soccr-oldb-available-leagues');
 
         $openLigaDBLeagues = get_transient($cacheKey);
 
@@ -353,7 +353,7 @@ class OpenLigaDBApi
      */
     public static function getAvailableTeams(string $leagueShortcut, int $leagueSeason): array
     {
-		$cacheKey = self::getCacheKey('soccr-oldb-available-teams', [$leagueShortcut, $leagueSeason]);
+        $cacheKey = self::getCacheKey('soccr-oldb-available-teams', [$leagueShortcut, $leagueSeason]);
 
         $openLigaDBTeams = get_transient($cacheKey);
 
@@ -475,9 +475,9 @@ class OpenLigaDBApi
      */
     public static function getCurrentLeagueSeason(string $leagueShortcut): OpenligaDBLeague
     {
-		$cacheKey = self::getCacheKey('soccr-oldb-current-league-season', [$leagueShortcut]);
+        $cacheKey = self::getCacheKey('soccr-oldb-current-league-season', [$leagueShortcut]);
 
-		$openLigaDBLeague = get_transient($cacheKey);
+        $openLigaDBLeague = get_transient($cacheKey);
         if ($openLigaDBLeague !== false) {
             return $openLigaDBLeague;
         }
@@ -572,7 +572,7 @@ class OpenLigaDBApi
      */
     public static function getStandings(string $leagueShortcut, int $leagueSeason): OpenLigaDBStandings
     {
-		$cacheKey = self::getCacheKey('soccr-oldb-standings', [$leagueShortcut, $leagueSeason]);
+        $cacheKey = self::getCacheKey('soccr-oldb-standings', [$leagueShortcut, $leagueSeason]);
 
         $url = "https://api.openligadb.de/getbltable/$leagueShortcut/$leagueSeason";
 
@@ -621,12 +621,12 @@ class OpenLigaDBApi
         return $openLigaDBStandings;
     }
 
-	private static function getCacheKey(string $key, array $values = []) : string
-	{
-		if(empty($values)) {
-			return $key . "-". SOCCR_VERSION;
-		}
+    private static function getCacheKey(string $key, array $values = []): string
+    {
+        if (empty($values)) {
+            return $key . "-" . SOCCR_VERSION;
+        }
 
-		return $key . '-' . implode('-', $values) . "-".SOCCR_VERSION;
-	}
+        return $key . '-' . implode('-', $values) . "-" . SOCCR_VERSION;
+    }
 }
