@@ -27,15 +27,10 @@ export const LeagueSelectControl = ( props ) => {
 					return;
 				}
 
-				console.log(data);
-
 				const leagueOptions = data.map( ( league ) => ( {
 					value: league.leagueShortcut + '###' + league.leagueSeason,
 					label: league.leagueNameShort,
 				} ) );
-
-
-				console.log(leagueOptions);
 
 				setLeagues( leagueOptions );
 			} )
@@ -68,17 +63,12 @@ export const LeagueSelectControl = ( props ) => {
 		if ( ! value ) {
 			return;
 		}
+
 		const [ leagueShortcut, leagueSeason ] = value.split( '###' );
-
 		const selectedLeague = leagues.find( ( l ) => l.value === value );
-
-		console.log(selectedLeague)
 		const leagueName = selectedLeague ? selectedLeague.label : '';
 		props.onChange( leagueShortcut, leagueSeason, leagueName );
 		setLeagueShortcutSeason( value );
-
-		console.log("onLeagueChange", value);
-
 	};
 
 	return (
