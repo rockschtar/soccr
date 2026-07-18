@@ -15,6 +15,13 @@ class RestController
         'upload.wikimedia.org',
     ];
 
+    private const ICON_ALLOWED_TYPES = [
+        'image/png',
+        'image/jpeg',
+        'image/gif',
+        'image/webp',
+    ];
+
     private function __construct()
     {
         add_action('rest_api_init', $this->restGetLeagues(...));
@@ -97,8 +104,8 @@ class RestController
 
                 if ($cached !== false) {
                     header('Content-Type: ' . $cached['type']);
+                    header('X-Content-Type-Options: nosniff');
                     header('Cache-Control: public, max-age=86400');
-                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo base64_decode($cached['data']);
                     exit;
                 }
@@ -111,7 +118,11 @@ class RestController
 
                 $body = wp_remote_retrieve_body($response);
                 $contentType = wp_remote_retrieve_header($response, 'content-type') ?: 'image/png';
-                $contentType = explode(';', $contentType)[0];
+                $contentType = strtolower(trim(explode(';', $contentType)[0]));
+
+                if (!in_array($contentType, self::ICON_ALLOWED_TYPES, true)) {
+                    return new \WP_REST_Response(['error' => 'Unsupported image type'], 415);
+                }
 
                 set_transient($cacheKey, [
                     'type' => $contentType,
@@ -119,6 +130,7 @@ class RestController
                 ], DAY_IN_SECONDS);
 
                 header('Content-Type: ' . $contentType);
+                header('X-Content-Type-Options: nosniff');
                 header('Cache-Control: public, max-age=86400');
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo $body;
