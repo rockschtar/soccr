@@ -34,7 +34,6 @@ class OpenLigaDBMatchQuery
 
     /**
      * @param OpenLigaDBLeagueSeason[] $leagueSeasons
-     * @return OpenLigaDBMatchQuery
      */
     public function setLeagueSeasons(array $leagueSeasons): OpenLigaDBMatchQuery
     {
@@ -42,36 +41,22 @@ class OpenLigaDBMatchQuery
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getGroupOrderId(): ?int
     {
         return $this->groupOrderId;
     }
 
-    /**
-     * @param int|null $groupOrderId
-     * @return OpenLigaDBMatchQuery
-     */
     public function setGroupOrderId(?int $groupOrderId): OpenLigaDBMatchQuery
     {
         $this->groupOrderId = $groupOrderId;
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getTeamId(): ?int
     {
         return $this->teamId;
     }
 
-    /**
-     * @param int|null $teamId
-     * @return OpenLigaDBMatchQuery
-     */
     public function setTeamId(?int $teamId): OpenLigaDBMatchQuery
     {
         $this->teamId = $teamId;
