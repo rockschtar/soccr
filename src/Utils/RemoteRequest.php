@@ -139,6 +139,9 @@ class RemoteRequest
         return $args;
     }
 
+    /**
+     * @throws RemoteRequestException
+     */
     public function execute(): RemoteResponse
     {
         $response = wp_remote_request($this->url, $this->getArgs());
