@@ -6,8 +6,8 @@ Requires at least: 7.0
 Tested up to: 7.0
 Requires PHP: 8.4
 Stable tag: develop
-License: MIT
-License URI: https://opensource.org/licenses/MIT
+License: GPL-3.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Display football match results, standings, and upcoming matches from OpenLigaDB as Gutenberg blocks.
 
