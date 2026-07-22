@@ -5,6 +5,7 @@
 .editorconfig
 .eslintignore
 .eslintrc
+.eslintrc.js
 .git
 .gitignore
 .github
@@ -30,6 +31,10 @@ multisite.xml.dist
 phpcs.xml
 .phpcs.xml.dist
 phpcs.xml.dist
+.php-cs-fixer.dist.php
+.php-cs-fixer.cache
+.claude
+.wordpress-org
 README.md
 webpack.config.js
 wp-cli.local.yml
