@@ -89,13 +89,13 @@ class StandingsBlock extends Block
                 <div class="{$this->blockClass('tr')}">
                     <div class="{$this->blockClass('th')} {$this->blockClass('position')}"></div>
                     <div class="{$this->blockClass('th')} {$this->blockClass('team')}"></div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('matches')}">{$this->esc(__('P', 'soccr'))}</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('wins')}">{$this->esc(__('W', 'soccr'))}</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('draws')}">{$this->esc(__('D', 'soccr'))}</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('looses')}">{$this->esc(__('L', 'soccr'))}</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('matches')}">{$this->esc(_x('P', 'standings table header: matches played', 'soccr'))}</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('wins')}">{$this->esc(_x('W', 'standings table header: wins', 'soccr'))}</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('draws')}">{$this->esc(_x('D', 'standings table header: draws', 'soccr'))}</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('looses')}">{$this->esc(_x('L', 'standings table header: losses', 'soccr'))}</div>
                     <div class="{$this->blockClass('th')} {$this->blockClass('goals')}">{$this->esc(__('Goals', 'soccr'))}</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('goals-difference')}">{$this->esc(__('GD', 'soccr'))}</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('points')}">{$this->esc(__('Pts', 'soccr'))}</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('goals-difference')}">{$this->esc(_x('GD', 'standings table header: goal difference', 'soccr'))}</div>
+                    <div class="{$this->blockClass('th')} {$this->blockClass('points')}">{$this->esc(_x('Pts', 'standings table header: points', 'soccr'))}</div>
                 </div>
 
            </div>
