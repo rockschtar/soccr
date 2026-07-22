@@ -33,8 +33,8 @@ By default, the following leagues and competitions from OpenLigaDB are available
 * 1. Bundesliga (bl1)
 * 2. Bundesliga (bl2)
 * 3. Liga (bl3)
-* Frauen-Bundesliga (fbl1)
-* 2. Frauen-Bundesliga (fbl2)
+* 1. Frauen Bundesliga (fbl1)
+* 2. Frauen Bundesliga (fbl2)
 * UEFA Champions League (ucl)
 * DFB-Pokal (dfb)
 
@@ -86,7 +86,7 @@ Available actions:
 
 = Which leagues are supported? =
 
-By default, the 1. Bundesliga, 2. Bundesliga, 3. Liga, Frauen-Bundesliga, 2. Frauen-Bundesliga, UEFA Champions League, and DFB-Pokal from OpenLigaDB are available. You can add other leagues available on OpenLigaDB using the `soccr_league_shortcuts` filter.
+By default, the 1. Bundesliga, 2. Bundesliga, 3. Liga, 1. Frauen Bundesliga, 2. Frauen Bundesliga, UEFA Champions League, and DFB-Pokal from OpenLigaDB are available. You can add other leagues available on OpenLigaDB using the `soccr_league_shortcuts` filter.
 
 = Is an API key required? =
 

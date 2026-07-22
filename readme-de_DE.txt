@@ -33,8 +33,8 @@ Standardmäßig sind folgende Ligen und Wettbewerbe aus OpenLigaDB verfügbar:
 * 1. Bundesliga (bl1)
 * 2. Bundesliga (bl2)
 * 3. Liga (bl3)
-* Frauen-Bundesliga (fbl1)
-* 2. Frauen-Bundesliga (fbl2)
+* 1. Frauen Bundesliga (fbl1)
+* 2. Frauen Bundesliga (fbl2)
 * UEFA Champions League (ucl)
 * DFB-Pokal (dfb)
 
@@ -86,7 +86,7 @@ Verfügbare Actions:
 
 = Welche Ligen werden unterstützt? =
 
-Standardmäßig sind die 1. Bundesliga, 2. Bundesliga, 3. Liga, Frauen-Bundesliga, 2. Frauen-Bundesliga, UEFA Champions League und DFB-Pokal aus OpenLigaDB verfügbar. Weitere bei OpenLigaDB verfügbare Ligen lassen sich über den Filter `soccr_league_shortcuts` einbinden.
+Standardmäßig sind die 1. Bundesliga, 2. Bundesliga, 3. Liga, 1. Frauen Bundesliga, 2. Frauen Bundesliga, UEFA Champions League und DFB-Pokal aus OpenLigaDB verfügbar. Weitere bei OpenLigaDB verfügbare Ligen lassen sich über den Filter `soccr_league_shortcuts` einbinden.
 
 = Wird ein API-Key benötigt? =
 
