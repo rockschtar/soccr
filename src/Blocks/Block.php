@@ -106,5 +106,11 @@ abstract class Block
         }
 
         $this->blockType = register_block_type($this->absBlockDirectory(), $args);
+
+        if ($this->blockType instanceof WP_Block_Type) {
+            foreach ($this->blockType->editor_script_handles as $scriptHandle) {
+                wp_set_script_translations($scriptHandle, 'soccr', SOCCR_PLUGIN_DIR . 'languages');
+            }
+        }
     }
 }

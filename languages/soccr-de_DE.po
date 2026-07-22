@@ -1,0 +1,290 @@
+# Copyright (C) 2026 rockschtar
+# This file is distributed under the GPL-3.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Soccr develop\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/soccr\n"
+"Last-Translator: rockschtar\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"POT-Creation-Date: 2026-07-22T20:37:19+00:00\n"
+"PO-Revision-Date: 2026-07-22T20:45:00+00:00\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: soccr\n"
+
+#. Plugin Name of the plugin
+#: soccr.php
+#: src/Controller/BlockEditorController.php:48
+msgid "Soccr"
+msgstr "Soccr"
+
+#. Plugin URI of the plugin
+#: soccr.php
+msgid "https://wordpress.org/plugins/soccr/"
+msgstr "https://wordpress.org/plugins/soccr/"
+
+#. Description of the plugin
+#: soccr.php
+msgid "Display football match results, standings, and upcoming matches from OpenLigaDB as Gutenberg blocks."
+msgstr "Zeigt Spielergebnisse, Tabellen und kommende Spiele aus OpenLigaDB als Gutenberg-Blöcke an."
+
+#. Author of the plugin
+#: soccr.php
+msgid "rockschtar"
+msgstr "rockschtar"
+
+#. Author URI of the plugin
+#: soccr.php
+msgid "http://www.eracer.de"
+msgstr "http://www.eracer.de"
+
+#. translators: %s is a link to openligadb.de
+#: src/Blocks/Block.php:45
+#, php-format
+msgid "Data: %s (ODbL)"
+msgstr "Daten: %s (ODbL)"
+
+#: src/Blocks/GroupMatchesBlock.php:86
+#: src/Blocks/StandingsBlock.php:52
+msgid "Error: matchday, league or season not found"
+msgstr "Fehler: Spieltag, Liga oder Saison nicht gefunden"
+
+#: src/Blocks/GroupMatchesBlock.php:118
+msgid "Previous matchday"
+msgstr "Vorheriger Spieltag"
+
+#: src/Blocks/GroupMatchesBlock.php:137
+msgid "Next matchday"
+msgstr "Nächster Spieltag"
+
+#: src/Blocks/GroupMatchesBlock.php:151
+#, php-format
+msgid "%1$s | %2$s"
+msgstr "%1$s | %2$s"
+
+#: src/Blocks/StandingsBlock.php:92
+msgctxt "standings table header: matches played"
+msgid "P"
+msgstr "Sp"
+
+#: src/Blocks/StandingsBlock.php:93
+msgctxt "standings table header: wins"
+msgid "W"
+msgstr "S"
+
+#: src/Blocks/StandingsBlock.php:94
+msgctxt "standings table header: draws"
+msgid "D"
+msgstr "U"
+
+#: src/Blocks/StandingsBlock.php:95
+msgctxt "standings table header: losses"
+msgid "L"
+msgstr "N"
+
+#: src/Blocks/StandingsBlock.php:96
+msgid "Goals"
+msgstr "Tore"
+
+#: src/Blocks/StandingsBlock.php:97
+msgctxt "standings table header: goal difference"
+msgid "GD"
+msgstr "Diff"
+
+#: src/Blocks/StandingsBlock.php:98
+msgctxt "standings table header: points"
+msgid "Pts"
+msgstr "Pkt"
+
+#: src/Blocks/TeamMatchBlock.php:46
+msgid "No match found"
+msgstr "Kein Spiel gefunden"
+
+#: src/Blocks/TeamMatchBlock.php:61
+msgid "Error: match, league or season not found"
+msgstr "Fehler: Spiel, Liga oder Saison nicht gefunden"
+
+#: src/Blocks/TeamMatchBlock.php:79
+#: src/Blocks/TeamMatchBlock.php:86
+#: blocks/OpenLigaDBTeamMatch/Components/Edit.js:18
+#: dist/OpenLigaDBTeamMatch/index.js:1
+msgid "Current match"
+msgstr "Aktuelles Spiel"
+
+#: src/Blocks/TeamMatchBlock.php:80
+#: blocks/OpenLigaDBTeamMatch/Components/Edit.js:19
+#: dist/OpenLigaDBTeamMatch/index.js:1
+msgid "Next match"
+msgstr "Nächstes Spiel"
+
+#: src/Blocks/TeamMatchBlock.php:81
+#: blocks/OpenLigaDBTeamMatch/Components/Edit.js:20
+#: dist/OpenLigaDBTeamMatch/index.js:1
+msgid "Last match"
+msgstr "Letztes Spiel"
+
+#: blocks/Components/LeagueSelectControl.js:77
+#: dist/OpenLigaDBGroupMatches/index.js:1
+#: dist/OpenLigaDBStandings/index.js:1
+#: dist/OpenLigaDBTeamMatch/index.js:1
+msgid "League:"
+msgstr "Liga:"
+
+#: blocks/Components/TeamSelectControl.js:11
+#: dist/OpenLigaDBStandings/index.js:1
+#: dist/OpenLigaDBTeamMatch/index.js:1
+msgid "Team:"
+msgstr "Mannschaft:"
+
+#: blocks/Components/TeamSelectControl.js:40
+#: dist/OpenLigaDBStandings/index.js:1
+#: dist/OpenLigaDBTeamMatch/index.js:1
+msgid "Select team"
+msgstr "Mannschaft auswählen"
+
+#: blocks/OpenLigaDBGroupMatches/Components/Edit.js:35
+#: blocks/OpenLigaDBStandings/Components/Edit.js:38
+#: blocks/OpenLigaDBTeamMatch/Components/Edit.js:52
+#: dist/OpenLigaDBGroupMatches/index.js:1
+#: dist/OpenLigaDBStandings/index.js:1
+#: dist/OpenLigaDBTeamMatch/index.js:1
+msgid "Show title"
+msgstr "Titel anzeigen"
+
+#: blocks/OpenLigaDBGroupMatches/Components/Edit.js:60
+#: dist/OpenLigaDBGroupMatches/index.js:1
+msgid "Show current matchday"
+msgstr "Aktuellen Spieltag anzeigen"
+
+#: blocks/OpenLigaDBGroupMatches/Components/Edit.js:74
+#: dist/OpenLigaDBGroupMatches/index.js:1
+msgid "Matchday (GroupOrderId)"
+msgstr "Spieltag (GroupOrderId)"
+
+#: blocks/OpenLigaDBGroupMatches/Components/Edit.js:88
+#: dist/OpenLigaDBGroupMatches/index.js:1
+msgid "Show pagination"
+msgstr "Blättern anzeigen"
+
+#: blocks/OpenLigaDBStandings/Components/Edit.js:74
+#: dist/OpenLigaDBStandings/index.js:1
+msgid "Show current season"
+msgstr "Aktuelle Saison anzeigen"
+
+#: blocks/OpenLigaDBStandings/Components/Edit.js:83
+#: dist/OpenLigaDBStandings/index.js:1
+msgid "Highlighted team:"
+msgstr "Hervorgehobene Mannschaft:"
+
+#: blocks/OpenLigaDBStandings/Components/Edit.js:103
+#: dist/OpenLigaDBStandings/index.js:1
+msgid "Standings"
+msgstr "Tabelle"
+
+#: blocks/OpenLigaDBTeamMatch/Components/Edit.js:59
+#: dist/OpenLigaDBTeamMatch/index.js:1
+msgid "Show team icons"
+msgstr "Team-Icons anzeigen"
+
+#: blocks/OpenLigaDBTeamMatch/Components/Edit.js:82
+#: dist/OpenLigaDBTeamMatch/index.js:1
+msgid "Display:"
+msgstr "Anzeige:"
+
+#: blocks/OpenLigaDBGroupMatches/block.json
+#: dist/OpenLigaDBGroupMatches/block.json
+msgctxt "block title"
+msgid "Soccr Matchday"
+msgstr "Soccr Spieltag"
+
+#: blocks/OpenLigaDBGroupMatches/block.json
+#: dist/OpenLigaDBGroupMatches/block.json
+msgctxt "block description"
+msgid "OpenLigaDB matchday"
+msgstr "OpenLigaDB-Spieltag"
+
+#: blocks/OpenLigaDBGroupMatches/block.json
+#: blocks/OpenLigaDBStandings/block.json
+#: blocks/OpenLigaDBTeamMatch/block.json
+#: dist/OpenLigaDBGroupMatches/block.json
+#: dist/OpenLigaDBStandings/block.json
+#: dist/OpenLigaDBTeamMatch/block.json
+msgctxt "block keyword"
+msgid "OpenLigaDB"
+msgstr "OpenLigaDB"
+
+#: blocks/OpenLigaDBGroupMatches/block.json
+#: blocks/OpenLigaDBTeamMatch/block.json
+#: dist/OpenLigaDBGroupMatches/block.json
+#: dist/OpenLigaDBTeamMatch/block.json
+msgctxt "block keyword"
+msgid "league"
+msgstr "Liga"
+
+#: blocks/OpenLigaDBGroupMatches/block.json
+#: dist/OpenLigaDBGroupMatches/block.json
+msgctxt "block keyword"
+msgid "matchday"
+msgstr "Spieltag"
+
+#: blocks/OpenLigaDBGroupMatches/block.json
+#: blocks/OpenLigaDBStandings/block.json
+#: blocks/OpenLigaDBTeamMatch/block.json
+#: dist/OpenLigaDBGroupMatches/block.json
+#: dist/OpenLigaDBStandings/block.json
+#: dist/OpenLigaDBTeamMatch/block.json
+msgctxt "block keyword"
+msgid "soccr"
+msgstr "soccr"
+
+#: blocks/OpenLigaDBStandings/block.json
+#: dist/OpenLigaDBStandings/block.json
+msgctxt "block title"
+msgid "Soccr Standings"
+msgstr "Soccr Tabelle"
+
+#: blocks/OpenLigaDBStandings/block.json
+#: dist/OpenLigaDBStandings/block.json
+msgctxt "block description"
+msgid "OpenLigaDB standings"
+msgstr "OpenLigaDB-Tabelle"
+
+#: blocks/OpenLigaDBStandings/block.json
+#: dist/OpenLigaDBStandings/block.json
+msgctxt "block keyword"
+msgid "standings"
+msgstr "Tabelle"
+
+#: blocks/OpenLigaDBStandings/block.json
+#: dist/OpenLigaDBStandings/block.json
+msgctxt "block keyword"
+msgid "table"
+msgstr "Tabelle"
+
+#: blocks/OpenLigaDBTeamMatch/block.json
+#: dist/OpenLigaDBTeamMatch/block.json
+msgctxt "block title"
+msgid "Soccr Team Match"
+msgstr "Soccr Team-Spiel"
+
+#: blocks/OpenLigaDBTeamMatch/block.json
+#: dist/OpenLigaDBTeamMatch/block.json
+msgctxt "block description"
+msgid "Next, current or last match of a team from OpenLigaDB"
+msgstr "Nächstes, aktuelles oder letztes Spiel einer Mannschaft von OpenLigaDB"
+
+#: blocks/OpenLigaDBTeamMatch/block.json
+#: dist/OpenLigaDBTeamMatch/block.json
+msgctxt "block keyword"
+msgid "match"
+msgstr "Spiel"
+
+#: blocks/OpenLigaDBTeamMatch/block.json
+#: dist/OpenLigaDBTeamMatch/block.json
+msgctxt "block keyword"
+msgid "team"
+msgstr "Mannschaft"

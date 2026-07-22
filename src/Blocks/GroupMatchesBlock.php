@@ -146,8 +146,8 @@ class GroupMatchesBlock extends Block
         $group = $openLigaDBGroupMatches->getGroup();
         $groupName = $openLigaDBGroupMatches->getGroup()->getGroupName();
 
-        /* translators: %1$s is the group name, %2$s is the league season */
         $headline = sprintf(
+            /* translators: %1$s is the group name, %2$s is the league season */
             __('%1$s | %2$s', 'soccr'),
             esc_html($groupName),
             esc_html($leagueNameShort),
