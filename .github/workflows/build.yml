@@ -178,3 +178,42 @@ jobs:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SLUG: soccr
+
+  # Pre-release tags (e.g. 2.0.0-beta.4) are pushed to SVN trunk + tags/<tag>,
+  # but the Stable tag must stay on the currently published stable version —
+  # otherwise wordpress.org would roll the pre-release out to all users.
+  wporg-deploy-prerelease:
+    name: wordpress.org Deploy (pre-release)
+    needs: release
+    runs-on: ubuntu-latest
+    if: contains(github.ref_name, '-')
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build
+        run: bun run build
+
+      - name: Set version, keep published stable tag
+        run: |
+          sed -i "s/Version:.*$/Version: ${{ github.ref_name }}/" soccr.php
+          STABLE_TAG=$(curl -sf https://plugins.svn.wordpress.org/soccr/trunk/readme.txt | grep -m1 -i '^Stable tag:' | cut -d: -f2 | tr -d '[:space:]')
+          if [ -z "$STABLE_TAG" ]; then
+            echo "Could not determine the published stable tag — aborting to avoid shipping a pre-release as stable."
+            exit 1
+          fi
+          echo "Keeping published stable tag: $STABLE_TAG"
+          sed -i "s/Stable tag:.*$/Stable tag: $STABLE_TAG/" readme.txt readme-de_DE.txt
+        shell: bash
+
+      - name: WordPress Plugin Deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SLUG: soccr
