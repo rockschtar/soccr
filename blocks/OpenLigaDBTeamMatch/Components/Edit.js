@@ -15,9 +15,9 @@ import { LeagueSelectControl } from '../../Components/LeagueSelectControl';
 import { TeamSelectControl } from '../../Components/TeamSelectControl';
 
 const displayModeLabels = {
-	current: __( 'Aktuelles Spiel', 'soccr' ),
-	next: __( 'Nächstes Spiel', 'soccr' ),
-	last: __( 'Letztes Spiel', 'soccr' ),
+	current: __( 'Current match', 'soccr' ),
+	next: __( 'Next match', 'soccr' ),
+	last: __( 'Last match', 'soccr' ),
 };
 
 const Edit = ( props ) => {
@@ -49,14 +49,14 @@ const Edit = ( props ) => {
 				<Panel key={ 'openligadb-team-match-ic-panel' }>
 					<PanelBody key={ 'openligadb-team-match-ic-panel-body' }>
 						<ToggleControl
-							label={ __( 'Titel anzeigen', 'soccr' ) }
+							label={ __( 'Show title', 'soccr' ) }
 							checked={ attributes.showTitle }
 							onChange={ ( showTitle ) =>
 								setAttributes( { showTitle } )
 							}
 						/>
 						<ToggleControl
-							label={ __( 'Team-Icons anzeigen', 'soccr' ) }
+							label={ __( 'Show team icons', 'soccr' ) }
 							checked={ attributes.showTeamIcons }
 							onChange={ ( showTeamIcons ) =>
 								setAttributes( { showTeamIcons } )
@@ -79,7 +79,7 @@ const Edit = ( props ) => {
 						) }
 						<SelectControl
 							key={ 'openligadb-team-match-display-mode' }
-							label={ __( 'Anzeige:', 'soccr' ) }
+							label={ __( 'Display:', 'soccr' ) }
 							value={ attributes.displayMode }
 							options={ displayModeOptions }
 							onChange={ ( displayMode ) => {

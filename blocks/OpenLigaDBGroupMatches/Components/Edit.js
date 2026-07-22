@@ -32,7 +32,7 @@ const Edit = ( props ) => {
 				<Panel key={ 'openligadb-group-matches-ic-panel' }>
 					<PanelBody key={ 'openligadb-group-matches-ic-panel-body' }>
 						<ToggleControl
-							label={ __( 'Titel anzeigen', 'soccr' ) }
+							label={ __( 'Show title', 'soccr' ) }
 							checked={ attributes.showTitle }
 							onChange={ ( showTitle ) =>
 								setAttributes( { showTitle } )
@@ -57,10 +57,7 @@ const Edit = ( props ) => {
 							key={
 								'openligadb-attribute-league-defaultcurrentgroup'
 							}
-							label={ __(
-								'Aktuellen Spieltag anzeigen',
-								'soccr'
-							) }
+							label={ __( 'Show current matchday', 'soccr' ) }
 							checked={ attributes.defaultCurrentGroup }
 							onChange={ ( defaultCurrentGroup ) => {
 								setAttributes( { defaultCurrentGroup } );
@@ -75,7 +72,7 @@ const Edit = ( props ) => {
 								type="number"
 								min={ 1 }
 								label={ __(
-									'Spieltag (GroupOrderId)',
+									'Matchday (GroupOrderId)',
 									'soccr'
 								) }
 								value={ attributes.groupOrderId ?? 1 }
@@ -88,7 +85,7 @@ const Edit = ( props ) => {
 						) }
 						<CheckboxControl
 							key={ 'openligadb-attribute-league-pagination' }
-							label={ __( 'Blättern anzeigen', 'soccr' ) }
+							label={ __( 'Show pagination', 'soccr' ) }
 							checked={ attributes.pagination }
 							onChange={ ( pagination ) => {
 								setAttributes( { pagination } );

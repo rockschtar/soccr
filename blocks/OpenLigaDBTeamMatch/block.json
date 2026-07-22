@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "soccr/team-match",
-	"title": "Soccr Team Spiel",
+	"title": "Soccr Team Match",
 	"category": "soccr",
-	"description": "OpenligaDB nächstes, aktuelles oder letztes Spiel einer Mannschaft",
-	"keywords": [ "OpenligaDB", "liga", "spiel", "mannschaft", "soccr" ],
+	"description": "Next, current or last match of a team from OpenLigaDB",
+	"keywords": [ "OpenLigaDB", "league", "match", "team", "soccr" ],
 	"textdomain": "soccr",
 	"attributes": {
 		"leagueShortcut": {

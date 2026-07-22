@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "soccr/group-matches",
-	"title": "Soccr Spieltag",
+	"title": "Soccr Matchday",
 	"category": "soccr",
-	"description": "OpenligaDB Spieltag",
-	"keywords": [ "OpenligaDB", "liga", "spieltag", "soccr" ],
+	"description": "OpenLigaDB matchday",
+	"keywords": [ "OpenLigaDB", "league", "matchday", "soccr" ],
 	"textdomain": "soccr",
 	"attributes": {
 		"leagueShortcut": {
