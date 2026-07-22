@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "soccr/standings",
-	"title": "Soccr Tabelle",
+	"title": "Soccr Standings",
 	"category": "soccr",
-	"description": "OpenligaDB Tabelle",
-	"keywords": [ "OpenligaDB", "tabelle", "spieltag", "soccr" ],
+	"description": "OpenLigaDB standings",
+	"keywords": [ "OpenLigaDB", "standings", "table", "soccr" ],
 	"textdomain": "soccr",
 	"attributes": {
 		"leagueShortcut": {

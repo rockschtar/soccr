@@ -42,7 +42,7 @@ abstract class Block
     {
         $attribution = sprintf(
             /* translators: %s is a link to openligadb.de */
-            __('Daten: %s (ODbL)', 'soccr'),
+            __('Data: %s (ODbL)', 'soccr'),
             '<a href="https://www.openligadb.de" target="_blank" rel="noopener noreferrer">OpenLigaDB</a>',
         );
 

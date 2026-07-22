@@ -74,7 +74,7 @@ export const LeagueSelectControl = ( props ) => {
 	return (
 		<Disabled isDisabled={ props.disabled }>
 			<ComboboxControl
-				label={ __( 'Liga:', 'soccr' ) }
+				label={ __( 'League:', 'soccr' ) }
 				value={ leagueShortcutSeason }
 				onChange={ onLeagueChange }
 				options={ leagues }

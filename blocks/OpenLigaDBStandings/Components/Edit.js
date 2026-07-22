@@ -35,7 +35,7 @@ const Edit = ( props ) => {
 				<Panel key={ 'openligadb-standings-ic-panel' }>
 					<PanelBody key={ 'openligadb-standings-ic-panel-body' }>
 						<ToggleControl
-							label={ __( 'Titel anzeigen', 'soccr' ) }
+							label={ __( 'Show title', 'soccr' ) }
 							checked={ attributes.showTitle }
 							onChange={ ( showTitle ) =>
 								setAttributes( { showTitle } )
@@ -71,7 +71,7 @@ const Edit = ( props ) => {
 							key={
 								'openligadb-attribute-league-defaultcurrentgroup'
 							}
-							label={ __( 'Aktuelle Saison anzeigen', 'soccr' ) }
+							label={ __( 'Show current season', 'soccr' ) }
 							checked={ attributes.defaultCurrentSeason }
 							onChange={ ( defaultCurrentSeason ) => {
 								setAttributes( { defaultCurrentSeason } );
@@ -80,10 +80,7 @@ const Edit = ( props ) => {
 
 						{ leagueSelected && (
 							<TeamSelectControl
-								label={ __(
-									'Hervorgehobene Mannschaft:',
-									'soccr'
-								) }
+								label={ __( 'Highlighted team:', 'soccr' ) }
 								leagueShortcut={ attributes.leagueShortcut }
 								leagueSeason={ attributes.leagueSeason }
 								teamId={ attributes.highlightTeamId }
@@ -103,7 +100,7 @@ const Edit = ( props ) => {
 					tagName="h2"
 					value={ attributes.title }
 					onChange={ ( title ) => setAttributes( { title } ) }
-					placeholder={ leagueName || __( 'Tabelle', 'soccr' ) }
+					placeholder={ leagueName || __( 'Standings', 'soccr' ) }
 				/>
 			) }
 

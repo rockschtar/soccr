@@ -12,24 +12,24 @@ class OpenLigaDBCommand
     private const array LEAGUE_FIELDS = ['leagueId', 'leagueName', 'leagueNameShort', 'leagueShortcut', 'leagueSeason'];
 
     /**
-     * Listet Ligen über OpenLigaDBApi::queryLeagues().
+     * Lists leagues via OpenLigaDBApi::queryLeagues().
      *
      * ## OPTIONS
      *
      * [--shortcuts=<shortcuts>]
-     * : Kommagetrennte League-Shortcuts, z. B. bl1,bl2
+     * : Comma-separated league shortcuts, e.g. bl1,bl2
      *
      * [--season-greater-than=<year>]
-     * : Nur Ligen mit Saison größer als <year>
+     * : Only leagues with a season greater than <year>
      *
      * [--include-shortcut=<shortcut>]
-     * : Diese Liga zusätzlich aufnehmen (zusammen mit --include-season)
+     * : Include this league as well (together with --include-season)
      *
      * [--include-season=<year>]
-     * : Saison zu --include-shortcut
+     * : Season for --include-shortcut
      *
      * [--format=<format>]
-     * : Ausgabeformat: table, json, csv, yaml, count. Default: table
+     * : Output format: table, json, csv, yaml, count. Default: table
      *
      * ## EXAMPLES
      *
@@ -74,18 +74,18 @@ class OpenLigaDBCommand
     }
 
     /**
-     * Holt eine Liga über OpenLigaDBApi::getLeagueSeason().
+     * Fetches a league via OpenLigaDBApi::getLeagueSeason().
      *
      * ## OPTIONS
      *
      * <shortcut>
-     * : League-Shortcut, z. B. bl1
+     * : League shortcut, e.g. bl1
      *
      * <season>
-     * : Saison, z. B. 2026
+     * : Season, e.g. 2026
      *
      * [--format=<format>]
-     * : Ausgabeformat: table, json, csv, yaml. Default: table
+     * : Output format: table, json, csv, yaml. Default: table
      *
      * ## EXAMPLES
      *

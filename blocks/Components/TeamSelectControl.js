@@ -8,7 +8,7 @@ export const TeamSelectControl = ( props ) => {
 	const {
 		leagueShortcut,
 		leagueSeason,
-		label = __( 'Mannschaft:', 'soccr' ),
+		label = __( 'Team:', 'soccr' ),
 	} = props;
 	const [ teams, setTeams ] = useState( [] );
 	const [ teamId, setTeamId ] = useState( props.teamId );
@@ -37,7 +37,7 @@ export const TeamSelectControl = ( props ) => {
 
 			teamOptions.unshift( {
 				value: 0,
-				label: __( 'Mannschaft auswählen', 'soccr' ),
+				label: __( 'Select team', 'soccr' ),
 			} );
 
 			if ( componentMounted.current ) {

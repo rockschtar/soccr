@@ -84,7 +84,7 @@ class GroupMatchesBlock extends Block
             if ($e->getCode() === 404) {
                 return '<p>'
                     . __(
-                        'Fehler, Spieltag, Liga oder Saison nicht gefunden',
+                        'Error: matchday, league or season not found',
                         'soccr',
                     )
                     . '</p>';
@@ -115,7 +115,7 @@ class GroupMatchesBlock extends Block
                     = '<a href="'
                     . esc_url($paginationPreviousUrl)
                     . '">'
-                    . __('Vorheriger Spieltag', 'soccr')
+                    . __('Previous matchday', 'soccr')
                     . '</a>';
             }
 
@@ -134,7 +134,7 @@ class GroupMatchesBlock extends Block
                     = '<a href="'
                     . esc_url($paginationNextUrl)
                     . '">'
-                    . __('Nächster Spieltag', 'soccr')
+                    . __('Next matchday', 'soccr')
                     . '</a>';
             }
         }

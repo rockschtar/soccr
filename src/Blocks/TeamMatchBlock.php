@@ -44,7 +44,7 @@ class TeamMatchBlock extends Block
             if ($match === null) {
                 return '<p>'
                     . __(
-                        'Kein Spiel gefunden',
+                        'No match found',
                         'soccr',
                     )
                     . '</p>';
@@ -59,7 +59,7 @@ class TeamMatchBlock extends Block
             if ($e->getCode() === 404) {
                 return '<p>'
                     . __(
-                        'Fehler: Spiel, Liga oder Saison nicht gefunden',
+                        'Error: match, league or season not found',
                         'soccr',
                     )
                     . '</p>';
@@ -76,14 +76,14 @@ class TeamMatchBlock extends Block
             : '-:-';
 
         $displayModeLabels = [
-            'current' => __('Aktuelles Spiel', 'soccr'),
-            'next' => __('Nächstes Spiel', 'soccr'),
-            'last' => __('Letztes Spiel', 'soccr'),
+            'current' => __('Current match', 'soccr'),
+            'next' => __('Next match', 'soccr'),
+            'last' => __('Last match', 'soccr'),
         ];
 
         $title = $parsedAttributes['title'] !== ''
             ? $parsedAttributes['title']
-            : ($displayModeLabels[$displayMode] ?? __('Aktuelles Spiel', 'soccr'));
+            : ($displayModeLabels[$displayMode] ?? __('Current match', 'soccr'));
         $showTitle = $parsedAttributes['showTitle'];
         $showTeamIcons = (bool) $parsedAttributes['showTeamIcons'];
         $isEditorPreview = defined('REST_REQUEST') && REST_REQUEST;
