@@ -56,7 +56,7 @@ class OpenligaDBLeague implements JsonSerializable
     public function getLeagueSeasonDisplay(): string
     {
         return apply_filters(
-            'openligadb-league-season-display',
+            'soccr_league_season_display',
             $this->getLeagueSeason(),
             $this->getLeagueShortcut(),
         );
