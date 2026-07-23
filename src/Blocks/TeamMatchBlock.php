@@ -6,10 +6,16 @@ use Exception;
 use Rockschtar\Soccr\Api\OpenLigaDBApi;
 use Rockschtar\Soccr\Models\OpenLigaDBMatch;
 use Rockschtar\Soccr\Models\OpenLigaDBMatchQuery;
+use Rockschtar\Soccr\Models\OpenLigaDBTeam;
 use Rockschtar\Soccr\Utils\DateFormat;
 
 class TeamMatchBlock extends Block
 {
+    // Wikimedia thumbnails are only rendered at fixed bucket widths
+    // (20/40/60/120/250/330/500/960, see https://w.wiki/GHai); 120px
+    // covers the 48px display size on 2x screens.
+    private const int WIKIMEDIA_THUMB_WIDTH = 120;
+
     protected function render(array $attributes, string $content = ''): string
     {
         $defaultAttributes = [
@@ -113,13 +119,13 @@ class TeamMatchBlock extends Block
                 <div class="{$this->blockClass('content')}">
                     <div class="{$this->blockClass('row')}">
                         <div class="{$this->blockClass('team-home')}">
-                            {$this->teamIconHtml($match->getTeam1()->getIconUrl(), $match->getTeam1()->getTeamName(), $showTeamIcons)}
+                            {$this->teamIconHtml($match->getTeam1(), $showTeamIcons)}
                             <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam1()->getTeamName())}</span>
                             <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam1()->getShortName())}</span>
                         </div>
                         <div class="{$this->blockClass('result')}">{$this->esc($resultDisplay)}</div>
                         <div class="{$this->blockClass('team-away')}">
-                            {$this->teamIconHtml($match->getTeam2()->getIconUrl(), $match->getTeam2()->getTeamName(), $showTeamIcons)}
+                            {$this->teamIconHtml($match->getTeam2(), $showTeamIcons)}
                             <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam2()->getTeamName())}</span>
                             <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam2()->getShortName())}</span>
                         </div>
@@ -148,13 +154,16 @@ class TeamMatchBlock extends Block
         };
     }
 
-    private function teamIconHtml(?string $iconUrl, string $teamName, bool $showTeamIcons): string
+    private function teamIconHtml(OpenLigaDBTeam $team, bool $showTeamIcons): string
     {
-        if (!$showTeamIcons || empty($iconUrl)) {
+        if (!$showTeamIcons || empty($team->getIconUrl())) {
             return '';
         }
 
-        $safeUrl = esc_url_raw($iconUrl);
+        $iconUrl = $team->getIconUrl();
+        $teamName = $team->getTeamName();
+
+        $safeUrl = esc_url_raw($this->normalizeIconUrl($iconUrl));
         $proxyUrl = add_query_arg([
             'url' => rawurlencode($safeUrl),
             'sig' => wp_hash($safeUrl),
@@ -164,6 +173,29 @@ class TeamMatchBlock extends Block
         $class = $this->blockClass('team-icon');
 
         return "<img class=\"{$class}\" src=\"{$src}\" alt=\"{$alt}\" />";
+    }
+
+    /**
+     * OpenLigaDB delivers some team icons as raw Wikimedia SVGs, which the
+     * icon proxy rejects. Rewrite those to the pre-rendered PNG thumbnail.
+     */
+    private function normalizeIconUrl(string $iconUrl): string
+    {
+        $pattern = '#^(https://upload\.wikimedia\.org/wikipedia/[^/]+)/([0-9a-f])/([0-9a-f]{2})/([^/?\#]+\.svg)$#i';
+
+        if (preg_match($pattern, $iconUrl, $matches) !== 1) {
+            return $iconUrl;
+        }
+
+        return sprintf(
+            '%s/thumb/%s/%s/%s/%dpx-%s.png',
+            $matches[1],
+            $matches[2],
+            $matches[3],
+            $matches[4],
+            self::WIKIMEDIA_THUMB_WIDTH,
+            $matches[4],
+        );
     }
 
     private function getCurrentMatch(OpenLigaDBMatchQuery $query): ?OpenLigaDBMatch

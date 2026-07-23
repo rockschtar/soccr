@@ -51,7 +51,7 @@ class OpenLigaDBTeam implements JsonSerializable
 
     public function getIconUrl(): ?string
     {
-        return $this->iconUrl;
+        return apply_filters('soccr_team_icon_url', $this->iconUrl, $this->getTeamId());
     }
 
     public function setIconUrl(?string $iconUrl): OpenLigaDBTeam
