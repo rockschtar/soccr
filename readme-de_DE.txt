@@ -67,7 +67,7 @@ Verfügbare Filter:
 * `soccr_group_matches_html` — HTML-Ausgabe des Spieltag-Blocks anpassen
 * `soccr_group_matches_headline` — Überschrift des Spieltag-Blocks anpassen
 * `soccr_team_icon_url` — URL des Mannschaftswappens vor dem Proxying anpassen
-* `openligadb-league-season-display` — Darstellung der Saison neben dem Liganamen anpassen
+* `soccr_league_season_display` — Darstellung der Saison neben dem Liganamen anpassen (Standard: `2025/2026`)
 
 Beispiel — weitere Ligen über `soccr_league_shortcuts` ergänzen. Es kann jeder bei OpenLigaDB verfügbare Shortcut verwendet werden:
 

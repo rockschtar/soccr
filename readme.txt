@@ -67,7 +67,7 @@ Available filters:
 * `soccr_group_matches_html` — Modify the Matchday block HTML output
 * `soccr_group_matches_headline` — Modify the Matchday block headline text
 * `soccr_team_icon_url` — Modify the team crest URL before it is proxied
-* `openligadb-league-season-display` — Modify how the season is displayed alongside the league name
+* `soccr_league_season_display` — Modify how the season is displayed alongside the league name (default: `2025/2026`)
 
 Example — adding leagues via `soccr_league_shortcuts`. Use any shortcut available on OpenLigaDB:
 
