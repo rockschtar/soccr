@@ -75,7 +75,7 @@ class GroupMatchesBlock extends Block
                 $groupOrderId,
             );
         } catch (Exception $e) {
-            do_action('openligadb_exception', $e);
+            do_action('soccr_exception', $e);
 
             if (defined('WP_DEBUG') && true === WP_DEBUG) {
                 return $this->esc($e->getMessage());
