@@ -146,7 +146,10 @@ jobs:
 
       - name: Keep published stable tag
         run: |
-          STABLE_TAG=$(curl -sf https://plugins.svn.wordpress.org/soccr/trunk/readme.txt | grep -m1 -i '^Stable tag:' | cut -d: -f2 | tr -d '[:space:]')
+          # curl must not pipe straight into grep -m1: grep closes the pipe after
+          # the first match and curl dies with exit 23 under pipefail.
+          TRUNK_README=$(curl -sf https://plugins.svn.wordpress.org/soccr/trunk/readme.txt || true)
+          STABLE_TAG=$(printf '%s\n' "$TRUNK_README" | grep -m1 -i '^Stable tag:' | cut -d: -f2 | tr -d '[:space:]' || true)
           if [ -z "$STABLE_TAG" ]; then
             echo "Could not determine the published stable tag — aborting."
             exit 1
@@ -216,7 +219,10 @@ jobs:
       - name: Set version, keep published stable tag
         run: |
           sed -i "s/Version:.*$/Version: ${{ github.ref_name }}/" soccr.php
-          STABLE_TAG=$(curl -sf https://plugins.svn.wordpress.org/soccr/trunk/readme.txt | grep -m1 -i '^Stable tag:' | cut -d: -f2 | tr -d '[:space:]')
+          # curl must not pipe straight into grep -m1: grep closes the pipe after
+          # the first match and curl dies with exit 23 under pipefail.
+          TRUNK_README=$(curl -sf https://plugins.svn.wordpress.org/soccr/trunk/readme.txt || true)
+          STABLE_TAG=$(printf '%s\n' "$TRUNK_README" | grep -m1 -i '^Stable tag:' | cut -d: -f2 | tr -d '[:space:]' || true)
           if [ -z "$STABLE_TAG" ]; then
             echo "Could not determine the published stable tag — aborting to avoid shipping a pre-release as stable."
             exit 1
