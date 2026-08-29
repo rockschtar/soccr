@@ -3,7 +3,7 @@ Contributors: rockschtar
 Donate link: https://github.com/rockschtar/soccr
 Tags: football, soccer, fussball, bundesliga, openligadb
 Requires at least: 7.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.4
 Stable tag: develop
 License: GPL-3.0-or-later
