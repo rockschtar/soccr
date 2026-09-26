@@ -1,6 +1,6 @@
 === Soccr ===
 Contributors: rockschtar
-Donate link: https://github.com/rockschtar/soccr
+Donate link: https://ko-fi.com/shdevelopment
 Tags: football, soccer, fussball, bundesliga, openligadb
 Requires at least: 7.0
 Tested up to: 7.1
