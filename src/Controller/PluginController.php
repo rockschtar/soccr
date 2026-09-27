@@ -20,12 +20,19 @@ class PluginController
             );
         }, 1);
 
+        register_uninstall_hook(SOCCR_PLUGIN_DIR . 'soccr.php', [self::class, 'onUninstall']);
         add_filter('plugin_action_links_' . SOCCR_PLUGIN, $this->donationLink(...));
 
         BlockEditorController::init();
         RestController::init();
         CommandController::init();
         OpenLigaDBController::init();
+        DonationNoticeController::init();
+    }
+
+    public static function onUninstall(): void
+    {
+        DonationNoticeController::uninstall();
     }
 
     private function donationLink(array $actions): array

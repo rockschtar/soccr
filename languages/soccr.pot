@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-22T20:37:19+00:00\n"
+"POT-Creation-Date: 2026-09-27T17:01:29+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: soccr\n"
@@ -59,6 +59,7 @@ msgstr ""
 msgid "Next matchday"
 msgstr ""
 
+#. translators: %1$s is the group name, %2$s is the league season
 #: src/Blocks/GroupMatchesBlock.php:151
 #, php-format
 msgid "%1$s | %2$s"
@@ -98,34 +99,58 @@ msgctxt "standings table header: points"
 msgid "Pts"
 msgstr ""
 
-#: src/Blocks/TeamMatchBlock.php:46
+#: src/Blocks/TeamMatchBlock.php:52
 msgid "No match found"
 msgstr ""
 
-#: src/Blocks/TeamMatchBlock.php:61
+#: src/Blocks/TeamMatchBlock.php:67
 msgid "Error: match, league or season not found"
 msgstr ""
 
-#: src/Blocks/TeamMatchBlock.php:79
-#: src/Blocks/TeamMatchBlock.php:86
+#: src/Blocks/TeamMatchBlock.php:85
+#: src/Blocks/TeamMatchBlock.php:92
 #: blocks/OpenLigaDBTeamMatch/Components/Edit.js:18
 #: dist/OpenLigaDBTeamMatch/index.js:1
 msgid "Current match"
 msgstr ""
 
-#: src/Blocks/TeamMatchBlock.php:80
+#: src/Blocks/TeamMatchBlock.php:86
 #: blocks/OpenLigaDBTeamMatch/Components/Edit.js:19
 #: dist/OpenLigaDBTeamMatch/index.js:1
 msgid "Next match"
 msgstr ""
 
-#: src/Blocks/TeamMatchBlock.php:81
+#: src/Blocks/TeamMatchBlock.php:87
 #: blocks/OpenLigaDBTeamMatch/Components/Edit.js:20
 #: dist/OpenLigaDBTeamMatch/index.js:1
 msgid "Last match"
 msgstr ""
 
-#: blocks/Components/LeagueSelectControl.js:77
+#: src/Controller/DonationNoticeController.php:74
+msgid "Enjoying Soccr?"
+msgstr ""
+
+#: src/Controller/DonationNoticeController.php:75
+msgid "Soccr is free and developed in my spare time. If it makes your website a little better, I'd be happy about a small donation."
+msgstr ""
+
+#: src/Controller/DonationNoticeController.php:78
+msgid "Buy me a coffee"
+msgstr ""
+
+#: src/Controller/DonationNoticeController.php:81
+msgid "Remind me later"
+msgstr ""
+
+#: src/Controller/DonationNoticeController.php:83
+msgid "Don't show again"
+msgstr ""
+
+#: src/Controller/PluginController.php:43
+msgid "Donate"
+msgstr ""
+
+#: blocks/Components/LeagueSelectControl.js:81
 #: dist/OpenLigaDBGroupMatches/index.js:1
 #: dist/OpenLigaDBStandings/index.js:1
 #: dist/OpenLigaDBTeamMatch/index.js:1
@@ -285,8 +310,4 @@ msgstr ""
 #: dist/OpenLigaDBTeamMatch/block.json
 msgctxt "block keyword"
 msgid "team"
-msgstr ""
-
-#: src/Controller/PluginController.php:37
-msgid "Donate"
 msgstr ""

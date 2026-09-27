@@ -1,18 +1,16 @@
-# Copyright (C) 2026 rockschtar
-# This file is distributed under the GPL-3.0-or-later.
 msgid ""
 msgstr ""
 "Project-Id-Version: Soccr develop\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/soccr\n"
 "Last-Translator: rockschtar\n"
 "Language-Team: German\n"
-"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "POT-Creation-Date: 2026-07-22T20:37:19+00:00\n"
 "PO-Revision-Date: 2026-07-22T20:45:00+00:00\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: soccr\n"
 
@@ -61,6 +59,7 @@ msgstr "Vorheriger Spieltag"
 msgid "Next matchday"
 msgstr "Nächster Spieltag"
 
+#. translators: %1$s is the group name, %2$s is the league season
 #: src/Blocks/GroupMatchesBlock.php:151
 #, php-format
 msgid "%1$s | %2$s"
@@ -100,34 +99,34 @@ msgctxt "standings table header: points"
 msgid "Pts"
 msgstr "Pkt"
 
-#: src/Blocks/TeamMatchBlock.php:46
+#: src/Blocks/TeamMatchBlock.php:52
 msgid "No match found"
 msgstr "Kein Spiel gefunden"
 
-#: src/Blocks/TeamMatchBlock.php:61
+#: src/Blocks/TeamMatchBlock.php:67
 msgid "Error: match, league or season not found"
 msgstr "Fehler: Spiel, Liga oder Saison nicht gefunden"
 
-#: src/Blocks/TeamMatchBlock.php:79
-#: src/Blocks/TeamMatchBlock.php:86
+#: src/Blocks/TeamMatchBlock.php:85
+#: src/Blocks/TeamMatchBlock.php:92
 #: blocks/OpenLigaDBTeamMatch/Components/Edit.js:18
 #: dist/OpenLigaDBTeamMatch/index.js:1
 msgid "Current match"
 msgstr "Aktuelles Spiel"
 
-#: src/Blocks/TeamMatchBlock.php:80
+#: src/Blocks/TeamMatchBlock.php:86
 #: blocks/OpenLigaDBTeamMatch/Components/Edit.js:19
 #: dist/OpenLigaDBTeamMatch/index.js:1
 msgid "Next match"
 msgstr "Nächstes Spiel"
 
-#: src/Blocks/TeamMatchBlock.php:81
+#: src/Blocks/TeamMatchBlock.php:87
 #: blocks/OpenLigaDBTeamMatch/Components/Edit.js:20
 #: dist/OpenLigaDBTeamMatch/index.js:1
 msgid "Last match"
 msgstr "Letztes Spiel"
 
-#: blocks/Components/LeagueSelectControl.js:77
+#: blocks/Components/LeagueSelectControl.js:81
 #: dist/OpenLigaDBGroupMatches/index.js:1
 #: dist/OpenLigaDBStandings/index.js:1
 #: dist/OpenLigaDBTeamMatch/index.js:1
@@ -289,6 +288,26 @@ msgctxt "block keyword"
 msgid "team"
 msgstr "Mannschaft"
 
-#: src/Controller/PluginController.php:37
+#: src/Controller/PluginController.php:43
 msgid "Donate"
 msgstr "Spenden"
+
+#: src/Controller/DonationNoticeController.php:74
+msgid "Enjoying Soccr?"
+msgstr "Gefällt dir Soccr?"
+
+#: src/Controller/DonationNoticeController.php:75
+msgid "Soccr is free and developed in my spare time. If it makes your website a little better, I'd be happy about a small donation."
+msgstr "Soccr ist kostenlos und wird in meiner Freizeit entwickelt. Wenn es deine Website ein bisschen besser macht, freue ich mich über eine kleine Spende."
+
+#: src/Controller/DonationNoticeController.php:78
+msgid "Buy me a coffee"
+msgstr "Spendier mir einen Kaffee"
+
+#: src/Controller/DonationNoticeController.php:81
+msgid "Remind me later"
+msgstr "Später erinnern"
+
+#: src/Controller/DonationNoticeController.php:83
+msgid "Don't show again"
+msgstr "Nicht mehr anzeigen"
