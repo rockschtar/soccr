@@ -286,3 +286,7 @@ msgstr ""
 msgctxt "block keyword"
 msgid "team"
 msgstr ""
+
+#: src/Controller/PluginController.php:37
+msgid "Donate"
+msgstr ""

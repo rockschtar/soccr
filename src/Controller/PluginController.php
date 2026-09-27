@@ -20,9 +20,22 @@ class PluginController
             );
         }, 1);
 
+        add_filter('plugin_action_links_' . SOCCR_PLUGIN, $this->donationLink(...));
+
         BlockEditorController::init();
         RestController::init();
         CommandController::init();
         OpenLigaDBController::init();
+    }
+
+    private function donationLink(array $actions): array
+    {
+        array_unshift($actions, sprintf(
+            '<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+            esc_url(SOCCR_DONATE_URL),
+            esc_html__('Donate', 'soccr'),
+        ));
+
+        return $actions;
     }
 }

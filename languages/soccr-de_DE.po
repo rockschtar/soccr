@@ -288,3 +288,7 @@ msgstr "Spiel"
 msgctxt "block keyword"
 msgid "team"
 msgstr "Mannschaft"
+
+#: src/Controller/PluginController.php:37
+msgid "Donate"
+msgstr "Spenden"
