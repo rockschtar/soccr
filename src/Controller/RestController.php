@@ -97,6 +97,8 @@ class RestController
                     header('Content-Type: ' . $cached['type']);
                     header('X-Content-Type-Options: nosniff');
                     header('Cache-Control: public, max-age=86400');
+
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- binary image data, Content-Type validated against ICON_ALLOWED_TYPES and set explicitly above.
                     echo base64_decode($cached['data']);
                     exit;
                 }
@@ -123,6 +125,7 @@ class RestController
                 header('Content-Type: ' . $contentType);
                 header('X-Content-Type-Options: nosniff');
                 header('Cache-Control: public, max-age=86400');
+
                 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo $body;
                 exit;
