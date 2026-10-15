@@ -14,13 +14,17 @@
 * Text Domain: soccr
 */
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 define('SOCCR_PLUGIN', plugin_basename(__FILE__));
 define('SOCCR_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SOCCR_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('SOCCR_VERSION', get_file_data(__FILE__, ['Version' => 'Version'])['Version']);
 const SOCCR_DONATE_URL = 'https://ko-fi.com/shdevelopment';
 
-if(file_exists(SOCCR_PLUGIN_DIR . 'vendor/autoload.php')) {
+if (file_exists(SOCCR_PLUGIN_DIR . 'vendor/autoload.php')) {
     require_once SOCCR_PLUGIN_DIR . 'vendor/autoload.php';
 } else {
     spl_autoload_register(static function ($class) {

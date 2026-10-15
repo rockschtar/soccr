@@ -11,9 +11,11 @@ declare(strict_types=1);
 
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__ . '/src')
+    ->append([__DIR__ . '/soccr.php'])
+    ->append([__DIR__ . '/.php-cs-fixer.dist.php'])
     ->name('*.php');
 
-return (new PhpCsFixer\Config())
+return new PhpCsFixer\Config()
     ->setRiskyAllowed(false)
     ->setRules([
         '@PER-CS3x0' => true,
