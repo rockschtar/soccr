@@ -53,7 +53,7 @@ class RestController
             'args' => [
                 'minSeason' => [
                     'required' => false,
-                    'default' => (int) date('Y') - 3,
+                    'default' => (int) wp_date('Y') - 3,
                     'description' => 'Only return leagues from this season onwards',
                     'type' => 'integer',
                     'sanitize_callback' => static function ($value) {

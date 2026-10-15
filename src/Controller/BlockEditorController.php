@@ -26,15 +26,15 @@ class BlockEditorController
     {
 
         if ($metaData['name'] === 'soccr/group-matches') {
-            $metaData['attributes']['leagueSeason']['default'] = date('Y');
+            $metaData['attributes']['leagueSeason']['default'] = (int) wp_date('Y');
         }
 
         if ($metaData['name'] === 'soccr/standings') {
-            $metaData['attributes']['leagueSeason']['default'] = date('Y');
+            $metaData['attributes']['leagueSeason']['default'] = (int) wp_date('Y');
         }
 
         if ($metaData['name'] === 'soccr/team-match') {
-            $metaData['attributes']['leagueSeason']['default'] = date('Y');
+            $metaData['attributes']['leagueSeason']['default'] = (int) wp_date('Y');
         }
 
         return $metaData;
