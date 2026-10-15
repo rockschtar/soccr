@@ -39,12 +39,10 @@ class StandingsBlock extends Block
                 $leagueSeason,
             );
         } catch (Exception $e) {
-            if (is_admin()) {
-                $detailedMessage = $e->getMessage();
-            }
+            do_action('soccr_exception', $e);
 
             if (defined('WP_DEBUG') && true === WP_DEBUG) {
-                $detailedMessage = $e->getMessage();
+                return $this->esc($e->getMessage());
             }
 
             if ($e->getCode() === 404) {
@@ -55,8 +53,6 @@ class StandingsBlock extends Block
                     )
                     . '</p>';
             }
-
-            do_action('soccr_exception', $e);
 
             return '';
         }
