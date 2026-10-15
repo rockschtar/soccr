@@ -151,9 +151,7 @@ class RemoteRequest
         }
 
         if (is_wp_error($response)) {
-            throw new RemoteRequestException(
-                wp_remote_retrieve_response_message($response),
-            );
+            throw new RemoteRequestException(esc_html($response->get_error_message()));
         }
 
         $responseCode = wp_remote_retrieve_response_code($response);
@@ -164,7 +162,7 @@ class RemoteRequest
             return new RemoteResponse($responseCode, $body);
         }
 
-        throw new RemoteRequestException($message ?? $body, $responseCode);
+        throw new RemoteRequestException(esc_html($message ?: $body), $responseCode);
     }
 
     /**
