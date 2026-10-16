@@ -78,12 +78,12 @@ class GroupMatchesBlock extends Block
             do_action('soccr_exception', $e);
 
             if (defined('WP_DEBUG') && true === WP_DEBUG) {
-                return $this->esc($e->getMessage());
+                return esc_html($e->getMessage());
             }
 
             if ($e->getCode() === 404) {
                 return '<p>'
-                    . __(
+                    . esc_html__(
                         'Error: matchday, league or season not found',
                         'soccr',
                     )
@@ -111,12 +111,13 @@ class GroupMatchesBlock extends Block
                     $paginationUrl,
                 );
 
-                $paginationPreviousHref
-                    = '<a href="'
-                    . esc_url($paginationPreviousUrl)
-                    . '">'
-                    . __('Previous matchday', 'soccr')
-                    . '</a>';
+                $paginationPreviousHref = strtr(
+                    '<a href="{url}">{label}</a>',
+                    [
+                        '{url}' => esc_url($paginationPreviousUrl),
+                        '{label}' => esc_html__('Previous matchday', 'soccr'),
+                    ],
+                );
             }
 
             if ($openLigaDBGroupMatches->getNextGroup() !== null) {
@@ -130,12 +131,13 @@ class GroupMatchesBlock extends Block
                     $paginationUrl,
                 );
 
-                $paginationNextHref
-                    = '<a href="'
-                    . esc_url($paginationNextUrl)
-                    . '">'
-                    . __('Next matchday', 'soccr')
-                    . '</a>';
+                $paginationNextHref = strtr(
+                    '<a href="{url}">{label}</a>',
+                    [
+                        '{url}' => esc_url($paginationNextUrl),
+                        '{label}' => esc_html__('Next matchday', 'soccr'),
+                    ],
+                );
             }
         }
 
@@ -170,24 +172,33 @@ class GroupMatchesBlock extends Block
 
         $headlineHTML = '';
         if ($showTitle) {
-            $displayTitle = $title !== '' ? $this->esc($title) : $headline;
-            $headlineHTML = <<<HTML
-                <div class="{$this->blockClass('header')}">
-                     <h2 class="{$this->blockClass('headline')}">$displayTitle</h2>
-                </div>
-            HTML;
+            $displayTitle = $title !== '' ? esc_html($title) : $headline;
+
+            $headlineHTML = strtr(
+                '<div class="{headerClass}"><h2 class="{headlineClass}">{title}</h2></div>',
+                [
+                    '{headerClass}' => esc_attr($this->blockClass('header')),
+                    '{headlineClass}' => esc_attr($this->blockClass('headline')),
+                    '{title}' => $displayTitle,
+                ],
+            );
         }
 
         $wrapperAttributes = get_block_wrapper_attributes([
             'class' => $this->blockClasses($parsedAttributes),
         ]);
 
-        $html = <<<HTML
-            $content
-            <div $wrapperAttributes>
-                $headlineHTML
-                <div class="{$this->blockClass('content')}">
-        HTML;
+        // $content is the inner block markup, $wrapperAttributes is escaped
+        // by get_block_wrapper_attributes().
+        $html = strtr(
+            '{content}<div {wrapperAttributes}>{headline}<div class="{contentClass}">',
+            [
+                '{content}' => $content,
+                '{wrapperAttributes}' => $wrapperAttributes,
+                '{headline}' => $headlineHTML,
+                '{contentClass}' => esc_attr($this->blockClass('content')),
+            ],
+        );
 
         $currentMatchDate = null;
 
@@ -196,51 +207,79 @@ class GroupMatchesBlock extends Block
 
             if ($currentMatchDate !== $matchDate) {
                 $currentMatchDate = $matchDate;
-                $matchDateString = $this->esc(DateFormat::toDate($match->getDateTime()));
-                $html .= <<<HTML
-                    <div class="{$this->blockClass('datetime')}">$matchDateString</div>
-                HTML;
+
+                $html .= strtr(
+                    '<div class="{datetimeClass}">{date}</div>',
+                    [
+                        '{datetimeClass}' => esc_attr($this->blockClass('datetime')),
+                        '{date}' => esc_html(DateFormat::toDate($match->getDateTime())),
+                    ],
+                );
             }
 
             $result = $match->getResultByType(2);
-            $fullDateTimeTooltip = esc_attr(DateFormat::toWordPress($match->getDateTime()));
 
             if ($result !== null) {
-                $resultContent = $this->esc((string) $result);
+                $resultContent = esc_html((string) $result);
                 $resultClass = $this->blockClass('result');
             } else {
-                $weekdayEscaped = $this->esc(date_i18n('D', $match->getDateTime()->getTimestamp()));
-                $timeEscaped = $this->esc(DateFormat::toTime($match->getDateTime()));
-                $weekdayClass = $this->blockClass('result-weekday');
-                $timeClass = $this->blockClass('result-time');
-                $resultContent = "<span class=\"{$weekdayClass}\">{$weekdayEscaped}</span><span class=\"{$timeClass}\">{$timeEscaped}</span>";
+                $resultContent = strtr(
+                    '<span class="{weekdayClass}">{weekday}</span><span class="{timeClass}">{time}</span>',
+                    [
+                        '{weekdayClass}' => esc_attr($this->blockClass('result-weekday')),
+                        '{weekday}' => esc_html(date_i18n('D', $match->getDateTime()->getTimestamp())),
+                        '{timeClass}' => esc_attr($this->blockClass('result-time')),
+                        '{time}' => esc_html(DateFormat::toTime($match->getDateTime())),
+                    ],
+                );
                 $resultClass = $this->blockClass('result') . ' ' . $this->blockClass('result-kickoff');
             }
 
-            $html .= <<<HTML
-                <div class="{$this->blockClass('row')}">
-                    <div class='{$this->blockClass('team-home')}'>
-                        <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam1()->getTeamName())}</span>
-                        <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam1()->getShortName())}</span>
-                    </div>
-                    <div class="{$resultClass}"><span title="{$fullDateTimeTooltip}">{$resultContent}</span></div>
-                    <div class="{$this->blockClass('team-away')}">
-                        <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam2()->getTeamName())}</span>
-                        <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam2()->getShortName())}</span>
-                    </div>
-                </div>
-            HTML;
+            $html .= strtr(
+                '<div class="{rowClass}">'
+                . '<div class="{teamHomeClass}">'
+                . '<span class="{teamNameClass}">{homeName}</span>'
+                . '<span class="{teamShortNameClass}">{homeShortName}</span>'
+                . '</div>'
+                . '<div class="{resultClass}"><span title="{kickoff}">{result}</span></div>'
+                . '<div class="{teamAwayClass}">'
+                . '<span class="{teamNameClass}">{awayName}</span>'
+                . '<span class="{teamShortNameClass}">{awayShortName}</span>'
+                . '</div>'
+                . '</div>',
+                [
+                    '{rowClass}' => esc_attr($this->blockClass('row')),
+                    '{teamHomeClass}' => esc_attr($this->blockClass('team-home')),
+                    '{teamAwayClass}' => esc_attr($this->blockClass('team-away')),
+                    '{teamNameClass}' => esc_attr($this->blockClass('team-name')),
+                    '{teamShortNameClass}' => esc_attr($this->blockClass('team-shortname')),
+                    '{resultClass}' => esc_attr($resultClass),
+                    '{homeName}' => esc_html($match->getTeam1()->getTeamName()),
+                    '{homeShortName}' => esc_html($match->getTeam1()->getShortName()),
+                    '{awayName}' => esc_html($match->getTeam2()->getTeamName()),
+                    '{awayShortName}' => esc_html($match->getTeam2()->getShortName()),
+                    '{kickoff}' => esc_attr(DateFormat::toWordPress($match->getDateTime())),
+                    '{result}' => $resultContent,
+                ],
+            );
         }
 
         $html .= '</div>';
 
-        if ($parsedAttributes['pagination']) {
-            $html .= <<<HTML
-                <div class="{$this->blockClass('pagination')}">
-                    <div class='{$this->blockClass('pagination-left')}'>$paginationPreviousHref</div>
-                    <div class='{$this->blockClass('pagination-right')}'>$paginationNextHref</div>
-                </div>
-            HTML;
+        if ($pagination) {
+            $html .= strtr(
+                '<div class="{paginationClass}">'
+                . '<div class="{leftClass}">{previous}</div>'
+                . '<div class="{rightClass}">{next}</div>'
+                . '</div>',
+                [
+                    '{paginationClass}' => esc_attr($this->blockClass('pagination')),
+                    '{leftClass}' => esc_attr($this->blockClass('pagination-left')),
+                    '{rightClass}' => esc_attr($this->blockClass('pagination-right')),
+                    '{previous}' => $paginationPreviousHref,
+                    '{next}' => $paginationNextHref,
+                ],
+            );
         }
 
         $html .= $this->attributionHtml();
