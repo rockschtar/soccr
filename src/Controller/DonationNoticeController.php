@@ -16,19 +16,23 @@ class DonationNoticeController
 
     private const string AJAX_ACTION = 'soccr_donation_notice';
 
+    private const string SCRIPT_HANDLE = 'soccr-donation-notice';
+
+    private const string SCRIPT_PATH = 'dist/Admin/DonationNotice/index';
+
     private const int DELAY = 14 * DAY_IN_SECONDS;
 
     private const int SNOOZE = 30 * DAY_IN_SECONDS;
 
     private const array SCREENS = ['dashboard', 'plugins'];
 
-    private bool $rendered = false;
+    private ?bool $shouldShow = null;
 
     private function __construct()
     {
         add_action('admin_init', $this->storeInstallDate(...));
+        add_action('admin_enqueue_scripts', $this->enqueueScript(...));
         add_action('admin_notices', $this->render(...));
-        add_action('admin_footer', $this->printScript(...));
         add_action('wp_ajax_' . self::AJAX_ACTION, $this->handleAction(...));
     }
 
@@ -40,6 +44,11 @@ class DonationNoticeController
     }
 
     private function shouldShow(): bool
+    {
+        return $this->shouldShow ??= $this->evaluateConditions();
+    }
+
+    private function evaluateConditions(): bool
     {
         if (!current_user_can('manage_options')) {
             return false;
@@ -73,7 +82,12 @@ class DonationNoticeController
         $snoozed = (bool) get_user_meta(get_current_user_id(), self::META_SNOOZED_UNTIL, true);
 
         ?>
-        <div class="notice notice-info is-dismissible soccr-donation-notice">
+        <div
+            class="notice notice-info is-dismissible soccr-donation-notice"
+            data-ajax-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>"
+            data-ajax-action="<?php echo esc_attr(self::AJAX_ACTION); ?>"
+            data-nonce="<?php echo esc_attr(wp_create_nonce(self::AJAX_ACTION)); ?>"
+        >
             <p><strong><?php esc_html_e('Enjoying Soccr?', 'soccr'); ?></strong></p>
             <p><?php esc_html_e("Soccr is free and developed in my spare time. If it makes your website a little better, I'd be happy about a small donation.", 'soccr'); ?></p>
             <p>
@@ -87,44 +101,26 @@ class DonationNoticeController
             </p>
         </div>
         <?php
-
-        $this->rendered = true;
     }
 
-    private function printScript(): void
+    private function enqueueScript(): void
     {
-        if (!$this->rendered) {
+        if (!$this->shouldShow()) {
             return;
         }
 
-        $config = [
-            'url' => admin_url('admin-ajax.php'),
-            'action' => self::AJAX_ACTION,
-            'nonce' => wp_create_nonce(self::AJAX_ACTION),
-        ];
+        $assetFile = SOCCR_PLUGIN_DIR . self::SCRIPT_PATH . '.asset.php';
+        $asset = file_exists($assetFile)
+            ? include $assetFile
+            : ['dependencies' => [], 'version' => SOCCR_VERSION];
 
-        $script = <<<'JS'
-            (function (config) {
-                var notice = document.querySelector('.soccr-donation-notice');
-                if (!notice) {
-                    return;
-                }
-                notice.addEventListener('click', function (event) {
-                    var target = event.target.closest('[data-soccr-action], .notice-dismiss');
-                    if (!target) {
-                        return;
-                    }
-                    var body = new FormData();
-                    body.append('action', config.action);
-                    body.append('_ajax_nonce', config.nonce);
-                    body.append('soccr_action', target.dataset.soccrAction || 'later');
-                    fetch(config.url, { method: 'POST', credentials: 'same-origin', body: body, keepalive: true });
-                    notice.remove();
-                });
-            })(%s);
-            JS;
-
-        wp_print_inline_script_tag(sprintf($script, wp_json_encode($config)));
+        wp_enqueue_script(
+            self::SCRIPT_HANDLE,
+            SOCCR_PLUGIN_URL . self::SCRIPT_PATH . '.js',
+            $asset['dependencies'],
+            $asset['version'],
+            ['in_footer' => true],
+        );
     }
 
     private function handleAction(): void
