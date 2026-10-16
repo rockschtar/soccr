@@ -41,13 +41,13 @@ msgid "http://www.eracer.de"
 msgstr "http://www.eracer.de"
 
 #. translators: %s is a link to openligadb.de
-#: src/Blocks/Block.php:45
+#: src/Blocks/Block.php:40
 #, php-format
 msgid "Data: %s (ODbL)"
 msgstr "Daten: %s (ODbL)"
 
 #: src/Blocks/GroupMatchesBlock.php:86
-#: src/Blocks/StandingsBlock.php:52
+#: src/Blocks/StandingsBlock.php:50
 msgid "Error: matchday, league or season not found"
 msgstr "Fehler: Spieltag, Liga oder Saison nicht gefunden"
 
@@ -55,46 +55,46 @@ msgstr "Fehler: Spieltag, Liga oder Saison nicht gefunden"
 msgid "Previous matchday"
 msgstr "Vorheriger Spieltag"
 
-#: src/Blocks/GroupMatchesBlock.php:137
+#: src/Blocks/GroupMatchesBlock.php:138
 msgid "Next matchday"
 msgstr "Nächster Spieltag"
 
 #. translators: %1$s is the group name, %2$s is the league season
-#: src/Blocks/GroupMatchesBlock.php:151
+#: src/Blocks/GroupMatchesBlock.php:153
 #, php-format
 msgid "%1$s | %2$s"
 msgstr "%1$s | %2$s"
 
-#: src/Blocks/StandingsBlock.php:92
+#: src/Blocks/StandingsBlock.php:86
 msgctxt "standings table header: matches played"
 msgid "P"
 msgstr "Sp"
 
-#: src/Blocks/StandingsBlock.php:93
+#: src/Blocks/StandingsBlock.php:87
 msgctxt "standings table header: wins"
 msgid "W"
 msgstr "S"
 
-#: src/Blocks/StandingsBlock.php:94
+#: src/Blocks/StandingsBlock.php:88
 msgctxt "standings table header: draws"
 msgid "D"
 msgstr "U"
 
-#: src/Blocks/StandingsBlock.php:95
+#: src/Blocks/StandingsBlock.php:89
 msgctxt "standings table header: losses"
 msgid "L"
 msgstr "N"
 
-#: src/Blocks/StandingsBlock.php:96
+#: src/Blocks/StandingsBlock.php:90
 msgid "Goals"
 msgstr "Tore"
 
-#: src/Blocks/StandingsBlock.php:97
+#: src/Blocks/StandingsBlock.php:91
 msgctxt "standings table header: goal difference"
 msgid "GD"
 msgstr "Diff"
 
-#: src/Blocks/StandingsBlock.php:98
+#: src/Blocks/StandingsBlock.php:92
 msgctxt "standings table header: points"
 msgid "Pts"
 msgstr "Pkt"
@@ -292,22 +292,22 @@ msgstr "Mannschaft"
 msgid "Donate"
 msgstr "Spenden"
 
-#: src/Controller/DonationNoticeController.php:74
+#: src/Controller/DonationNoticeController.php:91
 msgid "Enjoying Soccr?"
 msgstr "Gefällt dir Soccr?"
 
-#: src/Controller/DonationNoticeController.php:75
+#: src/Controller/DonationNoticeController.php:92
 msgid "Soccr is free and developed in my spare time. If it makes your website a little better, I'd be happy about a small donation."
 msgstr "Soccr ist kostenlos und wird in meiner Freizeit entwickelt. Wenn es deine Website ein bisschen besser macht, freue ich mich über eine kleine Spende."
 
-#: src/Controller/DonationNoticeController.php:78
+#: src/Controller/DonationNoticeController.php:95
 msgid "Buy me a coffee"
 msgstr "Spendier mir einen Kaffee"
 
-#: src/Controller/DonationNoticeController.php:81
+#: src/Controller/DonationNoticeController.php:98
 msgid "Remind me later"
 msgstr "Später erinnern"
 
-#: src/Controller/DonationNoticeController.php:83
+#: src/Controller/DonationNoticeController.php:100
 msgid "Don't show again"
 msgstr "Nicht mehr anzeigen"
