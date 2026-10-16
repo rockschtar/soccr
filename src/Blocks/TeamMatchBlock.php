@@ -49,7 +49,7 @@ class TeamMatchBlock extends Block
 
             if ($match === null) {
                 return '<p>'
-                    . __(
+                    . esc_html__(
                         'No match found',
                         'soccr',
                     )
@@ -59,12 +59,12 @@ class TeamMatchBlock extends Block
             do_action('soccr_exception', $e);
 
             if (defined('WP_DEBUG') && true === WP_DEBUG) {
-                return $this->esc($e->getMessage());
+                return esc_html($e->getMessage());
             }
 
             if ($e->getCode() === 404) {
                 return '<p>'
-                    . __(
+                    . esc_html__(
                         'Error: match, league or season not found',
                         'soccr',
                     )
@@ -96,44 +96,69 @@ class TeamMatchBlock extends Block
 
         $headlineHTML = '';
         if (!$isEditorPreview && $showTitle && $title !== '') {
-            $headlineHTML = <<<HTML
-                <div class="{$this->blockClass('header')}">
-                    <h4 class="{$this->blockClass('headline')}">{$this->esc($title)}</h4>
-                </div>
-            HTML;
+            $headlineHTML = strtr(
+                '<div class="{headerClass}"><h4 class="{headlineClass}">{title}</h4></div>',
+                [
+                    '{headerClass}' => esc_attr($this->blockClass('header')),
+                    '{headlineClass}' => esc_attr($this->blockClass('headline')),
+                    '{title}' => esc_html($title),
+                ],
+            );
         }
 
         $wrapperAttributes = get_block_wrapper_attributes([
             'class' => $this->blockClasses($parsedAttributes),
         ]);
 
-        $attributionHtml = $this->attributionHtml();
-
-        $html = <<<HTML
-            $content
-            <div $wrapperAttributes>
-                $headlineHTML
-                <div class="{$this->blockClass('header')}">
-                    <div class="{$this->blockClass('datetime')}">{$this->esc($matchDateTimeString)}</div>
-                </div>
-                <div class="{$this->blockClass('content')}">
-                    <div class="{$this->blockClass('row')}">
-                        <div class="{$this->blockClass('team-home')}">
-                            {$this->teamIconHtml($match->getTeam1(), $showTeamIcons)}
-                            <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam1()->getTeamName())}</span>
-                            <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam1()->getShortName())}</span>
-                        </div>
-                        <div class="{$this->blockClass('result')}">{$this->esc($resultDisplay)}</div>
-                        <div class="{$this->blockClass('team-away')}">
-                            {$this->teamIconHtml($match->getTeam2(), $showTeamIcons)}
-                            <span class="{$this->blockClass('team-name')}">{$this->esc($match->getTeam2()->getTeamName())}</span>
-                            <span class="{$this->blockClass('team-shortname')}">{$this->esc($match->getTeam2()->getShortName())}</span>
-                        </div>
-                    </div>
-                </div>
-                {$attributionHtml}
-            </div>
-        HTML;
+        // $content is the inner block markup, $wrapperAttributes is escaped
+        // by get_block_wrapper_attributes(), icons and attribution are
+        // escaped where they are built.
+        $html = strtr(
+            '{content}'
+            . '<div {wrapperAttributes}>'
+            . '{headline}'
+            . '<div class="{headerClass}"><div class="{datetimeClass}">{datetime}</div></div>'
+            . '<div class="{contentClass}">'
+            . '<div class="{rowClass}">'
+            . '<div class="{teamHomeClass}">'
+            . '{homeIcon}'
+            . '<span class="{teamNameClass}">{homeName}</span>'
+            . '<span class="{teamShortNameClass}">{homeShortName}</span>'
+            . '</div>'
+            . '<div class="{resultClass}">{result}</div>'
+            . '<div class="{teamAwayClass}">'
+            . '{awayIcon}'
+            . '<span class="{teamNameClass}">{awayName}</span>'
+            . '<span class="{teamShortNameClass}">{awayShortName}</span>'
+            . '</div>'
+            . '</div>'
+            . '</div>'
+            . '{attribution}'
+            . '</div>',
+            [
+                '{content}' => $content,
+                '{wrapperAttributes}' => $wrapperAttributes,
+                '{headline}' => $headlineHTML,
+                '{headerClass}' => esc_attr($this->blockClass('header')),
+                '{datetimeClass}' => esc_attr($this->blockClass('datetime')),
+                '{datetime}' => esc_html($matchDateTimeString),
+                '{contentClass}' => esc_attr($this->blockClass('content')),
+                '{rowClass}' => esc_attr($this->blockClass('row')),
+                '{teamHomeClass}' => esc_attr($this->blockClass('team-home')),
+                '{teamAwayClass}' => esc_attr($this->blockClass('team-away')),
+                '{teamNameClass}' => esc_attr($this->blockClass('team-name')),
+                '{teamShortNameClass}' => esc_attr($this->blockClass('team-shortname')),
+                '{resultClass}' => esc_attr($this->blockClass('result')),
+                '{homeIcon}' => $this->teamIconHtml($match->getTeam1(), $showTeamIcons),
+                '{homeName}' => esc_html($match->getTeam1()->getTeamName()),
+                '{homeShortName}' => esc_html($match->getTeam1()->getShortName()),
+                '{result}' => esc_html((string) $resultDisplay),
+                '{awayIcon}' => $this->teamIconHtml($match->getTeam2(), $showTeamIcons),
+                '{awayName}' => esc_html($match->getTeam2()->getTeamName()),
+                '{awayShortName}' => esc_html($match->getTeam2()->getShortName()),
+                '{attribution}' => $this->attributionHtml(),
+            ],
+        );
 
         return apply_filters(
             'soccr_team_match_html',
@@ -168,11 +193,15 @@ class TeamMatchBlock extends Block
             'url' => rawurlencode($safeUrl),
             'sig' => wp_hash($safeUrl),
         ], rest_url('openligadb/v1/team-icon'));
-        $src = esc_url($proxyUrl);
-        $alt = esc_attr($teamName);
-        $class = $this->blockClass('team-icon');
 
-        return "<img class=\"{$class}\" src=\"{$src}\" alt=\"{$alt}\" />";
+        return strtr(
+            '<img class="{class}" src="{src}" alt="{alt}" />',
+            [
+                '{class}' => esc_attr($this->blockClass('team-icon')),
+                '{src}' => esc_url($proxyUrl),
+                '{alt}' => esc_attr($teamName),
+            ],
+        );
     }
 
     /**

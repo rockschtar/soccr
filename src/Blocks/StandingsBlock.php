@@ -42,12 +42,12 @@ class StandingsBlock extends Block
             do_action('soccr_exception', $e);
 
             if (defined('WP_DEBUG') && true === WP_DEBUG) {
-                return $this->esc($e->getMessage());
+                return esc_html($e->getMessage());
             }
 
             if ($e->getCode() === 404) {
                 return '<p>'
-                    . __(
+                    . esc_html__(
                         'Error: matchday, league or season not found',
                         'soccr',
                     )
@@ -70,32 +70,52 @@ class StandingsBlock extends Block
 
         $headlineHTML = '';
         if (!$isEditorPreview && $showTitle && $title !== '') {
-            $headlineHTML = <<<HTML
-                    <div class="{$this->blockClass('header')}">
-                        <h2 class="{$this->blockClass('headline')}">{$this->esc($title)}</h2>
-                    </div>
-               HTML;
+            $headlineHTML = strtr(
+                '<div class="{headerClass}"><h2 class="{headlineClass}">{title}</h2></div>',
+                [
+                    '{headerClass}' => esc_attr($this->blockClass('header')),
+                    '{headlineClass}' => esc_attr($this->blockClass('headline')),
+                    '{title}' => esc_html($title),
+                ],
+            );
         }
 
-        $standingsHTMLHeader = <<<HTML
-           <div class="{$this->blockClass('thead')}">
-                <div class="{$this->blockClass('tr')}">
-                    $headlineHTML
-                </div>
-                <div class="{$this->blockClass('tr')}">
-                    <div class="{$this->blockClass('th')} {$this->blockClass('position')}"></div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('team')}"></div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('matches')}">{$this->esc(_x('P', 'standings table header: matches played', 'soccr'))}</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('wins')}">{$this->esc(_x('W', 'standings table header: wins', 'soccr'))}</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('draws')}">{$this->esc(_x('D', 'standings table header: draws', 'soccr'))}</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('looses')}">{$this->esc(_x('L', 'standings table header: losses', 'soccr'))}</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('goals')}">{$this->esc(__('Goals', 'soccr'))}</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('goals-difference')}">{$this->esc(_x('GD', 'standings table header: goal difference', 'soccr'))}</div>
-                    <div class="{$this->blockClass('th')} {$this->blockClass('points')}">{$this->esc(_x('Pts', 'standings table header: points', 'soccr'))}</div>
-                </div>
+        $headerColumns = [
+            'position' => '',
+            'team' => '',
+            'matches' => _x('P', 'standings table header: matches played', 'soccr'),
+            'wins' => _x('W', 'standings table header: wins', 'soccr'),
+            'draws' => _x('D', 'standings table header: draws', 'soccr'),
+            'looses' => _x('L', 'standings table header: losses', 'soccr'),
+            'goals' => __('Goals', 'soccr'),
+            'goals-difference' => _x('GD', 'standings table header: goal difference', 'soccr'),
+            'points' => _x('Pts', 'standings table header: points', 'soccr'),
+        ];
 
-           </div>
-        HTML;
+        $headerCells = '';
+        foreach ($headerColumns as $column => $label) {
+            $headerCells .= strtr(
+                '<div class="{thClass} {columnClass}">{label}</div>',
+                [
+                    '{thClass}' => esc_attr($this->blockClass('th')),
+                    '{columnClass}' => esc_attr($this->blockClass($column)),
+                    '{label}' => esc_html($label),
+                ],
+            );
+        }
+
+        $standingsHTMLHeader = strtr(
+            '<div class="{theadClass}">'
+            . '<div class="{trClass}">{headline}</div>'
+            . '<div class="{trClass}">{cells}</div>'
+            . '</div>',
+            [
+                '{theadClass}' => esc_attr($this->blockClass('thead')),
+                '{trClass}' => esc_attr($this->blockClass('tr')),
+                '{headline}' => $headlineHTML,
+                '{cells}' => $headerCells,
+            ],
+        );
 
         $standingsHTMLBody = '';
 
@@ -104,49 +124,80 @@ class StandingsBlock extends Block
         foreach ($openLigaDBStandings->getStandings() as $openLigaDBStanding) {
             $standingsPosition++;
 
-            $teamId = $openLigaDBStanding->getTeam()->getTeamId();
-            $highlightClass = ($highlightTeamId > 0 && $teamId === $highlightTeamId)
-                ? ' ' . $this->blockClass('row--highlighted')
-                : '';
+            $team = $openLigaDBStanding->getTeam();
+            $teamId = $team->getTeamId();
 
-            $standingsHTMLBody .= <<<HTML
-                <div class="{$this->blockClass('row')} {$this->blockClass('team-' . $teamId)}{$highlightClass}">
-                    <div class="{$this->blockClass('position')} {$this->blockClass('position')}-$standingsPosition">{$standingsPosition}</div>
-                    <div class="{$this->blockClass('team')}">
-                        <span class="{$this->blockClass('team-name')}">{$this->esc($openLigaDBStanding->getTeam()->getTeamName())}</span>
-                        <span class="{$this->blockClass('team-shortname')}">{$this->esc($openLigaDBStanding->getTeam()->getShortName())}</span>
-                    </div>
+            $rowClasses = $this->blockClass('row') . ' ' . $this->blockClass('team-' . $teamId);
+            if ($highlightTeamId > 0 && $teamId === $highlightTeamId) {
+                $rowClasses .= ' ' . $this->blockClass('row--highlighted');
+            }
 
-                    <div class="{$this->blockClass('matches')}">{$openLigaDBStanding->getMatches()}</div>
-                    <div class="{$this->blockClass('wins')}">{$openLigaDBStanding->getWins()}</div>
-                    <div class="{$this->blockClass('draws')}">{$openLigaDBStanding->getDraws()}</div>
-                    <div class="{$this->blockClass('looses')}">{$openLigaDBStanding->getLooses()}</div>
-                    <div class="{$this->blockClass('goals')}">{$openLigaDBStanding->getGoalsScored()}:{$openLigaDBStanding->getGoalsConceded()}</div>
-                    <div class="{$this->blockClass('goals-difference')}">{$openLigaDBStanding->getGoalDifference()}</div>
-                    <div class="{$this->blockClass('points')}">{$openLigaDBStanding->getPoints()}</div>
-                </div>
-            HTML;
+            $standingsHTMLBody .= strtr(
+                '<div class="{rowClasses}">'
+                . '<div class="{positionClass} {positionClass}-{position}">{position}</div>'
+                . '<div class="{teamClass}">'
+                . '<span class="{teamNameClass}">{teamName}</span>'
+                . '<span class="{teamShortNameClass}">{teamShortName}</span>'
+                . '</div>'
+                . '<div class="{matchesClass}">{matches}</div>'
+                . '<div class="{winsClass}">{wins}</div>'
+                . '<div class="{drawsClass}">{draws}</div>'
+                . '<div class="{loosesClass}">{looses}</div>'
+                . '<div class="{goalsClass}">{goalsScored}:{goalsConceded}</div>'
+                . '<div class="{goalsDifferenceClass}">{goalDifference}</div>'
+                . '<div class="{pointsClass}">{points}</div>'
+                . '</div>',
+                [
+                    '{rowClasses}' => esc_attr($rowClasses),
+                    '{positionClass}' => esc_attr($this->blockClass('position')),
+                    '{position}' => esc_html((string) $standingsPosition),
+                    '{teamClass}' => esc_attr($this->blockClass('team')),
+                    '{teamNameClass}' => esc_attr($this->blockClass('team-name')),
+                    '{teamShortNameClass}' => esc_attr($this->blockClass('team-shortname')),
+                    '{teamName}' => esc_html($team->getTeamName()),
+                    '{teamShortName}' => esc_html($team->getShortName()),
+                    '{matchesClass}' => esc_attr($this->blockClass('matches')),
+                    '{matches}' => esc_html((string) $openLigaDBStanding->getMatches()),
+                    '{winsClass}' => esc_attr($this->blockClass('wins')),
+                    '{wins}' => esc_html((string) $openLigaDBStanding->getWins()),
+                    '{drawsClass}' => esc_attr($this->blockClass('draws')),
+                    '{draws}' => esc_html((string) $openLigaDBStanding->getDraws()),
+                    '{loosesClass}' => esc_attr($this->blockClass('looses')),
+                    '{looses}' => esc_html((string) $openLigaDBStanding->getLooses()),
+                    '{goalsClass}' => esc_attr($this->blockClass('goals')),
+                    '{goalsScored}' => esc_html((string) $openLigaDBStanding->getGoalsScored()),
+                    '{goalsConceded}' => esc_html((string) $openLigaDBStanding->getGoalsConceded()),
+                    '{goalsDifferenceClass}' => esc_attr($this->blockClass('goals-difference')),
+                    '{goalDifference}' => esc_html((string) $openLigaDBStanding->getGoalDifference()),
+                    '{pointsClass}' => esc_attr($this->blockClass('points')),
+                    '{points}' => esc_html((string) $openLigaDBStanding->getPoints()),
+                ],
+            );
         }
-
-
 
         $wrapperAttributes = get_block_wrapper_attributes([
             'class' => $cssClasses,
         ]);
 
-        $attributionHtml = $this->attributionHtml();
-
-        return <<<HTML
-            <div {$wrapperAttributes}>
-                <div class="{$this->blockClass('content')}">
-                    {$standingsHTMLHeader}
-                    <div class="{$this->blockClass('tbody')}">
-                        {$standingsHTMLBody}
-                    </div>
-                </div>
-                {$attributionHtml}
-            </div>
-        HTML;
+        // $wrapperAttributes is escaped by get_block_wrapper_attributes(),
+        // header, body and attribution are escaped where they are built.
+        return strtr(
+            '<div {wrapperAttributes}>'
+            . '<div class="{contentClass}">'
+            . '{header}'
+            . '<div class="{tbodyClass}">{body}</div>'
+            . '</div>'
+            . '{attribution}'
+            . '</div>',
+            [
+                '{wrapperAttributes}' => $wrapperAttributes,
+                '{contentClass}' => esc_attr($this->blockClass('content')),
+                '{header}' => $standingsHTMLHeader,
+                '{tbodyClass}' => esc_attr($this->blockClass('tbody')),
+                '{body}' => $standingsHTMLBody,
+                '{attribution}' => $this->attributionHtml(),
+            ],
+        );
     }
 
     public function blockDirectory(): string

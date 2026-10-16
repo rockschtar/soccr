@@ -33,11 +33,6 @@ abstract class Block
         return rtrim(SOCCR_PLUGIN_URL, '/') . $this->blockDirectory();
     }
 
-    final protected function esc(mixed $value): string
-    {
-        return esc_html((string) $value);
-    }
-
     final protected function attributionHtml(): string
     {
         $attribution = sprintf(
