@@ -154,7 +154,8 @@ class RemoteRequest
             throw new RemoteRequestException(esc_html($response->get_error_message()));
         }
 
-        $responseCode = wp_remote_retrieve_response_code($response);
+        // Returns '' for malformed responses, cast once so the status is an int everywhere below.
+        $responseCode = (int) wp_remote_retrieve_response_code($response);
         $message = wp_remote_retrieve_response_message($response);
         $body = wp_remote_retrieve_body($response);
 
@@ -162,6 +163,7 @@ class RemoteRequest
             return new RemoteResponse($responseCode, $body);
         }
 
+        // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- $responseCode is an int (cast above), not output.
         throw new RemoteRequestException(esc_html($message ?: $body), $responseCode);
     }
 
