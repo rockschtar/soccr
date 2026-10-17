@@ -10,16 +10,6 @@ class PluginController
 
     private function __construct()
     {
-        // Bundled translations as fallback until the wp.org language pack
-        // exists — must load before the blocks register on init (priority 10).
-        add_action('init', static function (): void {
-            load_plugin_textdomain(
-                'soccr',
-                false,
-                dirname(plugin_basename(SOCCR_PLUGIN_DIR . 'soccr.php')) . '/languages',
-            );
-        }, 1);
-
         register_uninstall_hook(SOCCR_PLUGIN_DIR . 'soccr.php', [self::class, 'onUninstall']);
         add_filter('plugin_action_links_' . SOCCR_PLUGIN, $this->donationLink(...));
 

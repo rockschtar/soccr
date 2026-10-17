@@ -104,7 +104,7 @@ abstract class Block
 
         if ($this->blockType instanceof WP_Block_Type) {
             foreach ($this->blockType->editor_script_handles as $scriptHandle) {
-                wp_set_script_translations($scriptHandle, 'soccr', SOCCR_PLUGIN_DIR . 'languages');
+                wp_set_script_translations($scriptHandle, 'soccr');
             }
         }
     }
