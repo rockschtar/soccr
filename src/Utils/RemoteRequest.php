@@ -17,7 +17,7 @@ class RemoteRequest
 
     private array $headers = [];
 
-    private ?int $timeout = null;
+    private ?float $timeout = null;
 
     private ?string $userAgent = null;
 

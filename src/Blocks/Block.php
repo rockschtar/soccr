@@ -28,11 +28,6 @@ abstract class Block
         return $this->blockType instanceof WP_Block_Type ? $this->blockType->name : '';
     }
 
-    private function distUrl(): string
-    {
-        return rtrim(SOCCR_PLUGIN_URL, '/') . $this->blockDirectory();
-    }
-
     final protected function attributionHtml(): string
     {
         $attribution = sprintf(
@@ -82,22 +77,6 @@ abstract class Block
         $args = [];
         if (method_exists($this, 'render')) {
             $args['render_callback'] = $this->render(...);
-            $assets = include $this->absBlockDirectory() . DIRECTORY_SEPARATOR . 'index.asset.php';
-            $handle = sanitize_key(strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', get_class($this))));
-
-
-            $cssPath = $this->absBlockDirectory() . DIRECTORY_SEPARATOR . 'style-index.css';
-            $cssVersion = file_exists($cssPath) ? md5_file($cssPath) : $assets['version'];
-
-            wp_register_style(
-                $handle,
-                $this->distUrl() . '/style-index.css',
-                [],
-                $cssVersion,
-            );
-
-            $args['editor_style'] = $handle;
-            $args['style'] = $handle;
         }
 
         $this->blockType = register_block_type($this->absBlockDirectory(), $args);

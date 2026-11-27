@@ -24,17 +24,9 @@ class BlockEditorController
 
     private function blockTypeMetadata(array $metaData): array
     {
-
-        if ($metaData['name'] === 'soccr/group-matches') {
+        if (in_array($metaData['name'] ?? '', ['soccr/group-matches', 'soccr/standings', 'soccr/team-match'], true)) {
             $metaData['attributes']['leagueSeason']['default'] = (int) wp_date('Y');
-        }
-
-        if ($metaData['name'] === 'soccr/standings') {
-            $metaData['attributes']['leagueSeason']['default'] = (int) wp_date('Y');
-        }
-
-        if ($metaData['name'] === 'soccr/team-match') {
-            $metaData['attributes']['leagueSeason']['default'] = (int) wp_date('Y');
+            $metaData['version'] = SOCCR_VERSION === 'develop' ? (string) time() : SOCCR_VERSION;
         }
 
         return $metaData;
